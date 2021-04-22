@@ -1,0 +1,20 @@
+{
+  "name": "dniowarte2021",
+  "version": "1.0.0",
+  "description": "Moje wystąpienie na dniach otwartych II UWr 2021.",
+  "main": "index.js",
+  "dependencies": {
+    "jscoq": "^0.12.3",
+    "localhost": "^0.3.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ".."
+  },
+  "author": "",
+  "license": "ISC"
+}
