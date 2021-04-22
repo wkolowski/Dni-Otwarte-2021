@@ -1,0 +1,25 @@
+{
+  "name": "dniotwarte",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wkolowski/Dni-Otwarte-2021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wkolowski/Dni-Otwarte-2021/issues"
+  },
+  "homepage": "https://github.com/wkolowski/Dni-Otwarte-2021#readme",
+  "dependencies": {
+    "jscoq": "^0.12.3"
+  },
+  "devDependencies": {
+    "localhost": "^0.3.4"
+  }
+}
