@@ -14,25 +14,7 @@
     <div id="code-wrapper">
       <div id="document">
         <h1>Coq: jak udowodnić, że nasz program działa poprawnie</h1>
-        <p>
-            Write some text as well.
-        </p>
         <textarea id="coq-code">
-
-(** * Scenariusz i kod *)
-
-(**                                                                           |*)
-
-(** Scenariusz:
-    0. Powitanie.
-    1. Nazwa.
-    2. Środowisko jsCoq.
-    3. Programowanie funkcyjne.
-    4. Meritum.
-    5. 
-    
-*)
-
 (** * Coq a inne języki programowania *)
 
 (** Coq jest mocno wyjątkowym językiem programowania, różniącym się znacznie
@@ -52,33 +34,33 @@
     dowodzimy twierdzenia mówiącego, że program działa tak jak powinien. Gdy
     programujemy w Coqu, możemy (i powinniśmy!) być jednocześnie matematykiem. *)
 
-(** * Proste typy *)
+(** * Proste typy i funkcje *)
 
-Inductive bit : Type := (* "bit" jest typem *)
-    | tak : bit         (* "tak" jest elementem typu "bit" *)
-    | nie : bit         (* "nie" jest elementem typu "bit" *)
-    .                   (* i nie ma żadnych więcej elementów typu "bit" *)
+Inductive          (* Definicja typu zaczynaja się od słowa kluczowego "Inductive". *)
+  bit : Type :=    (* "bit" jest typem *)
+    | tak : bit    (* "tak" jest elementem typu "bit" *)
+    | nie : bit    (* "nie" jest elementem typu "bit" *)
+    .              (* Definicje czegokolwiek w Coqu zazwyczaj kończą się kropką. *)
 
-(** * Proste funkcje *)
+Definition                  (* Definicja zaczyna się od słowa kluczowego "Definition" *)
+  negacja : bit -> bit :=    (* "negacja" to funkcja, która bierze bit i zwraca bit *)
+    fun b : bit =>             (* Weź jako argument bit nazwany "b". *)
+      match b with          (* Sprawdźmy, jakiej "b" jest postaci. *)
+          | tak => nie       (* Gdy "b" to "tak", wynikiem funkcji jest "nie". *)
+          | nie => tak       (* Gdy "b" to "nie", wynikiem funkcji jest "tak". *)
+      end.                  (* Koniec definicji. *)
 
-Definition negacja : bit -> bit := (* "negacja" to funkcja, która bierze bit i zwraca bit *)
-  fun b : bit =>                     (* weź jako argument bit nazwany "b" *)
-    match b with                  (* sprawdźmy, jakiej "b" jest postaci *)
-        | tak => nie               (* gdy "b" to "tak", wynikiem funkcji jest "nie" *)
-        | nie => tak               (* gdy "b" to "nie", wynikiem funkcji jest "tak" *)
-    end.                          (* koniec definicji *)
-
-(** * Równość i obliczenia *)
+(** * Równość, obliczenia i proste twierdzenia *)
 
 Goal tak = tak. (* Po słowie kluczowym "Goal" piszemy, co chcemy udowodnić. *)
-Proof.          (* Dowód zaczynamy od "Proof". *)
+Proof.          (* Dowód zaczynamy od słowa kluczowego "Proof". *)
   reflexivity.  (* Każda rzecz jest równa samej sobie i Coq o tym wie. *)
 Qed.            (* Dowód kończymy słowem "Qed" - od łac. "Quod erat demonstrandum" - "Co należało udowodnić" *)
 
 Goal tak = nie.
 Proof.
   Fail reflexivity. (* "tak" to coś innego niż "nie" i Coq to wie - nie da się go zrobić w wała *)
-Abort. (* Zakończenie dowodu za pomocą "Abort" oznacza, że się poddajemy. *) 
+Abort.              (* Zakończenie dowodu za pomocą "Abort" oznacza, że się poddajemy. *) 
 
 Goal negacja tak = nie.
 Proof.
@@ -94,74 +76,85 @@ Proof.
   reflexivity.
 Qed.
 
-Lemma negacja_negacji :
-  forall b : bit, negacja (negacja b) = b.
+Goal forall b : bit, negacja (negacja b) = b.
 Proof.
-  intro b.    (* Weźmy dowolne b : bit *)
-  destruct b. (* Analiza przypadków: b może mieć jedną z dwóch postaci (tak/nie) *)
-    cbv. (* Obliczamy wynik. *) reflexivity. (* Udało się. *)
-    reflexivity. (* Nie musimy ręcznie prosić o policzenie - Coq sam wie, żeby to zrobić. *)
+  intro dowolne_b.    (* Weźmy dowolny bit *)
+  case dowolne_b.     (* Analiza przypadków: bit może mieć jedną z dwóch postaci (tak/nie) *)
+    cbv. reflexivity. (* Trochę obliczeń i... udało się! *)
+    reflexivity.      (* Nie musimy ręcznie prosić o policzenie - Coq sam wie, żeby to zrobić. *)
 Qed.
 
-Lemma tylko_dwie_opcje :
-  forall b : bit, b = tak \/ b = nie.
-Proof.
-  intro b. (* Weźmy dowolne b : bit *)
-  destruct b. (* Analiza przypadków *)
-    left. (* Będziemy dowodzić pierwszej możliwości (tak = tak). *) reflexivity.
-    right. (* Chcemy dowodzić drugiej możliwości. *) reflexivity.
-Qed.
-
-(** * Przydatne komendy *)
-
-(* [Check] sprawdza typ obiektu. *)
-Check tak.
-
-(* [Print] wyświetla definicję obiektu. *)
-Print bit.
-
-(* Znajdź wszystkie rzeczy związane z [bit]. *)
-Search bit.
-
-(** Listy *)
+(** * Bardziej skomplikowane typy, funkcje rekurencyjne i dowody przez indukcję *)
 
 Inductive lista : Type :=
-    | pusta : lista
-    | cons  : bit -> lista -> lista.
+    | koniec      : lista                (* "koniec" jest listą *)
+    | na_początku : bit -> lista -> lista. (* na_początku b l jest listą, pod warunkiem że b jest bitem a l listą *)
 
-Definition równe : bit -> bit -> bit :=
-  fun b1 b2 : bit =>
-    match b1, b2 with
-        | tak, tak => tak
-        | nie, nie => tak
-        | _  , _   => nie
-    end.
+(* [tak; nie; tak] *)
+Check na_początku tak (na_początku nie (na_początku tak koniec)).
 
-Definition lub : bit -> bit -> bit :=
-    fun b1 b2 : bit =>
-      match b1 with
-          | tak => tak
-          | _   => b2
-      end.
-
-Fixpoint zawiera (l : lista) (b : bit) : bit :=
+Fixpoint na_końcu (b : bit) (l : lista) : lista :=         (* Definicje rekurencyjne zaczynają się od "Fixpoint". *)
 match l with
-    | pusta     => nie
-    | cons c l' => lub (równe b c) (zawiera l' b)
+    | koniec           => na_początku b koniec
+    | na_początku c l' => na_początku c (na_końcu b l')
 end.
 
-Fixpoint sklej (l1 l2 : Lista) : List a :=
-match l1 with
-    | pusta => l2
-    | cons n l3 => cons n (sklej l3 l2)
+Fixpoint odwróć (l : lista) : lista :=
+match l with
+    | koniec           => koniec
+    | na_początku b l' => na_końcu b (odwróć l')
 end.
 
+Theorem odwróć_na_końcu :
+  forall (b : bit) (l : lista),
+    odwróć (na_końcu b l) = na_początku b (odwróć l).
+Proof.
+  intro b. (* Weźmy dowolne b. *)
+  induction l as [| głowa_l ogon_l hipoteza_indukcyjna].
+     cbv. reflexivity.
+     cbn. rewrite hipoteza_indukcyjna. cbn. reflexivity.
+Qed.
 
+Theorem odwróć_odwróć :
+  forall l : lista,
+    odwróć (odwróć l) = l.
+Proof.
+  induction l as [| głowa_l ogon_l hipoteza_indukcyjna].
+    cbn. reflexivity.
+    cbn. rewrite odwróć_na_końcu. rewrite hipoteza_indukcyjna.
+      reflexivity.
+Qed.
+
+(** * Ćwiczenia *)
+
+(** Zdefiniuj funkcję lub : bit → bit → bit, która zwraca "tak", gdy co najmniej jeden
+    z jej argumentów jest równy "tak", zaś "nie" w przeciwnym wypadku.
+    
+    Następnie udowodnij, że:
+    1. ∀ a : bit, lub a a = a.
+    2. ∀ a : bit, lub a (negacja a) = tak.
+    3. ∀ a b : bit, lub a b = lub b a.
+    4. ∀ a b c : bit, lub (lub a b) c = lub a (lub b c)
+    
+    Co się stanie, gdy zanegujemy lub, tzn. czemu jest równe "negacja (lub a b)"?
+    
+    Zdefiniuj funkcję sklej : lista → lista → lista, które bierze dwie listy i
+    skleja je ze sobą, np.
+    
+    sklej (na_początku tak koniec) (na_początku nie koniec)
+    =
+    na_początku tak (na_początku nie koniec).
+    
+    Następnie udowodnij następujące twierdzenia:
+    1. ∀ l : lista, sklej koniec l = l
+    2. ∀ l : lista, sklej l koniec = l
+    3. ∀ l1 l2 l3 : lista, sklej (sklej l1 l2) l3 = sklej l1 (sklej l2 l3)
+    4. ∀ (b : bit) (l1 l2 : lista), na_końcu b (sklej l1 l2) = sklej l1 (na_końcu b l2)
+    5. ∀ l1 l2 : lista, odwróć (sklej l1 l2) = sklej (odwróć l2) (odwróć l1) *)
 
 (** * Dlaczego warto nauczyć się Coqa? *)
 
 (** Języki funkcyjne ekspandują. *)
-
 
 (** * Kim jesteśmy, dokąd zmierzamy? *)
 
