@@ -1,166 +1,428 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <title>Coq: jak udowodnić, że nasz program działa poprawnie</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Coq: jak udowodnić, że nasz program działa poprawnie</title>
+</head>
 
-    <!-- important: this will not work from *within* the jsCoq package dir; -->
-    <!-- this template is meant to be copied to your project dir and edited -->
-    <script src="ui-js/jscoq-loader.js"></script>
-  </head>
+<body>
 
-<body class="jscoq-main">
-  <div id="ide-wrapper" class="toggled">
-    <div id="code-wrapper">
-      <div id="document">
-        <h1>Coq: jak udowodnić, że nasz program działa poprawnie</h1>
-        <textarea id="coq-code">
-(** * Coq a inne języki programowania *)
+<div id="page">
 
-(** Coq jest mocno wyjątkowym językiem programowania, różniącym się znacznie
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Coq: jak udowodnić, że nasz program działa poprawnie</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+
+<div class="paragraph"> </div>
+
+<a id="lab1"></a><h1 class="section">Coq a inne języki programowania</h1>
+
+<div class="paragraph"> </div>
+
+ Coq jest mocno wyjątkowym językiem programowania, różniącym się znacznie
     od większości popularnych języków, jak C++ czy Python.
-    
+
+<div class="paragraph"> </div>
+
     Po pierwsze, Coq jest językiem funkcyjnym. Zamiast zmiennych globalnych,
     dajemy funkcjom dodatkowe argumenty. Zamiast iterować po strukturach
     danych zrobionych ze wskaźników, przemierzamy drzewa za pomocą funkcji
-    rekurencyjnych - czyli takich, które wywołują same siebie. Zamiast wielkich
-    pętli przetwarzających dane, budujemy duże funkcje składając ze sobą wiele
-    małych funkcji. Nasze funkcje mogą brać inne funkcje jako argumenty oraz
-    zwracać funkcje jako wynik.
-    
+    rekurencyjnych - czyli takich, które wywołują same siebie. Zamiast
+    wielkich pętli przetwarzających dane, budujemy duże funkcje składając
+    ze sobą wiele małych funkcji. Nasze funkcje mogą brać inne funkcje jako
+    argumenty oraz zwracać funkcje jako wynik.
+
+<div class="paragraph"> </div>
+
     Jednak jest coś jeszcze, co odróżnia Coqa nawet od prawie wszystkich
-    innych języków funkcyjnych. Mianowicie, Coq pozwala na formalną weryfikację
-    poprawności napisanych w nim programów - najpierw piszemy program, a potem
-    dowodzimy twierdzenia mówiącego, że program działa tak jak powinien. Gdy
-    programujemy w Coqu, możemy (i powinniśmy!) być jednocześnie matematykiem. *)
+    innych języków funkcyjnych. Mianowicie, Coq pozwala na formalną
+    weryfikację poprawności napisanych w nim programów - najpierw piszemy
+    program, a potem dowodzimy twierdzenia mówiącego, że program działa tak
+    jak powinien. Gdy programujemy w Coqu, możemy (i powinniśmy!) być
+    jednocześnie matematykiem. 
+<div class="paragraph"> </div>
 
-(** * Proste typy i funkcje *)
+<a id="lab2"></a><h1 class="section">Środowisko jsCoq</h1>
 
-Inductive          (* Definicja typu zaczynaja się od słowa kluczowego "Inductive". *)
-  bit : Type :=    (* "bit" jest typem *)
-    | tak : bit    (* "tak" jest elementem typu "bit" *)
-    | nie : bit    (* "nie" jest elementem typu "bit" *)
-    .              (* Definicje czegokolwiek w Coqu zazwyczaj kończą się kropką. *)
+<div class="paragraph"> </div>
 
-Definition                  (* Definicja zaczyna się od słowa kluczowego "Definition" *)
-  negacja : bit -> bit :=    (* "negacja" to funkcja, która bierze bit i zwraca bit *)
-    fun b : bit =>             (* Weź jako argument bit nazwany "b". *)
-      match b with          (* Sprawdźmy, jakiej "b" jest postaci. *)
-          | tak => nie       (* Gdy "b" to "tak", wynikiem funkcji jest "nie". *)
-          | nie => tak       (* Gdy "b" to "nie", wynikiem funkcji jest "tak". *)
-      end.                  (* Koniec definicji. *)
+ Środowisko, którego aktualnie używamy, nazywa się jsCoq. Jest fajne, bo
+    pozwala używać Coqa bezpośrednio w przeglądarce i nie trzeba niczego
+    instalować.
 
-(** * Równość, obliczenia i proste twierdzenia *)
+<div class="paragraph"> </div>
 
-Goal tak = tak. (* Po słowie kluczowym "Goal" piszemy, co chcemy udowodnić. *)
-Proof.          (* Dowód zaczynamy od słowa kluczowego "Proof". *)
-  reflexivity.  (* Każda rzecz jest równa samej sobie i Coq o tym wie. *)
-Qed.            (* Dowód kończymy słowem "Qed" - od łac. "Quod erat demonstrandum" - "Co należało udowodnić" *)
+    Interakcja z Coqiem wygląda tak. Po lewej mamy tekst i okna z kodem
+    (można edytować kod, który tam jest - zachęcam do zabawy). Po prawej na
+    dole jest okno, w którym Coq wyświetla nam informacje diagnostyczne,
+    wiadomości o błędzie i odpowiedzi na nasze zapytania. W oknie na górze
+    po prawej póki co nie ma nic ciekawego - uaktywni się ono dopiero, gdy
+    będziemy chcieli czegoś dowodzić.
 
-Goal tak = nie.
-Proof.
-  Fail reflexivity. (* "tak" to coś innego niż "nie" i Coq to wie - nie da się go zrobić w wała *)
-Abort.              (* Zakończenie dowodu za pomocą "Abort" oznacza, że się poddajemy. *) 
+<div class="paragraph"> </div>
 
-Goal negacja tak = nie.
-Proof.
-  cbv delta.   (* Pierwszym krokiem obliczeń jest odwinięcie definicji. *)
-  cbn beta.    (* Kolejnym krokiem jest podstawienie wartości "tak" za argument funkcji. *)
-  cbn iota.    (* Ostatnim krokiem jest wykonanie dopasowania i zwrócenie odpowiedniej wartości. *)
-  reflexivity. 
-Qed.
+    Po prawej na samej górze mamy kilka strzałek, którymi mówimy Coqowi,
+    co ma robić (możemy też używać skrótów klawiszowych). Strzałka w dół
+    (skrót: alt + strzałka w dół) - "wczytaj następny kawałek kodu",
+    strzałka w górę (skrót: alt + strzałka w górę) - "cofnij się do
+    poprzedniego kawałka kodu", podwójna strzałka (skrót: alt + enter) -
+    "wczytaj cały kod aż do miejsca, w którym znajduje się kursor".
 
-Goal negacja nie = tak.
-Proof.
-  cbv. (* Oczywiście można obliczyć wszystko za jednym zamachem. *)
-  reflexivity.
-Qed.
+<div class="paragraph"> </div>
 
-Goal forall b : bit, negacja (negacja b) = b.
-Proof.
-  intro dowolne_b.    (* Weźmy dowolny bit *)
-  case dowolne_b.     (* Analiza przypadków: bit może mieć jedną z dwóch postaci (tak/nie) *)
-    cbv. reflexivity. (* Trochę obliczeń i... udało się! *)
-    reflexivity.      (* Nie musimy ręcznie prosić o policzenie - Coq sam wie, żeby to zrobić. *)
-Qed.
+    Ok, czas zobaczyć w końcu trochę kodu. 
+<div class="paragraph"> </div>
 
-(** * Bardziej skomplikowane typy, funkcje rekurencyjne i dowody przez indukcję *)
+<a id="lab3"></a><h1 class="section">Proste typy i funkcje</h1>
 
-Inductive lista : Type :=
-    | koniec      : lista                (* "koniec" jest listą *)
-    | na_początku : bit -> lista -> lista. (* na_początku b l jest listą, pod warunkiem że b jest bitem a l listą *)
+<div class="paragraph"> </div>
 
-(* [tak; nie; tak] *)
-Check na_początku tak (na_początku nie (na_początku tak koniec)).
+ Wiesz pewnie, co to bit. Otóż bit to takie coś co może być zerem lub
+    jedynką. Spróbujmy zaimplementować w Coqu typ reprezentujący bity,
+    napisać jakąś funkcję i coś o niej udowodnić. Uwaga: "0" i "1" nie są
+    legalnymi nazwami w Coqu, więc nasze bity musimy nazwać jakoś inaczej.
+    Przyjmijmy nazwy "tak" i "nie". 
+</div>
+<div class="code">
 
-Fixpoint na_końcu (b : bit) (l : lista) : lista :=         (* Definicje rekurencyjne zaczynają się od "Fixpoint". *)
-match l with
-    | koniec           => na_początku b koniec
-    | na_początku c l' => na_początku c (na_końcu b l')
-end.
+<br/>
+<span class="id" title="keyword">Inductive</span>          <span class="comment">(*&nbsp;Definicja&nbsp;typu&nbsp;zaczynaja&nbsp;się&nbsp;od&nbsp;słowa&nbsp;kluczowego&nbsp;"Inductive".&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">bit</span> : <span class="id" title="keyword">Type</span> :=    <span class="comment">(*&nbsp;"bit"&nbsp;jest&nbsp;typem&nbsp;zdefiniowanym&nbsp;w&nbsp;ten&nbsp;sposób,&nbsp;że...&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">tak</span> : <span class="id" title="var">bit</span>    <span class="comment">(*&nbsp;"tak"&nbsp;jest&nbsp;elementem&nbsp;typu&nbsp;"bit"&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">nie</span> : <span class="id" title="var">bit</span>    <span class="comment">(*&nbsp;"nie"&nbsp;jest&nbsp;elementem&nbsp;typu&nbsp;"bit"&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;. <span class="comment">(*&nbsp;I&nbsp;nie&nbsp;ma&nbsp;żadnych&nbsp;innych&nbsp;elementów&nbsp;typu&nbsp;bit.&nbsp;*)</span><br/>
 
-Fixpoint odwróć (l : lista) : lista :=
-match l with
-    | koniec           => koniec
-    | na_początku b l' => na_końcu b (odwróć l')
-end.
+<br/>
+</div>
 
-Theorem odwróć_na_końcu :
-  forall (b : bit) (l : lista),
-    odwróć (na_końcu b l) = na_początku b (odwróć l).
-Proof.
-  intro b. (* Weźmy dowolne b. *)
-  induction l as [| głowa_l ogon_l hipoteza_indukcyjna].
-     cbv. reflexivity.
-     cbn. rewrite hipoteza_indukcyjna. cbn. reflexivity.
-Qed.
+<div class="doc">
+Żeby Coq przeczytać powyższą definicję, kliknij na smaej górze po prawej
+    strzałkę w dół (lub wciśnij alt + strzałka w dół). Kiedy Coq jest w trakcie
+    czytania definicji, jest ona podświetlona na pomarańczowo, zaś gdy Coq ją
+    zaakceptuje, jest podświetlona na szaro. Jeżeli Coq akceptuje definicję, to
+    milczy. Jeżeli coś mu nie pasuje, komunikat o błędzie pojawia się w oknie
+    na dole po prawej. Powyższa definicja, jak widać, jest w porządku.
 
-Theorem odwróć_odwróć :
-  forall l : lista,
-    odwróć (odwróć l) = l.
-Proof.
-  induction l as [| głowa_l ogon_l hipoteza_indukcyjna].
-    cbn. reflexivity.
-    cbn. rewrite odwróć_na_końcu. rewrite hipoteza_indukcyjna.
-      reflexivity.
-Qed.
+<div class="paragraph"> </div>
 
-(** * Ćwiczenia *)
+    Co można zrobić z bitem? Zanegować! Tzn. zamienić "1" na "0", a "0" na "1"
+    (w naszym przypadku zamienić "tak" na "nie", a "nie" na "tak". Do dzieła. 
+</div>
+<div class="code">
 
-(** Zdefiniuj funkcję lub : bit → bit → bit, która zwraca "tak", gdy co najmniej jeden
+<br/>
+<span class="id" title="keyword">Definition</span>                  <span class="comment">(*&nbsp;Definicja&nbsp;zaczyna&nbsp;się&nbsp;od&nbsp;słowa&nbsp;kluczowego&nbsp;"Definition"&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">negacja</span> : <span class="id" title="var">bit</span> -&gt; <span class="id" title="var">bit</span> :=    <span class="comment">(*&nbsp;"negacja"&nbsp;to&nbsp;funkcja,&nbsp;która&nbsp;bierze&nbsp;bit&nbsp;i&nbsp;zwraca&nbsp;bit,&nbsp;zdefiniowana&nbsp;następująco:&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">b</span> : <span class="id" title="var">bit</span> =&gt;             <span class="comment">(*&nbsp;Weź&nbsp;jako&nbsp;argument&nbsp;bit&nbsp;nazwany&nbsp;"b".&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">b</span> <span class="id" title="keyword">with</span>          <span class="comment">(*&nbsp;Sprawdźmy,&nbsp;jakiej&nbsp;"b"&nbsp;jest&nbsp;postaci.&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">tak</span> =&gt; <span class="id" title="var">nie</span>       <span class="comment">(*&nbsp;Gdy&nbsp;"b"&nbsp;to&nbsp;"tak",&nbsp;wynikiem&nbsp;funkcji&nbsp;jest&nbsp;"nie".&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">nie</span> =&gt; <span class="id" title="var">tak</span>       <span class="comment">(*&nbsp;Gdy&nbsp;"b"&nbsp;to&nbsp;"nie",&nbsp;wynikiem&nbsp;funkcji&nbsp;jest&nbsp;"tak".&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>. <span class="comment">(*&nbsp;Koniec&nbsp;definicji.&nbsp;*)</span><br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Uwaga: jeżeli oglądałeś moje nagranie z Dni Otwartych, to możesz tam
+    zauważyć, że Coq automatycznie zamienia strzałkę "-&gt;" na "→", "=&gt;"
+    na "→", "fun" na "λ", a "forall" na "∀". Żeby nie komplikować ci życia,
+    na niniejszej stronie wyłączyłem te konwersje. 
+<div class="paragraph"> </div>
+
+<a id="lab4"></a><h1 class="section">Równość</h1>
+
+<div class="paragraph"> </div>
+
+ Czy nasza definicja negacji jest poprawna? Na razie nie wiadomo - musimy
+    udowodnić jakieś twierdzenie, które nas w tym upewni. Zanim jednak to
+    nastąpi, zobaczmy jak w ogóle działają w Coqu twierdzenia. Szczególnie
+    zainteresowani będziemy dowodzeniem równości dwóch obiektów.
+
+<div class="paragraph"> </div>
+
+    Twierdzenia i dowody są jedną z najmocniejszych stron Coqa. Gdy zaczynamy
+    dowód, w oknie po prawej pojawia się nasz cel, czyli to czego chcemy
+    dowieść. W miarę jak wykonujemy kolejne kroki dowodu, stan okna po prawej
+    zmienia się, żeby pokazać nam co musimy zrobić, co mamy do dyspozycji oraz
+    co pozostało jeszcze do zrobienia. Każdy dowód możemy swobodnie przewijać
+    w przód i w tył za pomocą strzałek na górze po prawej lub skrótów
+    klawiszowych. Jeżeli nie rozumiesz jakiegoś dowodu, możesz powtarzać go,
+    dopóki cię nie oświeci. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">tak</span> = <span class="id" title="var">tak</span>. <span class="comment">(*&nbsp;Po&nbsp;słowie&nbsp;kluczowym&nbsp;"Goal"&nbsp;piszemy,&nbsp;co&nbsp;chcemy&nbsp;udowodnić.&nbsp;*)</span><br/>
+<span class="id" title="keyword">Proof</span>. <span class="comment">(*&nbsp;Dowód&nbsp;zaczynamy&nbsp;od&nbsp;słowa&nbsp;kluczowego&nbsp;"Proof".&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;Każda&nbsp;rzecz&nbsp;jest&nbsp;równa&nbsp;samej&nbsp;sobie&nbsp;i&nbsp;Coq&nbsp;o&nbsp;tym&nbsp;wie.&nbsp;*)</span><br/>
+<span class="id" title="keyword">Qed</span>. <span class="comment">(*&nbsp;Dowód&nbsp;kończymy&nbsp;słowem&nbsp;"Qed"&nbsp;-&nbsp;od&nbsp;łac.&nbsp;"Quod&nbsp;erat&nbsp;demonstrandum"&nbsp;-&nbsp;"Co&nbsp;należało&nbsp;udowodnić"&nbsp;*)</span><br/>
+
+<br/>
+</div>
+
+<div class="doc">
+"reflexivity" znaczy po angielsku "zwrotność", a "zwrotność" to w
+    matematycznej mowie nazwa na fakt, że każda rzecz jest równa samej
+    sobie - wiedział o tym już Arystoteles jakieś 2400 lat temu, więc
+    i nie dziwota, że Coq o tym wie. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">tak</span> = <span class="id" title="var">nie</span>. <span class="comment">(*&nbsp;A&nbsp;może&nbsp;"tak"&nbsp;jest&nbsp;równe&nbsp;"nie"?&nbsp;Oby&nbsp;nie!&nbsp;*)</span><br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Fail</span> <span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;"tak"&nbsp;to&nbsp;coś&nbsp;innego&nbsp;niż "nie"&nbsp;i&nbsp;Coq&nbsp;to&nbsp;wie&nbsp;-&nbsp;nie&nbsp;da&nbsp;się&nbsp;go&nbsp;zrobić&nbsp;w&nbsp;wała&nbsp;*)</span><br/>
+<span class="id" title="keyword">Abort</span>. <span class="comment">(*&nbsp;Zakończenie&nbsp;dowodu&nbsp;za&nbsp;pomocą&nbsp;"Abort"&nbsp;oznacza,&nbsp;że&nbsp;się&nbsp;poddajemy.&nbsp;*)</span><br/>
+
+<br/>
+</div>
+
+<div class="doc">
+"reflexivity" jest taktyką. Taktyka to formalny, Coqowy odpowiednik
+    nieformalnego sposobu rozumowania. Powiedzenie, że "każda rzecz jest
+    równa samej sobie", to właśnie taki nieformalny sposób rozumowania,
+    a taktyka "reflexivity" jest jego realizacją. Nie każdy sposób
+    rozumowania jest poprawny. a zatem nie każde użycie taktyki kończy
+    się sukcesem. W powyższym przykładzie rozumowanie "tak to to samo
+    co nie, bo każda rzecz jest równa samej sobie" jest niepoprawne, a
+    zatem próba użycia taktyki "reflexivity" zawodzi i musimy się poddać. 
+<div class="paragraph"> </div>
+
+<a id="lab5"></a><h1 class="section">Obliczenia</h1>
+
+<div class="paragraph"> </div>
+
+ Obliczenia w Coqu są wykonywane w bardzo prosty sposób - wszystko
+    sprowadza się do upraszczania wyrażeń. Uczyłeś się pewnie w szkole
+    na matematyce, że 0 + x = x i że jeżeli mamy jakieś skomplikowane
+    wyrażenie, w którym występuje 0 + x, to możemy to wyrażenie uprościć
+    do postaci, w której zamiast 0 + x występuje samo x.
+
+<div class="paragraph"> </div>
+
+    Każdy program w Coqu jest po prostu wyrażeniem, a jego obliczanie
+    polega na wykonywaniu po kolei różnych uproszczeń. Są trzy główne
+    rodzaje uproszczeń: odwinięcie definicji, podstawienie wartości za
+    argument funkcji, i wykonanie dopasowania do wzorca. W praktyce
+    wygląda to tak: 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">negacja</span> <span class="id" title="var">tak</span> = <span class="id" title="var">nie</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">cbv</span> <span class="id" title="keyword">delta</span>. <span class="comment">(*&nbsp;Pierwszym&nbsp;krokiem&nbsp;obliczeń&nbsp;jest&nbsp;odwinięcie&nbsp;definicji.&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">cbv</span> <span class="id" title="keyword">beta</span>. <span class="comment">(*&nbsp;Kolejnym&nbsp;krokiem&nbsp;jest&nbsp;podstawienie&nbsp;wartości&nbsp;"tak"&nbsp;za&nbsp;argument&nbsp;funkcji.&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">cbv</span> <span class="id" title="keyword">iota</span>. <span class="comment">(*&nbsp;Ostatnim&nbsp;krokiem&nbsp;jest&nbsp;wykonanie&nbsp;dopasowania&nbsp;i&nbsp;zwrócenie&nbsp;odpowiedniej&nbsp;wartości.&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">negacja</span> <span class="id" title="var">nie</span> = <span class="id" title="var">tak</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">cbv</span>. <span class="comment">(*&nbsp;Oczywiście&nbsp;możemy&nbsp;policzyć&nbsp;wszystko&nbsp;za&nbsp;jednym&nbsp;zamachem.&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Taktyka "cbv" realizuje sposób rozumowania "uprość program
+    maksymalnie jak tylko się da". Nazwa pochodzi od angielskiego
+    "call by value" i oznacza pewną konkretną kolejność, w której
+    wykonywane są trzy podstawowe rodzaje uproszczeń, które
+    widzieliśmy powyżej. 
+<div class="paragraph"> </div>
+
+<a id="lab6"></a><h1 class="section">Niebanalne twierdzenie</h1>
+
+<div class="paragraph"> </div>
+
+ No, wreszcie czas udowodnić coś o naszej negacji. Ale co? Cóż...
+    gdyby tak zanegować jakiś bit dwa razy, to powinniśmy w wyniku
+    otrzymać to samo, co mieliśmy na początku, czyż nie? 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="keyword">forall</span> <span class="id" title="var">b</span> : <span class="id" title="var">bit</span>,              <span class="comment">(*&nbsp;Dla&nbsp;każdego&nbsp;bitu&nbsp;b...&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">negacja</span> (<span class="id" title="var">negacja</span> <span class="id" title="var">b</span>) = <span class="id" title="var">b</span>. <span class="comment">(*&nbsp;negacja&nbsp;negacji&nbsp;b&nbsp;jest&nbsp;równa&nbsp;b&nbsp;*)</span><br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">dowolne_b</span>. <span class="comment">(*&nbsp;Weźmy&nbsp;dowolny&nbsp;bit&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">dowolne_b</span>. <span class="comment">(*&nbsp;Analiza&nbsp;przypadków:&nbsp;bit&nbsp;może&nbsp;mieć&nbsp;jedną&nbsp;z&nbsp;dwóch&nbsp;postaci&nbsp;(tak/nie)&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">cbv</span>. <span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;Trochę&nbsp;obliczeń&nbsp;i...&nbsp;udało&nbsp;się!&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;Nie&nbsp;musimy&nbsp;ręcznie&nbsp;prosić&nbsp;o&nbsp;policzenie&nbsp;-&nbsp;Coq&nbsp;sam&nbsp;wie,&nbsp;żeby&nbsp;to&nbsp;zrobić.&nbsp;*)</span><br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Nasze twierdzenie ma stosować się do każdego bitu b, a więc nie
+    możemy o tym bicie niczego założyć. Żeby to wyrazić, piszemy "forall",
+    czyli po polsku "dla każdego".
+
+<div class="paragraph"> </div>
+
+    Żeby udowodnić coś o każdym bicie b, wystarczy udowodnić to dla
+    dowolnego bitu. Właśnie ten sposób rozumowania realizuje taktyka
+    "intros" (argument po "intros" to nazwa, którą chcemy nadać naszemu
+    dowolnemu bitowi). Po przeczytaniu linijki "intro dowolne_b" mamy
+    spore zmiany w oknie po prawej - z naszego celu zniknęło "forall
+    b : bit", zaś nad kreską pojawiła się linijka "dowolne_b : bit".
+    To, co znajduje się nad kreską, to kontekst - widać tam wszystkie
+    nasze założenia, hipotezy oraz wszelkie inne obiekty, którymi możemy
+    się posługiwać w trakcie dowodu.
+
+<div class="paragraph"> </div>
+
+    Następnie rozumujemy przez analizę przypadków. Ponieważ zdefiniowaliśmy
+    bit mówiąc (a raczej pisząc), że każdy bit to albo "tak" albo "nie", to
+    rozpatrzenie tych dwóch przypadków z osobna wystarcza, by powiedzieć
+    coś o dowolnym bicie. Właśnie ten sposób rozumowania jest realizowany
+    przez taktykę "destruct". W wyniku użycia tej taktyki mamy tearz dwa
+    cele: w pierwszy z nich "dowolne_b" zostało zastąpione przez "tak", a w
+    drugim przez "nie". W pierwszym przypadku wystarczy wykonać nieco obliczeń
+    i widać wtedy, że obie strony równości są takie same. Drugi przypadek jest
+    analogiczny - co więcej, jeżeli użyjemy tylko taktyki "reflexivity", to
+    Coq sam połapie się, że powinien wykonać odpowiednie obliczenia.
+
+<div class="paragraph"> </div>
+
+    Tym sposobem udało nam się udowodnić nasze twierdzenie, choć być może nie
+    wzbudza ono w tobie jakiegoś wybitnego entuzjazmu. Wszakże w Pythonie czy
+    innym C++, aby upewnić się, czy tamtejsza negacja jest poprawna, wystarczy
+    napisać dwa testy. Jeżeli oba przechodzą, można ogłosić sukces. 
+<div class="paragraph"> </div>
+
+<a id="lab7"></a><h1 class="section">Bardziej skomplikowane typy, funkcje rekurencyjne i dowody przez indukcję</h1>
+
+<div class="paragraph"> </div>
+
+ Czas więc, abyśmy ujrzeli jakiś bardziej skomplikowany przykład. Interesuje
+    nas typ, który miałby nieskończenie wiele elementów. Z pewnością w Pythonie
+    czy C++ nie da się napisać nieskończenie wielu testów, prawda? W Coqu zaś
+    można dowodzić właściwości programów operujących na takich typach bez żadnego
+    problemu. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">lista</span> : <span class="id" title="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">koniec</span>      : <span class="id" title="var">lista</span>                <span class="comment">(*&nbsp;"koniec"&nbsp;jest&nbsp;listą&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> : <span class="id" title="var">bit</span> -&gt; <span class="id" title="var">lista</span> -&gt; <span class="id" title="var">lista</span>. <span class="comment">(*&nbsp;na_początku&nbsp;b&nbsp;l&nbsp;jest&nbsp;listą,&nbsp;pod&nbsp;warunkiem&nbsp;że&nbsp;b&nbsp;jest&nbsp;bitem&nbsp;a&nbsp;l&nbsp;listą&nbsp;*)</span><br/>
+
+<br/>
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">tak</span>;</span> <span class="inlinecode"><span class="id" title="var">nie</span>;</span> <span class="inlinecode"><span class="id" title="var">tak</span></span>&nbsp;*)</span><br/>
+<span class="id" title="keyword">Check</span> <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">tak</span> (<span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">nie</span> (<span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">tak</span> <span class="id" title="var">koniec</span>)).<br/>
+
+<br/>
+<span class="id" title="keyword">Fixpoint</span> <span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span> (<span class="id" title="var">b</span> : <span class="id" title="var">bit</span>) (<span class="id" title="var">l</span> : <span class="id" title="var">lista</span>) : <span class="id" title="var">lista</span> :=         <span class="comment">(*&nbsp;Definicje&nbsp;rekurencyjne&nbsp;zaczynają&nbsp;się od&nbsp;"Fixpoint".&nbsp;*)</span><br/>
+<span class="id" title="keyword">match</span> <span class="id" title="var">l</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">koniec</span>           =&gt; <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">b</span> <span class="id" title="var">koniec</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">c</span> <span class="id" title="var">l'</span> =&gt; <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">c</span> (<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span> <span class="id" title="var">b</span> <span class="id" title="var">l'</span>)<br/>
+<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Fixpoint</span> <span class="id" title="var">odwró</span>ć (<span class="id" title="var">l</span> : <span class="id" title="var">lista</span>) : <span class="id" title="var">lista</span> :=<br/>
+<span class="id" title="keyword">match</span> <span class="id" title="var">l</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">koniec</span>           =&gt; <span class="id" title="var">koniec</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">b</span> <span class="id" title="var">l'</span> =&gt; <span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span> <span class="id" title="var">b</span> (<span class="id" title="var">odwró</span>ć <span class="id" title="var">l'</span>)<br/>
+<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">odwró</span>ć<span class="id" title="var">_na_ko</span>ń<span class="id" title="var">cu</span> :<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">forall</span> (<span class="id" title="var">b</span> : <span class="id" title="var">bit</span>) (<span class="id" title="var">l</span> : <span class="id" title="var">lista</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">odwró</span>ć (<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span> <span class="id" title="var">b</span> <span class="id" title="var">l</span>) = <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">b</span> (<span class="id" title="var">odwró</span>ć <span class="id" title="var">l</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">b</span>. <span class="comment">(*&nbsp;Weźmy&nbsp;dowolne&nbsp;b.&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l</span> <span class="id" title="keyword">as</span> [| <span class="id" title="var">g</span>ł<span class="id" title="var">owa_l</span> <span class="id" title="var">ogon_l</span> <span class="id" title="var">hipoteza_indukcyjna</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">cbv</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">hipoteza_indukcyjna</span>. <span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">odwró</span>ć<span class="id" title="var">_odwró</span>ć :<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">forall</span> <span class="id" title="var">l</span> : <span class="id" title="var">lista</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">odwró</span>ć (<span class="id" title="var">odwró</span>ć <span class="id" title="var">l</span>) = <span class="id" title="var">l</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l</span> <span class="id" title="keyword">as</span> [| <span class="id" title="var">g</span>ł<span class="id" title="var">owa_l</span> <span class="id" title="var">ogon_l</span> <span class="id" title="var">hipoteza_indukcyjna</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">odwró</span>ć<span class="id" title="var">_na_ko</span>ń<span class="id" title="var">cu</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">hipoteza_indukcyjna</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab8"></a><h1 class="section">Ćwiczenia</h1>
+
+<div class="paragraph"> </div>
+
+ Zdefiniuj funkcję lub : bit → bit → bit, która zwraca "tak", gdy co najmniej jeden
     z jej argumentów jest równy "tak", zaś "nie" w przeciwnym wypadku.
-    
+
+<div class="paragraph"> </div>
+
     Następnie udowodnij, że:
     1. ∀ a : bit, lub a a = a.
     2. ∀ a : bit, lub a (negacja a) = tak.
     3. ∀ a b : bit, lub a b = lub b a.
     4. ∀ a b c : bit, lub (lub a b) c = lub a (lub b c)
-    
+
+<div class="paragraph"> </div>
+
     Co się stanie, gdy zanegujemy lub, tzn. czemu jest równe "negacja (lub a b)"?
-    
+
+<div class="paragraph"> </div>
+
     Zdefiniuj funkcję sklej : lista → lista → lista, które bierze dwie listy i
     skleja je ze sobą, np.
-    
+
+<div class="paragraph"> </div>
+
     sklej (na_początku tak koniec) (na_początku nie koniec)
     =
     na_początku tak (na_początku nie koniec).
-    
+
+<div class="paragraph"> </div>
+
     Następnie udowodnij następujące twierdzenia:
     1. ∀ l : lista, sklej koniec l = l
     2. ∀ l : lista, sklej l koniec = l
     3. ∀ l1 l2 l3 : lista, sklej (sklej l1 l2) l3 = sklej l1 (sklej l2 l3)
     4. ∀ (b : bit) (l1 l2 : lista), na_końcu b (sklej l1 l2) = sklej l1 (na_końcu b l2)
-    5. ∀ l1 l2 : lista, odwróć (sklej l1 l2) = sklej (odwróć l2) (odwróć l1) *)
+    5. ∀ l1 l2 : lista, odwróć (sklej l1 l2) = sklej (odwróć l2) (odwróć l1) 
+<div class="paragraph"> </div>
 
-(** * Dlaczego warto nauczyć się Coqa? *)
+<a id="lab9"></a><h1 class="section">Dlaczego warto nauczyć się Coqa?</h1>
 
-(** Języki funkcyjne ekspandują. *)
+<div class="paragraph"> </div>
 
-(** * Kim jesteśmy, dokąd zmierzamy? *)
+ Języki funkcyjne ekspandują. 
+<div class="paragraph"> </div>
 
-(** Najłatwiej jest zapoznać się z Coqiem używając przeglądarkowego środowiska
+<a id="lab10"></a><h1 class="section">Kim jesteśmy, dokąd zmierzamy?</h1>
+
+<div class="paragraph"> </div>
+
+ Najłatwiej jest zapoznać się z Coqiem używając przeglądarkowego środowiska
     jsCoq (https://jscoq.github.io/scratchpad.html). Polecam - nie trzeba nic
     instalować i ma rozsądne podpowiadanie składni dla początkujących.
+
+<div class="paragraph"> </div>
 
     Jeżeli chcecie zacząć dłuższą przygodę z Coqiem, polecam go zainstalować
     (https://coq.inria.fr/) - śmiga wtedy lepiej niż w przeglądarce. Musicie
@@ -173,45 +435,41 @@ Qed.
     4. W ostateczności można też używać Coqa z poziomu konsoli, ale tym
        bardziej nie polecam.
 
+<div class="paragraph"> </div>
+
     Przyda się też troche materiałów dydaktycznych:
     1. Nagranie z zeszłorocznych dni otwartych (po polsku, ok. 20 min):
-       https://www.youtube.com/watch?v=njgUPWlWYUM&t=6936s
+       https://www.youtube.com/watch?v=njgUPWlWYUM&amp;t=6936s
     2. Nagranie z prezentacji podobnej do naszej (po angielsku, 3 godziny):
        https://www.youtube.com/watch?v=5e7UdWzITyQ
     3. Książka Software Foundations, pierwsza połowa pierwszego tomu
        (po angielsku): https://softwarefoundations.cis.upenn.edu/lf-current/toc.html
-    
+
+<div class="paragraph"> </div>
+
     Jeżeli słuchanie/czytanie po angielsku sprawia wam problem, możecie też przeczytać
     pierwsze rozdziały mojej własnej twórczości: https://wkolowski.github.io/CoqBookPL/
     (uwaga, dość niekompletna i trochę nie po kolei).
-    
+
+<div class="paragraph"> </div>
+
     Przydatne linki:
     1. Strona domowa: https://coq.inria.fr/
     2. GitHub: https://github.com/coq/coq
     3. Forum: https://coq.discourse.group/
     4. Czat: https://coq.zulipchat.com/login/
-    5. Q&A: https://stackoverflow.com/questions/tagged/coq
-    
+    5. Q&amp;A: https://stackoverflow.com/questions/tagged/coq
+
+<div class="paragraph"> </div>
+
     Jeżeli macie pytania, piszcie (asekuracyjnie podaje uczelniane maile):
     1. Ja: 299899@uwr.edu.pl
-    2. Nie ja: tomasz.drab@cs.uni.wroc.pl *)
-        </textarea>
-      </div>
-    </div>
-  </div>
-
-  <!-- jsCoq configuration part -->
-  <script type="text/javascript">
-
-    var jscoq_ids  = ['coq-code'];
-    var jscoq_opts = {
-        prelude:   true,
-        base_path: './',
-        editor:    { mode: { 'company-coq': true }, keyMap: 'default' },
-        init_pkgs: ['init'],
-        all_pkgs:  ['coq']
-    };
-
-    JsCoq.start(jscoq_opts.base_path, './', jscoq_ids, jscoq_opts);
-  </script>
+    2. Nie ja: tomasz.drab@cs.uni.wroc.pl 
+</div>
+<div class="code">
+</div>
+<footer>
+  <script src="node_modules/jscoq/ui-js/jscoq-loader.js"></script>
+  <script src="jscoq-embed.js"></script>
+</footer>
 </body>
