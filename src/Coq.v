@@ -48,12 +48,12 @@
     jedynką. Spróbujmy zaimplementować w Coqu typ reprezentujący bity,
     napisać jakąś funkcję i coś o niej udowodnić. Uwaga: "0" i "1" nie są
     legalnymi nazwami w Coqu, więc nasze bity musimy nazwać jakoś inaczej.
-    Przyjmijmy nazwy "tak" i "nie". *)
+    Przyjmijmy nazwy [tak] i [nie]. *)
 
-Inductive          (* Definicja typu zaczynaja się od słowa kluczowego "Inductive". *)
-  bit : Type :=    (* "bit" jest typem zdefiniowanym w ten sposób, że... *)
-    | tak : bit    (* "tak" jest elementem typu "bit" *)
-    | nie : bit    (* "nie" jest elementem typu "bit" *)
+Inductive          (* Definicja typu zaczynaja się od słowa kluczowego [Inductive]. *)
+  bit : Type :=    (* [bit] jest typem zdefiniowanym w ten sposób, że... *)
+    | tak : bit    (* [tak] jest elementem typu [bit] *)
+    | nie : bit    (* [nie] jest elementem typu [bit] *)
     .              (* I nie ma żadnych innych elementów typu bit. *)
 
 (** Żeby Coq przeczytać powyższą definicję, kliknij na smaej górze po prawej
@@ -64,19 +64,19 @@ Inductive          (* Definicja typu zaczynaja się od słowa kluczowego "Induct
     na dole po prawej. Powyższa definicja, jak widać, jest w porządku.
     
     Co można zrobić z bitem? Zanegować! Tzn. zamienić "1" na "0", a "0" na "1"
-    (w naszym przypadku zamienić "tak" na "nie", a "nie" na "tak". Do dzieła. *)
+    (w naszym przypadku zamienić [tak] na [nie], a [nie] na [tak]. Do dzieła. *)
 
-Definition                  (* Definicja zaczyna się od słowa kluczowego "Definition" *)
-  negacja : bit -> bit :=    (* "negacja" to funkcja, która bierze bit i zwraca bit, zdefiniowana następująco: *)
-    fun b : bit =>             (* Weź jako argument bit nazwany "b". *)
-      match b with          (* Sprawdźmy, jakiej "b" jest postaci. *)
-          | tak => nie       (* Gdy "b" to "tak", wynikiem funkcji jest "nie". *)
-          | nie => tak       (* Gdy "b" to "nie", wynikiem funkcji jest "tak". *)
+Definition                  (* Definicja zaczyna się od słowa kluczowego [Definition] *)
+  negacja : bit -> bit :=   (* [negacja] to funkcja, która bierze bit i zwraca bit, zdefiniowana następująco: *)
+    fun b : bit =>          (* Weź jako argument bit nazwany [b]. *)
+      match b with          (* Sprawdźmy, jakiej [b] jest postaci. *)
+          | tak => nie      (* Gdy [b] to [tak], wynikiem funkcji jest [nie]. *)
+          | nie => tak      (* Gdy [b] to [nie], wynikiem funkcji jest [tak]. *)
       end.                  (* Koniec definicji. *)
 
 (** Uwaga: jeżeli oglądałeś moje nagranie z Dni Otwartych, to możesz tam
-    zauważyć, że Coq automatycznie zamienia strzałkę "->" na "→", "=>"
-    na "→", "fun" na "λ", a "forall" na "∀". Żeby nie komplikować ci życia,
+    zauważyć, że Coq automatycznie zamienia strzałkę [->] na [→], [=>]
+    na [→], [fun] na [λ], a [forall] na [∀]. Żeby nie komplikować ci życia,
     na niniejszej stronie wyłączyłem te konwersje. *)
 
 (** * Równość *)
@@ -95,29 +95,29 @@ Definition                  (* Definicja zaczyna się od słowa kluczowego "Defi
     klawiszowych. Jeżeli nie rozumiesz jakiegoś dowodu, możesz powtarzać go,
     dopóki cię nie oświeci. *)
 
-Goal tak = tak. (* Po słowie kluczowym "Goal" piszemy, co chcemy udowodnić. *)
-Proof.          (* Dowód zaczynamy od słowa kluczowego "Proof". *)
+Goal tak = tak. (* Po słowie kluczowym [Goal] piszemy, co chcemy udowodnić. *)
+Proof.          (* Dowód zaczynamy od słowa kluczowego [Proof]. *)
   reflexivity.  (* Każda rzecz jest równa samej sobie i Coq o tym wie. *)
-Qed.            (* Dowód kończymy słowem "Qed" - od łac. "Quod erat demonstrandum" - "Co należało udowodnić" *)
+Qed.            (* Dowód kończymy słowem [Qed] - od łac. "Quod erat demonstrandum" - "Co należało udowodnić" *)
 
-(** "reflexivity" znaczy po angielsku "zwrotność", a "zwrotność" to w
+(** [reflexivity] znaczy po angielsku "zwrotność", a "zwrotność" to w
     matematycznej mowie nazwa na fakt, że każda rzecz jest równa samej
     sobie - wiedział o tym już Arystoteles jakieś 2400 lat temu, więc
     i nie dziwota, że Coq o tym wie. *)
 
-Goal tak = nie.     (* A może "tak" jest równe "nie"? Oby nie! *)
+Goal tak = nie.     (* A może [tak] jest równe [nie]? Oby nie! *)
 Proof.
-  Fail reflexivity. (* "tak" to coś innego niż "nie" i Coq to wie - nie da się go zrobić w wała *)
-Abort.              (* Zakończenie dowodu za pomocą "Abort" oznacza, że się poddajemy. *) 
+  Fail reflexivity. (* [tak] to coś innego niż [nie] i Coq to wie - nie da się go zrobić w wała *)
+Abort.              (* Zakończenie dowodu za pomocą [Abort] oznacza, że się poddajemy. *) 
 
-(** "reflexivity" jest taktyką. Taktyka to formalny, Coqowy odpowiednik
+(** [reflexivity] jest taktyką. Taktyka to formalny, Coqowy odpowiednik
     nieformalnego sposobu rozumowania. Powiedzenie, że "każda rzecz jest
     równa samej sobie", to właśnie taki nieformalny sposób rozumowania,
-    a taktyka "reflexivity" jest jego realizacją. Nie każdy sposób
-    rozumowania jest poprawny. a zatem nie każde użycie taktyki kończy
+    a taktyka [reflexivity] jest jego realizacją. Nie każdy sposób
+    rozumowania jest poprawny, a zatem nie każde użycie taktyki kończy
     się sukcesem. W powyższym przykładzie rozumowanie "tak to to samo
     co nie, bo każda rzecz jest równa samej sobie" jest niepoprawne, a
-    zatem próba użycia taktyki "reflexivity" zawodzi i musimy się poddać. *)
+    zatem próba użycia taktyki [reflexivity] zawodzi i musimy się poddać. *)
 
 (** * Obliczenia *)
 
@@ -136,7 +136,7 @@ Abort.              (* Zakończenie dowodu za pomocą "Abort" oznacza, że się 
 Goal negacja tak = nie.
 Proof.
   cbv delta.   (* Pierwszym krokiem obliczeń jest odwinięcie definicji. *)
-  cbv beta.    (* Kolejnym krokiem jest podstawienie wartości "tak" za argument funkcji. *)
+  cbv beta.    (* Kolejnym krokiem jest podstawienie wartości [tak] za argument funkcji. *)
   cbv iota.    (* Ostatnim krokiem jest wykonanie dopasowania i zwrócenie odpowiedniej wartości. *)
   reflexivity.
 Qed.
@@ -147,7 +147,7 @@ Proof.
   reflexivity.
 Qed.
 
-(** Taktyka "cbv" realizuje sposób rozumowania "uprość program
+(** Taktyka [cbv] realizuje sposób rozumowania "uprość program
     maksymalnie jak tylko się da". Nazwa pochodzi od angielskiego
     "call by value" i oznacza pewną konkretną kolejność, w której
     wykonywane są trzy podstawowe rodzaje uproszczeń, które
@@ -159,7 +159,7 @@ Qed.
     gdyby tak zanegować jakiś bit dwa razy, to powinniśmy w wyniku
     otrzymać to samo, co mieliśmy na początku, czyż nie? *)
 
-Goal forall b : bit,              (* Dla każdego bitu b... *)
+Goal forall b : bit,         (* Dla każdego bitu b... *)
   negacja (negacja b) = b.   (* negacja negacji b jest równa b *)
 Proof.
   intro dowolne_b.           (* Weźmy dowolny bit *)
@@ -169,28 +169,28 @@ Proof.
 Qed.
 
 (** Nasze twierdzenie ma stosować się do każdego bitu b, a więc nie
-    możemy o tym bicie niczego założyć. Żeby to wyrazić, piszemy "forall",
+    możemy o tym bicie niczego założyć. Żeby to wyrazić, piszemy [forall],
     czyli po polsku "dla każdego".
-    
+
     Żeby udowodnić coś o każdym bicie b, wystarczy udowodnić to dla
     dowolnego bitu. Właśnie ten sposób rozumowania realizuje taktyka
-    "intros" (argument po "intros" to nazwa, którą chcemy nadać naszemu
-    dowolnemu bitowi). Po przeczytaniu linijki "intro dowolne_b" mamy
-    spore zmiany w oknie po prawej - z naszego celu zniknęło "forall
-    b : bit", zaś nad kreską pojawiła się linijka "dowolne_b : bit".
+    [intros] (argument po [intros] to nazwa, którą chcemy nadać naszemu
+    dowolnemu bitowi). Po przeczytaniu linijki [intro dowolne_b.] mamy
+    spore zmiany w oknie po prawej - z naszego celu zniknęło [forall
+    b : bit], zaś nad kreską pojawiła się linijka [dowolne_b : bit].
     To, co znajduje się nad kreską, to kontekst - widać tam wszystkie
     nasze założenia, hipotezy oraz wszelkie inne obiekty, którymi możemy
     się posługiwać w trakcie dowodu.
 
     Następnie rozumujemy przez analizę przypadków. Ponieważ zdefiniowaliśmy
-    bit mówiąc (a raczej pisząc), że każdy bit to albo "tak" albo "nie", to
+    bit mówiąc (a raczej pisząc), że każdy bit to albo [tak] albo [nie], to
     rozpatrzenie tych dwóch przypadków z osobna wystarcza, by powiedzieć
     coś o dowolnym bicie. Właśnie ten sposób rozumowania jest realizowany
-    przez taktykę "destruct". W wyniku użycia tej taktyki mamy tearz dwa
-    cele: w pierwszy z nich "dowolne_b" zostało zastąpione przez "tak", a w
-    drugim przez "nie". W pierwszym przypadku wystarczy wykonać nieco obliczeń
+    przez taktykę [destruct]. W wyniku użycia tej taktyki mamy tearz dwa
+    cele: w pierwszy z nich [dowolne_b] zostało zastąpione przez [tak], a w
+    drugim przez [nie]. W pierwszym przypadku wystarczy wykonać nieco obliczeń
     i widać wtedy, że obie strony równości są takie same. Drugi przypadek jest
-    analogiczny - co więcej, jeżeli użyjemy tylko taktyki "reflexivity", to
+    analogiczny - co więcej, jeżeli użyjemy tylko taktyki [reflexivity], to
     Coq sam połapie się, że powinien wykonać odpowiednie obliczenia.
 
     Tym sposobem udało nam się udowodnić nasze twierdzenie, choć być może nie
@@ -207,13 +207,13 @@ Qed.
     problemu. *)
 
 Inductive lista : Type :=
-    | koniec      : lista                (* "koniec" jest listą *)
-    | na_początku : bit -> lista -> lista. (* na_początku b l jest listą, pod warunkiem że b jest bitem a l listą *)
+    | koniec      : lista                  (* [koniec] jest listą *)
+    | na_początku : bit -> lista -> lista. (* [na_początku b l] jest listą, pod warunkiem że [b] jest bitem a [l] listą *)
 
-(* [tak; nie; tak] *)
+(* [[tak; nie; tak]] *)
 Check na_początku tak (na_początku nie (na_początku tak koniec)).
 
-Fixpoint na_końcu (b : bit) (l : lista) : lista :=         (* Definicje rekurencyjne zaczynają się od "Fixpoint". *)
+Fixpoint na_końcu (b : bit) (l : lista) : lista :=       (* Definicje rekurencyjne zaczynają się od [Fixpoint]. *)
 match l with
     | koniec           => na_początku b koniec
     | na_początku c l' => na_początku c (na_końcu b l')
@@ -247,30 +247,30 @@ Qed.
 
 (** * Ćwiczenia *)
 
-(** Zdefiniuj funkcję lub : bit → bit → bit, która zwraca "tak", gdy co najmniej jeden
-    z jej argumentów jest równy "tak", zaś "nie" w przeciwnym wypadku.
-    
+(** Zdefiniuj funkcję [lub : bit -> bit -> bit], która zwraca [tak], gdy co najmniej jeden
+    z jej argumentów jest równy [tak], zaś [nie] w przeciwnym wypadku.
+
     Następnie udowodnij, że:
-    1. ∀ a : bit, lub a a = a.
-    2. ∀ a : bit, lub a (negacja a) = tak.
-    3. ∀ a b : bit, lub a b = lub b a.
-    4. ∀ a b c : bit, lub (lub a b) c = lub a (lub b c)
-    
-    Co się stanie, gdy zanegujemy lub, tzn. czemu jest równe "negacja (lub a b)"?
-    
-    Zdefiniuj funkcję sklej : lista → lista → lista, które bierze dwie listy i
+    - [forall a : bit, lub a a = a]
+    - [forall a : bit, lub a (negacja a) = tak]
+    - [forall a b : bit, lub a b = lub b a]
+    - [forall a b c : bit, lub (lub a b) c = lub a (lub b c)]
+
+    Co się stanie, gdy zanegujemy [lub], tzn. czemu jest równe [negacja (lub a b)]?
+
+    Zdefiniuj funkcję [sklej : lista -> lista -> lista], które bierze dwie listy i
     skleja je ze sobą, np.
-    
-    sklej (na_początku tak koniec) (na_początku nie koniec)
+
+    [sklej (na_początku tak koniec) (na_początku nie koniec)
     =
-    na_początku tak (na_początku nie koniec).
-    
+    na_początku tak (na_początku nie koniec)]
+
     Następnie udowodnij następujące twierdzenia:
-    1. ∀ l : lista, sklej koniec l = l
-    2. ∀ l : lista, sklej l koniec = l
-    3. ∀ l1 l2 l3 : lista, sklej (sklej l1 l2) l3 = sklej l1 (sklej l2 l3)
-    4. ∀ (b : bit) (l1 l2 : lista), na_końcu b (sklej l1 l2) = sklej l1 (na_końcu b l2)
-    5. ∀ l1 l2 : lista, odwróć (sklej l1 l2) = sklej (odwróć l2) (odwróć l1) *)
+    - [forall l : lista, sklej koniec l = l]
+    - [forall l : lista, sklej l koniec = l]
+    - [forall l1 l2 l3 : lista, sklej (sklej l1 l2) l3 = sklej l1 (sklej l2 l3)]
+    - [forall (b : bit) (l1 l2 : lista), na_końcu b (sklej l1 l2) = sklej l1 (na_końcu b l2)]
+    - [forall l1 l2 : lista, odwróć (sklej l1 l2) = sklej (odwróć l2) (odwróć l1)] *)
 
 (** * Dlaczego warto nauczyć się Coqa? *)
 
@@ -285,33 +285,33 @@ Qed.
     Jeżeli chcecie zacząć dłuższą przygodę z Coqiem, polecam go zainstalować
     (https://coq.inria.fr/) - śmiga wtedy lepiej niż w przeglądarce. Musicie
     też wybrać sobie jakieś IDE:
-    1. CoqIDE (https://coq.inria.fr/) - standardowe IDE do Coqa, polecam.
-    2. Visual Studio Code (https://code.visualstudio.com/) z pluginem dla
-       Coqa - również całkiem spoko.
-    3. Emacs (https://www.gnu.org/software/emacs/) z pluginem Proof General
-       (https://proofgeneral.github.io/) - nie polecam.
-    4. W ostateczności można też używać Coqa z poziomu konsoli, ale tym
-       bardziej nie polecam.
+    - CoqIDE (https://coq.inria.fr/) - standardowe IDE do Coqa, polecam.
+    - Visual Studio Code (https://code.visualstudio.com/) z pluginem dla
+      Coqa - również całkiem spoko.
+    - Emacs (https://www.gnu.org/software/emacs/) z pluginem Proof General
+      (https://proofgeneral.github.io/) - nie polecam.
+    - W ostateczności można też używać Coqa z poziomu konsoli, ale tym
+      bardziej nie polecam.
 
     Przyda się też troche materiałów dydaktycznych:
-    1. Nagranie z zeszłorocznych dni otwartych (po polsku, ok. 20 min):
-       https://www.youtube.com/watch?v=njgUPWlWYUM&t=6936s
-    2. Nagranie z prezentacji podobnej do naszej (po angielsku, 3 godziny):
-       https://www.youtube.com/watch?v=5e7UdWzITyQ
-    3. Książka Software Foundations, pierwsza połowa pierwszego tomu
-       (po angielsku): https://softwarefoundations.cis.upenn.edu/lf-current/toc.html
-    
+    - Nagranie z zeszłorocznych dni otwartych (po polsku, ok. 20 min):
+      https://www.youtube.com/watch?v=njgUPWlWYUM&t=6936s
+    - Nagranie z prezentacji podobnej do naszej (po angielsku, 3 godziny):
+      https://www.youtube.com/watch?v=5e7UdWzITyQ
+    - Książka Software Foundations, pierwsza połowa pierwszego tomu
+      (po angielsku): https://softwarefoundations.cis.upenn.edu/lf-current/toc.html
+
     Jeżeli słuchanie/czytanie po angielsku sprawia wam problem, możecie też przeczytać
     pierwsze rozdziały mojej własnej twórczości: https://wkolowski.github.io/CoqBookPL/
     (uwaga, dość niekompletna i trochę nie po kolei).
-    
+
     Przydatne linki:
-    1. Strona domowa: https://coq.inria.fr/
-    2. GitHub: https://github.com/coq/coq
-    3. Forum: https://coq.discourse.group/
-    4. Czat: https://coq.zulipchat.com/login/
-    5. Q&A: https://stackoverflow.com/questions/tagged/coq
-    
+    - Strona domowa: https://coq.inria.fr/
+    - GitHub: https://github.com/coq/coq
+    - Forum: https://coq.discourse.group/
+    - Czat: https://coq.zulipchat.com/login/
+    - Q&A: https://stackoverflow.com/questions/tagged/coq
+
     Jeżeli macie pytania, piszcie (asekuracyjnie podaje uczelniane maile):
-    1. Ja: 299899@uwr.edu.pl
-    2. Nie ja: tomasz.drab@cs.uni.wroc.pl *)
+    - Ja: 299899@uwr.edu.pl
+    - Nie ja: tomasz.drab@cs.uni.wroc.pl *)
