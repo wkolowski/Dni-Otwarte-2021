@@ -90,7 +90,7 @@ Inductive        (* Definicja typu zaczyna się od słowa kluczowego "Inductive"
     | tak : bit  (* "tak" jest elementem typu "bit" *)
     | nie : bit. (* "nie" jest elementem typu "bit" *)
 
-(** Żeby Coq przeczytał powyższą definicję, kliknij na smaej górze po prawej
+(** Żeby Coq przeczytał powyższą definicję, kliknij na samej górze po prawej
     strzałkę w dół (lub wciśnij alt + strzałka w dół). Kiedy Coq jest w trakcie
     czytania definicji, jest ona podświetlona na pomarańczowo. Jeżeli Coq ją
     zaakceptuje, zostaje ona podświetlona na szaro. Jeżeli z definicją jest coś
@@ -241,24 +241,84 @@ Qed.
 
 (** * Bardziej skomplikowane typy, funkcje rekurencyjne i dowody przez indukcję *)
 
-(** Czas więc, abyśmy ujrzeli jakiś bardziej skomplikowany przykład. Interesuje
-    nas typ, który miałby nieskończenie wiele elementów. Z pewnością w Pythonie
+(** Czas więc, abyśmy ujrzeli jakiś bardziej skomplikowany przykład. Interesować
+    będzie nas typ, który ma nieskończenie wiele elementów. Z pewnością w Pythonie
     czy C++ nie da się napisać nieskończenie wielu testów, prawda? W Coqu zaś
     można dowodzić właściwości programów operujących na takich typach bez żadnego
-    problemu. *)
+    problemu. Ponieważ w językach funkcyjnych najbardziej rozpowszechnioną
+    strukturą danych są listy, to właśnie one będą naszym kolejnym przykładem -
+    zdefiniujemy typ reprezentujący listy bitów, dwie proste funkcje operujące
+    na listach, i udowodnimy, że są one poprawne. *)
 
 Inductive lista : Type :=
     | koniec      : lista                  (* [koniec] jest listą *)
     | na_początku : bit -> lista -> lista. (* [na_początku b l] jest listą, pod warunkiem że [b] jest bitem a [l] listą *)
 
-(* [[tak; nie; tak]] *)
-Check na_początku tak (na_początku nie (na_początku tak koniec)).
+(** Najpierw trochę terminologii: to, co w definicji typu piszemy po pionowej
+    kresce "|", to konstruktor. A zatem konstruktorami typu [bit] są [tak] i
+    [nie], zaś konstruktorami typu [lista] są [koniec] i [na_początku].
+    Konstruktory danego typu służą do konstruowania jego elementów, stąd nazwa.
+    Uwaga: konstruktory w Coqu nie mają nic wspólnego z konstruktorami znanymi
+    z języków takich jak C++ czy Python - zbieżność nazw jest przypadkowa.
 
-Fixpoint na_końcu (b : bit) (l : lista) : lista :=       (* Definicje rekurencyjne zaczynają się od [Fixpoint]. *)
+    Powyższą definicję możemy przeczytać w następujący sposób: każda lista to
+    albo [koniec], albo [na_początku b l], gdzie [b] jest bitem, a [l] listą.
+    [koniec] reprezentuje listę pustą (czyli taką, w której nie ma żadnych
+    bitów), zaś [na_początku b l] reprezentuje listę, która powstaje z dostawienia
+    bitu [b] na samym początku jakiejś innej listy [l]. Elementy typu [lista]
+    mają się do bardziej tradycyjnego zapisu list (używającego kwadratowych nawiasów)
+    następująco:
+    - Tradycyjnie: [[]] (lista pusta). Po naszemu: [koniec].
+    - Tradycyjnie: [[tak]]. Po naszemu: [na_początku tak koniec].
+    - Tradycyjnie [[nie; tak]]. Po naszemu: [na_początku nie (na początku tak koniec)].
+    - I tak dalej... *)
+
+Check na_początku tak (na_początku nie (na_początku tak koniec)).
+(* ===> na_początku tak (na_początku nie (na_początku tak koniec)) : lista *)
+
+(** Żebyś miał pewność, że nie robię cię w konia, możemy poprosić Coqa żeby
+    sprawdził, jakiego typu jest dany obiekt. Służy do tego komenda [Check].
+    W prawym dolnym rogu Coq wyświetla swoją odpowiedź: najpierw powtarza to co
+    wpisaliśmy, a potem, po dwukropku, podaje nam typ obiektu. Jak widać, Coq
+    sądzi, że to, co napisaliśmy powyżej, jest obiektem typu [lista] (odpowiedź
+    Coqa pozwoliłem sobie skopiować i wkleić powyżej w komentarzu po znaczniku
+    "===>"). Lista ta w tradycyjnym zapisie to [[tak; nie; tak]]. *)
+
+Fixpoint na_końcu (b : bit) (l : lista) : lista :=
 match l with
     | koniec           => na_początku b koniec
     | na_początku c l' => na_początku c (na_końcu b l')
 end.
+
+(** Skoro umiemy robić listy, dostawiając bit na początku, to dobrze byłoby
+    też dowiedzieć się, jak dostawić bit na końcu listy. W tym celu definiujemy
+    funkcję [na_końcu]. Ta funkcja będzie rekurencyjna, więc definicję musimy
+    zacząć od słowa kluczowego [Fixpoint] (co znaczy słowo "fixpoint" i co ma
+    wspólnego z rekurencją, nie pytaj...). [na_końcu] jest funkcją typu
+    [bit -> lista -> lista], tzn. bierze jako argumenty bit oraz listę, a zwraca
+    listę. Zapis jednak nieco różni się od tego, którego użyliśmy definiując
+    funkcję [negacja] - jest nieco bardziej zwięzły.
+
+    Definicję zaczynamy od sprawdzenia, jakiej postaci jest lista [l]. Opcje
+    są dwie, tak jak wynika z definicji typu [lista]. Gdy [l] to [koniec],
+    wynikiem jest [na_początku b koniec] - skoro doszliśmy do końca listy, to
+    dostawienie bitu na końcu jest dokładnie tym samym, co dostawienie go na
+    początku. Gdy [l] to [na_początku c l'] dla jakiegoś [c : bit] oraz
+    [l' : lista], wynikiem jest [na_początku c (na_końcu b l')] - ponieważ bit
+    chcemy dostawić na końcu, to początek listy pozostaje bez zmian. Co jednak
+    z resztą listy, czyli z [l']? Musimy na jej końcu dostawić bit [b], a zrobić
+    to możemy za pomocą funkcji [na_końcu]...
+
+    I to właśnie jest rekurencja - żeby zdefiniować funkcję [na_końcu], musimy
+    użyć funkcji [na_końcu]. Innymi słowy: funkcja [na_końcu] wywołuje samą
+    siebie. Mogłoby się wydawać, że coś takiego jest nielegalne ("kręcimy się w
+    kółko"), ale nic bardziej mylnego: każde wywołanie rekurencyjne bierze jako
+    argument coraz mniejszą listę. Ponieważ każda lista jest skończona (mimo, że
+    wszystkich list razem jest nieskończenie wiele), to wywołania rekurencyjne
+    prędzej czy później skonsumują całą listę i trafimy na [koniec], a wtedy
+    działanie funkcji się zakończy. Definicje rekurencyjne są więc w Coqu
+    dozwolone. Ba! Są naszym jedynym wyjściem - nie mamy do dyspozycji żadnych
+    pętli ani niczego takiego. *)
 
 Fixpoint odwróć (l : lista) : lista :=
 match l with
@@ -266,11 +326,23 @@ match l with
     | na_początku b l' => na_końcu b (odwróć l')
 end.
 
+(** Kolejną funkcją, którą chcemy zdefiniować, jest funkcja [odwróć], której
+    zadaniem jest odwrócenie listy tak, żeby początek był na końcu, a koniec
+    na początku. [odwróć] jest typu [lista -> lista], czyli bierze listę oraz
+    zwraca listę. Podobnie jak [na_końcu] (i prawie wszystkie inne definicje
+    funkcji operaujących na listach), definicja jest rekurencyjna. Najpierw
+    sprawdzamy, jakiej postaci jest argument [l]. Gdy [l] to [koniec], wynikiem
+    również jest [koniec] - gdy nie ma na liście żadnych bitów, nie ma czego
+    odwracać. Jeżeli [l] jest postaci [na_początku b l'] dla [b : bit] oraz 
+    [l : lista], to początkowy bit [b] musi powędrować na koniec wynikowej listy -
+    możemy wysłać go tam za pomocą funkcji [na_końcu] - zaś reszta listy (czyli
+    [l']) musi zostać rekurencyjnie odwrócona, za pomocą funkcji [odwróć]. *)
+
 Theorem odwróć_na_końcu :
   forall (b : bit) (l : lista),
     odwróć (na_końcu b l) = na_początku b (odwróć l).
 Proof.
-  intro b. (* Weźmy dowolne b. *)
+  intro b.
   induction l as [| głowa_l ogon_l hipoteza_indukcyjna].
      cbv. reflexivity.
      cbn. rewrite hipoteza_indukcyjna. cbn. reflexivity.
