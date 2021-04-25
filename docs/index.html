@@ -25,31 +25,79 @@
 
 <div class="paragraph"> </div>
 
+ Cześć, nazywam się Wojciech Kołowski i witam cię na Dniach Otwartych
+    Instytutu Informatyki UWr 2021. Wszystkie materiały z tego wydarzenia
+    możesz znaleźć tutaj: https://ii.uni.wroc.pl/dla-studenta/drzwi-otwarte,
+    ja natomiast opowiem ci dziś o języku programowania Coq. 
+<div class="paragraph"> </div>
+
 <a id="lab1"></a><h1 class="section">Coq a inne języki programowania</h1>
 
 <div class="paragraph"> </div>
 
- Coq jest mocno wyjątkowym językiem programowania, różniącym się znacznie
-    od większości popularnych języków, jak C++ czy Python.
+ Coq (wymawiane "kok"; nazwa pochodzi od francuskiego słowa "coq",
+    oznaczającego koguta) jest mocno wyjątkowym językiem programowania,
+    różniącym się znacznie od większości popularnych języków, jak C++ czy
+    Python.
 
 <div class="paragraph"> </div>
 
-    Po pierwsze, Coq jest językiem funkcyjnym. Zamiast zmiennych globalnych,
-    dajemy funkcjom dodatkowe argumenty. Zamiast iterować po strukturach
-    danych zrobionych ze wskaźników, przemierzamy drzewa za pomocą funkcji
-    rekurencyjnych - czyli takich, które wywołują same siebie. Zamiast
-    wielkich pętli przetwarzających dane, budujemy duże funkcje składając
-    ze sobą wiele małych funkcji. Nasze funkcje mogą brać inne funkcje jako
-    argumenty oraz zwracać funkcje jako wynik.
+    Coq jest przede wszystkim językiem funkcyjnym. Funkcje są podstawowym
+    budulcem wszystkich programów i cieszą się niespotykaną w mainstreamowych
+    językach elastycznością - mogą brać inne funkcje jako argumenty, zwracać
+    funkcje jako wynik, i tak dalej. W Coqu (i w ogóle w językach funkcyjnych)
+    większość rzeczy robimy inaczej, niż w innych językach programowania:
+<ul class="doclist">
+<li> Zamiast zmiennych globalnych, dajemy funkcjom dodatkowe argumenty.
+
+</li>
+<li> Zamiast iterować po strukturach danych zrobionych ze wskaźników,
+      przemierzamy drzewa za pomocą funkcji rekurencyjnych (czyli takich,
+      które wywołują same siebie).
+
+</li>
+<li> Zamiast wielkich pętli przetwarzających dane, budujemy duże funkcje
+      składając ze sobą wiele małych funkcji.
+
+</li>
+<li> Różnic jest więcej, ale nie sposób wszystkich ich tutaj wymienić.
+
+</li>
+</ul>
 
 <div class="paragraph"> </div>
 
-    Jednak jest coś jeszcze, co odróżnia Coqa nawet od prawie wszystkich
-    innych języków funkcyjnych. Mianowicie, Coq pozwala na formalną
-    weryfikację poprawności napisanych w nim programów - najpierw piszemy
-    program, a potem dowodzimy twierdzenia mówiącego, że program działa tak
-    jak powinien. Gdy programujemy w Coqu, możemy (i powinniśmy!) być
-    jednocześnie matematykiem. 
+    Jednak jest coś jeszcze, co odróżnia Coqa nawet od pozostałych języków
+    funkcyjnych. Mianowicie, Coq pozwala na formalną weryfikację poprawności
+    napisanych w nim programów... ale co to właściwie znaczy? W zwykłych
+    językach, jak Python czy C++, w zasadzie jedyną możliwością sprawdzenia,
+    czy napisany przez nas program działa tak jak chcemy, są testy. Pojedynczy
+    test uruchamia nasz program dla jakichś konkretnych danych wejściowych i
+    sprawdza, czy wynik jest taki jak się spodziewamy. Jeżeli napiszemy dużo
+    testów i wszystkie one kończą się pomyślnie, to uznajemy, że nasz program
+    jest poprawny.
+
+<div class="paragraph"> </div>
+
+    Takie podejście jako tako sprawdza się w praktyce, ale nie daje pełnych i
+    niepodważalnych gwarancji poprawności. Wszak, jak powiedział niegdyś klasyk
+    informatyki, "testy mogą wykazać obecność błędów w programie, ale nie mogą
+    wykazać ich nieobecności". Coq zaś wykazanie nieobecności błędów umożliwia:
+    najpierw piszemy program, a potem dowodzimy twierdzenia, które mówi, że
+    program działa tak jak powinien. Pisząc "twierdzenia" mam na myśli rzeczy
+    analogiczne do tych znanych ci z lekcji matematyki, jak twierdzenie
+    Pitagorasa, tylko że dotyczące programów, a pisząc "dowodzimy" mam na myśli
+    czynność analogiczną do tej, którą wykonuje matematyk, aby upewnić się, że
+    twierdzenie Pitagorasa jest prawdziwe. Wynik jest również analogiczny: tak
+    jak twierdzenie Pitagorsa jest prawdziwe i nie ma co do tego najmniejszych
+    wątpliwości ani nie da się go w żaden sposób podważyć, tak też twierdzenie
+    o poprawności naszego programu, gdy je udowodnimy, gwarantuje nam, że w
+    programie na pewno nie ma błędów.
+
+<div class="paragraph"> </div>
+
+    Morał tej bajki jest prosty: gdy programujemy w Coqu, możemy (i powinniśmy!)
+    być jednocześnie matematykiem. 
 <div class="paragraph"> </div>
 
 <a id="lab2"></a><h1 class="section">Środowisko jsCoq</h1>
@@ -62,11 +110,11 @@
 
 <div class="paragraph"> </div>
 
-    Interakcja z Coqiem wygląda tak. Po lewej mamy tekst i okna z kodem
-    (można edytować kod, który tam jest - zachęcam do zabawy). Po prawej na
-    dole jest okno, w którym Coq wyświetla nam informacje diagnostyczne,
-    wiadomości o błędzie i odpowiedzi na nasze zapytania. W oknie na górze
-    po prawej póki co nie ma nic ciekawego - uaktywni się ono dopiero, gdy
+    Interakcja z Coqiem przebiega następująco. Po lewej mamy tekst poprzeplatany
+    polami tekstowymi zawierającymi kod (można ten kod edytować - zachęcam do
+    zabawy). Po prawej na dole jest okno, w którym Coq wyświetla nam informacje
+    diagnostyczne, wiadomości o błędach i odpowiedzi na nasze zapytania. W oknie
+    po prawej na górze póki co nie ma nic ciekawego - uaktywni się ono dopiero, gdy
     będziemy chcieli czegoś dowodzić.
 
 <div class="paragraph"> </div>
@@ -80,7 +128,7 @@
 
 <div class="paragraph"> </div>
 
-    Ok, czas zobaczyć w końcu trochę kodu. 
+    Ok, tyle tytułem wstępu. Czas zobaczyć w końcu jakiś przykład! 
 <div class="paragraph"> </div>
 
 <a id="lab3"></a><h1 class="section">Proste typy i funkcje</h1>
@@ -91,43 +139,53 @@
     jedynką. Spróbujmy zaimplementować w Coqu typ reprezentujący bity,
     napisać jakąś funkcję i coś o niej udowodnić. Uwaga: "0" i "1" nie są
     legalnymi nazwami w Coqu, więc nasze bity musimy nazwać jakoś inaczej.
-    Przyjmijmy nazwy <span class="inlinecode"><span class="id" title="var">tak</span></span> i <span class="inlinecode"><span class="id" title="var">nie</span></span>. 
+    Przyjmijmy nazwy <span class="inlinecode"><span class="id" title="var">tak</span></span> i <span class="inlinecode"><span class="id" title="var">nie</span></span>. Uwaga 2: tekst pomiędzy znacznikami "( *"
+    oraz "* )" to komentarze. Po każdej linijce kodu, która wprowadza jakąś
+    nowość, będę umieszczał komentarze tłumaczące, co dana linijka oznacza. 
 </div>
 <div class="code">
 
 <br/>
-<span class="id" title="keyword">Inductive</span>          <span class="comment">(*&nbsp;Definicja&nbsp;typu&nbsp;zaczynaja&nbsp;się&nbsp;od&nbsp;słowa&nbsp;kluczowego&nbsp;<span class="inlinecode"><span class="id" title="keyword">Inductive</span></span>.&nbsp;*)</span><br/>
-&nbsp;&nbsp;<span class="id" title="var">bit</span> : <span class="id" title="keyword">Type</span> :=    <span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">bit</span></span>&nbsp;jest&nbsp;typem&nbsp;zdefiniowanym&nbsp;w&nbsp;ten&nbsp;sposób,&nbsp;że...&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">tak</span> : <span class="id" title="var">bit</span>    <span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">tak</span></span>&nbsp;jest&nbsp;elementem&nbsp;typu&nbsp;<span class="inlinecode"><span class="id" title="var">bit</span></span>&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">nie</span> : <span class="id" title="var">bit</span>    <span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">nie</span></span>&nbsp;jest&nbsp;elementem&nbsp;typu&nbsp;<span class="inlinecode"><span class="id" title="var">bit</span></span>&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;. <span class="comment">(*&nbsp;I&nbsp;nie&nbsp;ma&nbsp;żadnych&nbsp;innych&nbsp;elementów&nbsp;typu&nbsp;bit.&nbsp;*)</span><br/>
+<span class="id" title="keyword">Inductive</span>        <span class="comment">(*&nbsp;Definicja&nbsp;typu&nbsp;zaczyna&nbsp;się&nbsp;od&nbsp;słowa&nbsp;kluczowego&nbsp;"Inductive".&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">bit</span> : <span class="id" title="keyword">Type</span> :=  <span class="comment">(*&nbsp;"bit"&nbsp;jest&nbsp;typem&nbsp;zdefiniowanym&nbsp;w&nbsp;ten&nbsp;sposób,&nbsp;że:&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">tak</span> : <span class="id" title="var">bit</span>  <span class="comment">(*&nbsp;"tak"&nbsp;jest&nbsp;elementem&nbsp;typu&nbsp;"bit"&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">nie</span> : <span class="id" title="var">bit</span>. <span class="comment">(*&nbsp;"nie"&nbsp;jest&nbsp;elementem&nbsp;typu&nbsp;"bit"&nbsp;*)</span><br/>
 
 <br/>
 </div>
 
 <div class="doc">
-Żeby Coq przeczytać powyższą definicję, kliknij na smaej górze po prawej
+Żeby Coq przeczytał powyższą definicję, kliknij na smaej górze po prawej
     strzałkę w dół (lub wciśnij alt + strzałka w dół). Kiedy Coq jest w trakcie
-    czytania definicji, jest ona podświetlona na pomarańczowo, zaś gdy Coq ją
-    zaakceptuje, jest podświetlona na szaro. Jeżeli Coq akceptuje definicję, to
-    milczy. Jeżeli coś mu nie pasuje, komunikat o błędzie pojawia się w oknie
-    na dole po prawej. Powyższa definicja, jak widać, jest w porządku.
+    czytania definicji, jest ona podświetlona na pomarańczowo. Jeżeli Coq ją
+    zaakceptuje, zostaje ona podświetlona na szaro. Jeżeli z definicją jest coś
+    nie tak, to zostanie podświetlona na czerwono, a komunikat o błędzie pojawi
+    się w oknie po prawej na dole.
+
+<div class="paragraph"> </div>
+
+    Powyższa definicja, jak widać, jest w porządku. Nie pytaj na razie, skąd
+    słowo kluczowe <span class="inlinecode"><span class="id" title="keyword">Inductive</span></span> - dowiemy się tego później. Zauważ też, że
+    definicja kończy się kropką, podobnie jak wszystkie inne komendy w Coqu.
+    Samą definicję można odczytać następująco: "bit jest typem, który może
+    przjmować tylko jedną z dwóch wartości: tak albo nie".
 
 <div class="paragraph"> </div>
 
     Co można zrobić z bitem? Zanegować! Tzn. zamienić "1" na "0", a "0" na "1"
-    (w naszym przypadku zamienić <span class="inlinecode"><span class="id" title="var">tak</span></span> na <span class="inlinecode"><span class="id" title="var">nie</span></span>, a <span class="inlinecode"><span class="id" title="var">nie</span></span> na <span class="inlinecode"><span class="id" title="var">tak</span></span>. Do dzieła. 
+    (co w naszym przypadku oznacza, że chcemy zamienić <span class="inlinecode"><span class="id" title="var">tak</span></span> na <span class="inlinecode"><span class="id" title="var">nie</span></span>, a <span class="inlinecode"><span class="id" title="var">nie</span></span>
+    na <span class="inlinecode"><span class="id" title="var">tak</span></span>). A zatem do dzieła. 
 </div>
 <div class="code">
 
 <br/>
-<span class="id" title="keyword">Definition</span>                  <span class="comment">(*&nbsp;Definicja&nbsp;zaczyna&nbsp;się&nbsp;od&nbsp;słowa&nbsp;kluczowego&nbsp;<span class="inlinecode"><span class="id" title="keyword">Definition</span></span>&nbsp;*)</span><br/>
-&nbsp;&nbsp;<span class="id" title="var">negacja</span> : <span class="id" title="var">bit</span> -&gt; <span class="id" title="var">bit</span> :=   <span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">negacja</span></span>&nbsp;to&nbsp;funkcja,&nbsp;która&nbsp;bierze&nbsp;bit&nbsp;i&nbsp;zwraca&nbsp;bit,&nbsp;zdefiniowana&nbsp;następująco:&nbsp;*)</span><br/>
+<span class="id" title="keyword">Definition</span>                  <span class="comment">(*&nbsp;Definicja&nbsp;zaczyna&nbsp;się&nbsp;od&nbsp;słowa&nbsp;kluczowego&nbsp;"Definition".&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">negacja</span> : <span class="id" title="var">bit</span> -&gt; <span class="id" title="var">bit</span> :=   <span class="comment">(*&nbsp;negacja&nbsp;to&nbsp;funkcja,&nbsp;która&nbsp;bierze&nbsp;bit&nbsp;i&nbsp;zwraca&nbsp;bit,&nbsp;zdefiniowana&nbsp;następująco:&nbsp;*)</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">b</span> : <span class="id" title="var">bit</span> =&gt;          <span class="comment">(*&nbsp;Weź&nbsp;jako&nbsp;argument&nbsp;bit&nbsp;nazwany&nbsp;<span class="inlinecode"><span class="id" title="var">b</span></span>.&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">b</span> <span class="id" title="keyword">with</span>          <span class="comment">(*&nbsp;Sprawdźmy,&nbsp;jakiej&nbsp;<span class="inlinecode"><span class="id" title="var">b</span></span>&nbsp;jest&nbsp;postaci.&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">b</span> <span class="id" title="keyword">with</span>          <span class="comment">(*&nbsp;Sprawdź,&nbsp;jakiej&nbsp;<span class="inlinecode"><span class="id" title="var">b</span></span>&nbsp;jest&nbsp;postaci:&nbsp;*)</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">tak</span> =&gt; <span class="id" title="var">nie</span>      <span class="comment">(*&nbsp;Gdy&nbsp;<span class="inlinecode"><span class="id" title="var">b</span></span>&nbsp;to&nbsp;<span class="inlinecode"><span class="id" title="var">tak</span></span>,&nbsp;wynikiem&nbsp;funkcji&nbsp;jest&nbsp;<span class="inlinecode"><span class="id" title="var">nie</span></span>.&nbsp;*)</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">nie</span> =&gt; <span class="id" title="var">tak</span>      <span class="comment">(*&nbsp;Gdy&nbsp;<span class="inlinecode"><span class="id" title="var">b</span></span>&nbsp;to&nbsp;<span class="inlinecode"><span class="id" title="var">nie</span></span>,&nbsp;wynikiem&nbsp;funkcji&nbsp;jest&nbsp;<span class="inlinecode"><span class="id" title="var">tak</span></span>.&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>. <span class="comment">(*&nbsp;Koniec&nbsp;definicji.&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
 
 <br/>
 </div>
@@ -367,38 +425,93 @@ Nasze twierdzenie ma stosować się do każdego bitu b, a więc nie
 </div>
 
 <div class="doc">
-<a id="lab8"></a><h1 class="section">Ćwiczenia</h1>
+<a id="lab8"></a><h1 class="section">Dlaczego warto nauczyć się Coqa?</h1>
 
 <div class="paragraph"> </div>
 
- Zdefiniuj funkcję <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">bit</span></span>, która zwraca <span class="inlinecode"><span class="id" title="var">tak</span></span>, gdy co najmniej jeden
-    z jej argumentów jest równy <span class="inlinecode"><span class="id" title="var">tak</span></span>, zaś <span class="inlinecode"><span class="id" title="var">nie</span></span> w przeciwnym wypadku.
+ Języki funkcyjne ekspandują. 
+<div class="paragraph"> </div>
+
+<a id="lab9"></a><h1 class="section">Ćwiczenia</h1>
 
 <div class="paragraph"> </div>
 
-    Następnie udowodnij, że:
+ Jeżeli dobrnąłeś aż tutaj, to gratuluję - znaczy, że musisz być całkiem
+    wytrwały, a na dodatek zainteresowany tematem. Żeby nabyta w trakcie
+    czytania wiedza nie uleciała, a entuzjazm nie opadł, proponuję żebyś
+    wykonał parę łatwiutkich ćwiczeń.
+
+<div class="paragraph"> </div>
+
+    Oczywiście jak nie chcesz, to nie musisz robić ćwiczeń - nikt cię nie
+    zmusza. To tylko taka dobra rada... 
+<div class="paragraph"> </div>
+
+<a id="lab10"></a><h4 class="section">Funkcja <span class="inlinecode"><span class="id" title="var">lub</span></span></h4>
+
+<div class="paragraph"> </div>
+
+ Zdefiniuj funkcję <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">bit</span></span>, która zwraca <span class="inlinecode"><span class="id" title="var">tak</span></span>, gdy co
+    najmniej jeden z jej argumentów jest równy <span class="inlinecode"><span class="id" title="var">tak</span></span>, zaś <span class="inlinecode"><span class="id" title="var">nie</span></span> w przeciwnym
+    wypadku.
+
+<div class="paragraph"> </div>
+
+    Zanim zabierzesz się za następne zadanie, spróbuj wymyślić i udowodnić
+    jakieś twierdzenie, które upewni cię, że twoja definicja jest poprawna. 
+<div class="paragraph"> </div>
+
+<a id="lab11"></a><h4 class="section">Właściwości funkcji <span class="inlinecode"><span class="id" title="var">lub</span></span> - zadania zamknięte</h4>
+
+<div class="paragraph"> </div>
+
+ Udowodnij podstawowe właściwości funkcji <span class="inlinecode"><span class="id" title="var">lub</span></span>:
 <ul class="doclist">
-<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>,</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">a</span></span>
+<li> Idempotencja: <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>,</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">a</span></span>
 
 </li>
-<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>,</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">(<span class="id" title="var">negacja</span></span> <span class="inlinecode"><span class="id" title="var">a</span>)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">tak</span></span>
+<li> Przemienność: <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>,</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span>
 
 </li>
-<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>,</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span>
-
-</li>
-<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">c</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>,</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode">(<span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">b</span>)</span> <span class="inlinecode"><span class="id" title="var">c</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">(<span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">c</span>)</span>
-
+<li> Łączność: <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">c</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>,</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode">(<span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">b</span>)</span> <span class="inlinecode"><span class="id" title="var">c</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">(<span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">c</span>)</span> 
 </li>
 </ul>
 
 <div class="paragraph"> </div>
 
-    Co się stanie, gdy zanegujemy <span class="inlinecode"><span class="id" title="var">lub</span></span>, tzn. czemu jest równe <span class="inlinecode"><span class="id" title="var">negacja</span></span> <span class="inlinecode">(<span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">b</span>)</span>?
+<a id="lab12"></a><h4 class="section">Właściwości funkcji <span class="inlinecode"><span class="id" title="var">lub</span></span> - zadania otwarte</h4>
 
 <div class="paragraph"> </div>
 
-    Zdefiniuj funkcję <span class="inlinecode"><span class="id" title="var">sklej</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span></span> <span class="inlinecode">-&gt; <span class="id" title="var">lista</span></span> <span class="inlinecode">-&gt; <span class="id" title="var">lista</span></span>, które bierze dwie listy i
+ Udowodnij poniższe twierdzenia, zamieniając uprzednio symbol <span class="inlinecode">?</span> na jakieś
+    konkretne wyrażenie:
+<ul class="doclist">
+<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>,</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">tak</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">=</span> <span class="inlinecode">?</span>
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>,</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">nie</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">=</span> <span class="inlinecode">?</span>
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>,</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">tak</span></span> <span class="inlinecode">=</span> <span class="inlinecode">?</span>
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>,</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">nie</span></span> <span class="inlinecode">=</span> <span class="inlinecode">?</span>
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>,</span> <span class="inlinecode"><span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode">(<span class="id" title="var">negacja</span></span> <span class="inlinecode"><span class="id" title="var">a</span>)</span> <span class="inlinecode">=</span> <span class="inlinecode">?</span>
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>,</span> <span class="inlinecode"><span class="id" title="var">negacja</span></span> <span class="inlinecode">(<span class="id" title="var">lub</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">b</span>)</span> <span class="inlinecode">=</span> <span class="inlinecode">?</span> 
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+<a id="lab13"></a><h4 class="section">Funkcja <span class="inlinecode"><span class="id" title="var">sklej</span></span></h4>
+
+<div class="paragraph"> </div>
+
+ Zdefiniuj funkcję <span class="inlinecode"><span class="id" title="var">sklej</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span></span> <span class="inlinecode">-&gt; <span class="id" title="var">lista</span></span> <span class="inlinecode">-&gt; <span class="id" title="var">lista</span></span>, które bierze dwie listy i
     skleja je ze sobą, np.
 
 <div class="paragraph"> </div>
@@ -409,34 +522,54 @@ Nasze twierdzenie ma stosować się do każdego bitu b, a więc nie
 
 <div class="paragraph"> </div>
 
-    Następnie udowodnij następujące twierdzenia:
+    Innymi słowy: <span class="inlinecode"><span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode"><span class="id" title="var">l2</span></span> zwraca listę, której początkiem jest lista <span class="inlinecode"><span class="id" title="var">l1</span></span>,
+    zaś końcem lista <span class="inlinecode"><span class="id" title="var">l2</span></span>.
+
+<div class="paragraph"> </div>
+
+    Zanim zabierzesz się za następne zadanie, spróbuj wymyślić i udowodnić
+    jakieś twierdzenie, które upewni cię, że twoja definicja jest poprawna. 
+<div class="paragraph"> </div>
+
+<a id="lab14"></a><h4 class="section">Właściwości funkcji <span class="inlinecode"><span class="id" title="var">sklej</span></span> - zadania zamknięte</h4>
+
+<div class="paragraph"> </div>
+
+ Udowodnij podstawowe właściwości funkcji <span class="inlinecode"><span class="id" title="var">sklej</span></span>:
 <ul class="doclist">
-<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span>,</span> <span class="inlinecode"><span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">koniec</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">l</span></span>
-
-</li>
-<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span>,</span> <span class="inlinecode"><span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span> <span class="inlinecode"><span class="id" title="var">koniec</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">l</span></span>
-
-</li>
-<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode"><span class="id" title="var">l2</span></span> <span class="inlinecode"><span class="id" title="var">l3</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span>,</span> <span class="inlinecode"><span class="id" title="var">sklej</span></span> <span class="inlinecode">(<span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode"><span class="id" title="var">l2</span>)</span> <span class="inlinecode"><span class="id" title="var">l3</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode">(<span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l2</span></span> <span class="inlinecode"><span class="id" title="var">l3</span>)</span>
-
-</li>
-<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode">(<span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>)</span> <span class="inlinecode">(<span class="id" title="var">l1</span></span> <span class="inlinecode"><span class="id" title="var">l2</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span>),</span> <span class="inlinecode"><span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">(<span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode"><span class="id" title="var">l2</span>)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode">(<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">l2</span>)</span>
-
-</li>
-<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode"><span class="id" title="var">l2</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span>,</span> <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode"><span class="id" title="var">l2</span>)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">sklej</span></span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode"><span class="id" title="var">l2</span>)</span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode"><span class="id" title="var">l1</span>)</span> 
+<li> Łączność: <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode"><span class="id" title="var">l2</span></span> <span class="inlinecode"><span class="id" title="var">l3</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span>,</span> <span class="inlinecode"><span class="id" title="var">sklej</span></span> <span class="inlinecode">(<span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode"><span class="id" title="var">l2</span>)</span> <span class="inlinecode"><span class="id" title="var">l3</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode">(<span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l2</span></span> <span class="inlinecode"><span class="id" title="var">l3</span>)</span> 
 </li>
 </ul>
 
 <div class="paragraph"> </div>
 
-<a id="lab9"></a><h1 class="section">Dlaczego warto nauczyć się Coqa?</h1>
+<a id="lab15"></a><h4 class="section">Właściwości funkcji <span class="inlinecode"><span class="id" title="var">sklej</span></span> - zadania otwarte</h4>
 
 <div class="paragraph"> </div>
 
- Języki funkcyjne ekspandują. 
+ Udowodnij poniższe twierdzenia, zamieniając uprzednio symbol <span class="inlinecode">?</span> na jakieś
+    konkretne wyrażenie:
+<ul class="doclist">
+<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span>,</span> <span class="inlinecode"><span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">koniec</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span> <span class="inlinecode">=</span> <span class="inlinecode">?</span>
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span>,</span> <span class="inlinecode"><span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span> <span class="inlinecode"><span class="id" title="var">koniec</span></span> <span class="inlinecode">=</span> <span class="inlinecode">?</span>
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode">(<span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>)</span> <span class="inlinecode">(<span class="id" title="var">l1</span></span> <span class="inlinecode"><span class="id" title="var">l2</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span>),</span> <span class="inlinecode"><span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">(<span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode"><span class="id" title="var">l2</span>)</span> <span class="inlinecode">=</span> <span class="inlinecode">?</span>
+
+</li>
+<li> <span class="inlinecode"><span class="id" title="keyword">forall</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode"><span class="id" title="var">l2</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span>,</span> <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">sklej</span></span> <span class="inlinecode"><span class="id" title="var">l1</span></span> <span class="inlinecode"><span class="id" title="var">l2</span>)</span> <span class="inlinecode">=</span> <span class="inlinecode">?</span> 
+</li>
+</ul>
+
 <div class="paragraph"> </div>
 
-<a id="lab10"></a><h1 class="section">Kim jesteśmy, dokąd zmierzamy?</h1>
+<a id="lab16"></a><h1 class="section">Co dalej?</h1>
+
+<div class="paragraph"> </div>
+
+<a id="lab17"></a><h2 class="section">Środowisko</h2>
 
 <div class="paragraph"> </div>
 
@@ -462,14 +595,17 @@ Nasze twierdzenie ma stosować się do każdego bitu b, a więc nie
 
 </li>
 <li> W ostateczności można też używać Coqa z poziomu konsoli, ale tym
-      bardziej nie polecam.
-
+      bardziej nie polecam. 
 </li>
 </ul>
 
 <div class="paragraph"> </div>
 
-    Przyda się też troche materiałów dydaktycznych:
+<a id="lab18"></a><h2 class="section">Materiały dydaktyczne</h2>
+
+<div class="paragraph"> </div>
+
+ Przyda ci się też trochę materiałów dydaktycznych:
 <ul class="doclist">
 <li> Nagranie z zeszłorocznych dni otwartych (po polsku, ok. 20 min):
       https://www.youtube.com/watch?v=njgUPWlWYUM&amp;t=6936s
@@ -489,11 +625,14 @@ Nasze twierdzenie ma stosować się do każdego bitu b, a więc nie
 
     Jeżeli słuchanie/czytanie po angielsku sprawia wam problem, możecie też przeczytać
     pierwsze rozdziały mojej własnej twórczości: https://wkolowski.github.io/CoqBookPL/
-    (uwaga, dość niekompletna i trochę nie po kolei).
+    (uwaga, dość niekompletna i trochę nie po kolei). 
+<div class="paragraph"> </div>
+
+<a id="lab19"></a><h2 class="section">Linki i kontakt</h2>
 
 <div class="paragraph"> </div>
 
-    Przydatne linki:
+ Przydatne linki:
 <ul class="doclist">
 <li> Strona domowa: https://coq.inria.fr/
 
@@ -514,7 +653,7 @@ Nasze twierdzenie ma stosować się do każdego bitu b, a więc nie
 
 <div class="paragraph"> </div>
 
-    Jeżeli macie pytania, piszcie (asekuracyjnie podaje uczelniane maile):
+    Jeżeli masz pytania, pisz śmiało:
 <ul class="doclist">
 <li> Ja: 299899@uwr.edu.pl
 

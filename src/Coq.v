@@ -1,24 +1,57 @@
 (** * Coq: jak udowodnić, że nasz program działa poprawnie *)
 
+(** Cześć, nazywam się Wojciech Kołowski i witam cię na Dniach Otwartych
+    Instytutu Informatyki UWr 2021. Wszystkie materiały z tego wydarzenia
+    możesz znaleźć tutaj: https://ii.uni.wroc.pl/dla-studenta/drzwi-otwarte,
+    ja natomiast opowiem ci dziś o języku programowania Coq. *)
+
 (** * Coq a inne języki programowania *)
 
-(** Coq jest mocno wyjątkowym językiem programowania, różniącym się znacznie
-    od większości popularnych języków, jak C++ czy Python.
+(** Coq (wymawiane "kok"; nazwa pochodzi od francuskiego słowa "coq",
+    oznaczającego koguta) jest mocno wyjątkowym językiem programowania,
+    różniącym się znacznie od większości popularnych języków, jak C++ czy
+    Python.
 
-    Po pierwsze, Coq jest językiem funkcyjnym. Zamiast zmiennych globalnych,
-    dajemy funkcjom dodatkowe argumenty. Zamiast iterować po strukturach
-    danych zrobionych ze wskaźników, przemierzamy drzewa za pomocą funkcji
-    rekurencyjnych - czyli takich, które wywołują same siebie. Zamiast
-    wielkich pętli przetwarzających dane, budujemy duże funkcje składając
-    ze sobą wiele małych funkcji. Nasze funkcje mogą brać inne funkcje jako
-    argumenty oraz zwracać funkcje jako wynik.
+    Coq jest przede wszystkim językiem funkcyjnym. Funkcje są podstawowym
+    budulcem wszystkich programów i cieszą się niespotykaną w mainstreamowych
+    językach elastycznością - mogą brać inne funkcje jako argumenty, zwracać
+    funkcje jako wynik, i tak dalej. W Coqu (i w ogóle w językach funkcyjnych)
+    większość rzeczy robimy inaczej, niż w innych językach programowania:
+    - Zamiast zmiennych globalnych, dajemy funkcjom dodatkowe argumenty.
+    - Zamiast iterować po strukturach danych zrobionych ze wskaźników,
+      przemierzamy drzewa za pomocą funkcji rekurencyjnych (czyli takich,
+      które wywołują same siebie).
+    - Zamiast wielkich pętli przetwarzających dane, budujemy duże funkcje
+      składając ze sobą wiele małych funkcji.
+    - Różnic jest więcej, ale nie sposób wszystkich ich tutaj wymienić.
 
-    Jednak jest coś jeszcze, co odróżnia Coqa nawet od prawie wszystkich
-    innych języków funkcyjnych. Mianowicie, Coq pozwala na formalną
-    weryfikację poprawności napisanych w nim programów - najpierw piszemy
-    program, a potem dowodzimy twierdzenia mówiącego, że program działa tak
-    jak powinien. Gdy programujemy w Coqu, możemy (i powinniśmy!) być
-    jednocześnie matematykiem. *)
+    Jednak jest coś jeszcze, co odróżnia Coqa nawet od pozostałych języków
+    funkcyjnych. Mianowicie, Coq pozwala na formalną weryfikację poprawności
+    napisanych w nim programów... ale co to właściwie znaczy? W zwykłych
+    językach, jak Python czy C++, w zasadzie jedyną możliwością sprawdzenia,
+    czy napisany przez nas program działa tak jak chcemy, są testy. Pojedynczy
+    test uruchamia nasz program dla jakichś konkretnych danych wejściowych i
+    sprawdza, czy wynik jest taki jak się spodziewamy. Jeżeli napiszemy dużo
+    testów i wszystkie one kończą się pomyślnie, to uznajemy, że nasz program
+    jest poprawny.
+
+    Takie podejście jako tako sprawdza się w praktyce, ale nie daje pełnych i
+    niepodważalnych gwarancji poprawności. Wszak, jak powiedział niegdyś klasyk
+    informatyki, "testy mogą wykazać obecność błędów w programie, ale nie mogą
+    wykazać ich nieobecności". Coq zaś wykazanie nieobecności błędów umożliwia:
+    najpierw piszemy program, a potem dowodzimy twierdzenia, które mówi, że
+    program działa tak jak powinien. Pisząc "twierdzenia" mam na myśli rzeczy
+    analogiczne do tych znanych ci z lekcji matematyki, jak twierdzenie
+    Pitagorasa, tylko że dotyczące programów, a pisząc "dowodzimy" mam na myśli
+    czynność analogiczną do tej, którą wykonuje matematyk, aby upewnić się, że
+    twierdzenie Pitagorasa jest prawdziwe. Wynik jest również analogiczny: tak
+    jak twierdzenie Pitagorsa jest prawdziwe i nie ma co do tego najmniejszych
+    wątpliwości ani nie da się go w żaden sposób podważyć, tak też twierdzenie
+    o poprawności naszego programu, gdy je udowodnimy, gwarantuje nam, że w
+    programie na pewno nie ma błędów.
+
+    Morał tej bajki jest prosty: gdy programujemy w Coqu, możemy (i powinniśmy!)
+    być jednocześnie matematykiem. *)
 
 (** * Środowisko jsCoq *)
 
@@ -26,11 +59,11 @@
     pozwala używać Coqa bezpośrednio w przeglądarce i nie trzeba niczego
     instalować.
 
-    Interakcja z Coqiem wygląda tak. Po lewej mamy tekst i okna z kodem
-    (można edytować kod, który tam jest - zachęcam do zabawy). Po prawej na
-    dole jest okno, w którym Coq wyświetla nam informacje diagnostyczne,
-    wiadomości o błędzie i odpowiedzi na nasze zapytania. W oknie na górze
-    po prawej póki co nie ma nic ciekawego - uaktywni się ono dopiero, gdy
+    Interakcja z Coqiem przebiega następująco. Po lewej mamy tekst poprzeplatany
+    polami tekstowymi zawierającymi kod (można ten kod edytować - zachęcam do
+    zabawy). Po prawej na dole jest okno, w którym Coq wyświetla nam informacje
+    diagnostyczne, wiadomości o błędach i odpowiedzi na nasze zapytania. W oknie
+    po prawej na górze póki co nie ma nic ciekawego - uaktywni się ono dopiero, gdy
     będziemy chcieli czegoś dowodzić.
 
     Po prawej na samej górze mamy kilka strzałek, którymi mówimy Coqowi,
@@ -40,7 +73,7 @@
     poprzedniego kawałka kodu", podwójna strzałka (skrót: alt + enter) -
     "wczytaj cały kod aż do miejsca, w którym znajduje się kursor".
 
-    Ok, czas zobaczyć w końcu trochę kodu. *)
+    Ok, tyle tytułem wstępu. Czas zobaczyć w końcu jakiś przykład! *)
 
 (** * Proste typy i funkcje *)
 
@@ -48,31 +81,39 @@
     jedynką. Spróbujmy zaimplementować w Coqu typ reprezentujący bity,
     napisać jakąś funkcję i coś o niej udowodnić. Uwaga: "0" i "1" nie są
     legalnymi nazwami w Coqu, więc nasze bity musimy nazwać jakoś inaczej.
-    Przyjmijmy nazwy [tak] i [nie]. *)
+    Przyjmijmy nazwy [tak] i [nie]. Uwaga 2: tekst pomiędzy znacznikami "( *"
+    oraz "* )" to komentarze. Po każdej linijce kodu, która wprowadza jakąś
+    nowość, będę umieszczał komentarze tłumaczące, co dana linijka oznacza. *)
 
-Inductive          (* Definicja typu zaczynaja się od słowa kluczowego [Inductive]. *)
-  bit : Type :=    (* [bit] jest typem zdefiniowanym w ten sposób, że... *)
-    | tak : bit    (* [tak] jest elementem typu [bit] *)
-    | nie : bit    (* [nie] jest elementem typu [bit] *)
-    .              (* I nie ma żadnych innych elementów typu bit. *)
+Inductive        (* Definicja typu zaczyna się od słowa kluczowego "Inductive". *)
+  bit : Type :=  (* "bit" jest typem zdefiniowanym w ten sposób, że: *)
+    | tak : bit  (* "tak" jest elementem typu "bit" *)
+    | nie : bit. (* "nie" jest elementem typu "bit" *)
 
-(** Żeby Coq przeczytać powyższą definicję, kliknij na smaej górze po prawej
+(** Żeby Coq przeczytał powyższą definicję, kliknij na smaej górze po prawej
     strzałkę w dół (lub wciśnij alt + strzałka w dół). Kiedy Coq jest w trakcie
-    czytania definicji, jest ona podświetlona na pomarańczowo, zaś gdy Coq ją
-    zaakceptuje, jest podświetlona na szaro. Jeżeli Coq akceptuje definicję, to
-    milczy. Jeżeli coś mu nie pasuje, komunikat o błędzie pojawia się w oknie
-    na dole po prawej. Powyższa definicja, jak widać, jest w porządku.
-    
-    Co można zrobić z bitem? Zanegować! Tzn. zamienić "1" na "0", a "0" na "1"
-    (w naszym przypadku zamienić [tak] na [nie], a [nie] na [tak]. Do dzieła. *)
+    czytania definicji, jest ona podświetlona na pomarańczowo. Jeżeli Coq ją
+    zaakceptuje, zostaje ona podświetlona na szaro. Jeżeli z definicją jest coś
+    nie tak, to zostanie podświetlona na czerwono, a komunikat o błędzie pojawi
+    się w oknie po prawej na dole.
 
-Definition                  (* Definicja zaczyna się od słowa kluczowego [Definition] *)
-  negacja : bit -> bit :=   (* [negacja] to funkcja, która bierze bit i zwraca bit, zdefiniowana następująco: *)
+    Powyższa definicja, jak widać, jest w porządku. Nie pytaj na razie, skąd
+    słowo kluczowe [Inductive] - dowiemy się tego później. Zauważ też, że
+    definicja kończy się kropką, podobnie jak wszystkie inne komendy w Coqu.
+    Samą definicję można odczytać następująco: "bit jest typem, który może
+    przjmować tylko jedną z dwóch wartości: tak albo nie".
+
+    Co można zrobić z bitem? Zanegować! Tzn. zamienić "1" na "0", a "0" na "1"
+    (co w naszym przypadku oznacza, że chcemy zamienić [tak] na [nie], a [nie]
+    na [tak]). A zatem do dzieła. *)
+
+Definition                  (* Definicja zaczyna się od słowa kluczowego "Definition". *)
+  negacja : bit -> bit :=   (* negacja to funkcja, która bierze bit i zwraca bit, zdefiniowana następująco: *)
     fun b : bit =>          (* Weź jako argument bit nazwany [b]. *)
-      match b with          (* Sprawdźmy, jakiej [b] jest postaci. *)
+      match b with          (* Sprawdź, jakiej [b] jest postaci: *)
           | tak => nie      (* Gdy [b] to [tak], wynikiem funkcji jest [nie]. *)
           | nie => tak      (* Gdy [b] to [nie], wynikiem funkcji jest [tak]. *)
-      end.                  (* Koniec definicji. *)
+      end.
 
 (** Uwaga: jeżeli oglądałeś moje nagranie z Dni Otwartych, to możesz tam
     zauważyć, że Coq automatycznie zamienia strzałkę [->] na [→], [=>]
@@ -245,38 +286,79 @@ Proof.
       reflexivity.
 Qed.
 
+(** * Dlaczego warto nauczyć się Coqa? *)
+
+(** Języki funkcyjne ekspandują. *)
+
 (** * Ćwiczenia *)
 
-(** Zdefiniuj funkcję [lub : bit -> bit -> bit], która zwraca [tak], gdy co najmniej jeden
-    z jej argumentów jest równy [tak], zaś [nie] w przeciwnym wypadku.
+(** Jeżeli dobrnąłeś aż tutaj, to gratuluję - znaczy, że musisz być całkiem
+    wytrwały, a na dodatek zainteresowany tematem. Żeby nabyta w trakcie
+    czytania wiedza nie uleciała, a entuzjazm nie opadł, proponuję żebyś
+    wykonał parę łatwiutkich ćwiczeń.
 
-    Następnie udowodnij, że:
-    - [forall a : bit, lub a a = a]
-    - [forall a : bit, lub a (negacja a) = tak]
-    - [forall a b : bit, lub a b = lub b a]
-    - [forall a b c : bit, lub (lub a b) c = lub a (lub b c)]
+    Oczywiście jak nie chcesz, to nie musisz robić ćwiczeń - nikt cię nie
+    zmusza. To tylko taka dobra rada... *)
 
-    Co się stanie, gdy zanegujemy [lub], tzn. czemu jest równe [negacja (lub a b)]?
+(** **** Funkcja [lub] *)
 
-    Zdefiniuj funkcję [sklej : lista -> lista -> lista], które bierze dwie listy i
+(** Zdefiniuj funkcję [lub : bit -> bit -> bit], która zwraca [tak], gdy co
+    najmniej jeden z jej argumentów jest równy [tak], zaś [nie] w przeciwnym
+    wypadku.
+
+    Zanim zabierzesz się za następne zadanie, spróbuj wymyślić i udowodnić
+    jakieś twierdzenie, które upewni cię, że twoja definicja jest poprawna. *)
+
+(** **** Właściwości funkcji [lub] - zadania zamknięte *)
+
+(** Udowodnij podstawowe właściwości funkcji [lub]:
+    - Idempotencja: [forall a : bit, lub a a = a]
+    - Przemienność: [forall a b : bit, lub a b = lub b a]
+    - Łączność: [forall a b c : bit, lub (lub a b) c = lub a (lub b c)] *)
+
+(** **** Właściwości funkcji [lub] - zadania otwarte *)
+
+(** Udowodnij poniższe twierdzenia, zamieniając uprzednio symbol [?] na jakieś
+    konkretne wyrażenie:
+    - [forall a : bit, lub tak a = ?]
+    - [forall a : bit, lub nie a = ?]
+    - [forall a : bit, lub a tak = ?]
+    - [forall a : bit, lub a nie = ?]
+    - [forall a : bit, lub a (negacja a) = ?]
+    - [forall a b : bit, negacja (lub a b) = ?] *)
+
+(** **** Funkcja [sklej] *)
+
+(** Zdefiniuj funkcję [sklej : lista -> lista -> lista], które bierze dwie listy i
     skleja je ze sobą, np.
 
     [sklej (na_początku tak koniec) (na_początku nie koniec)
     =
     na_początku tak (na_początku nie koniec)]
 
-    Następnie udowodnij następujące twierdzenia:
-    - [forall l : lista, sklej koniec l = l]
-    - [forall l : lista, sklej l koniec = l]
-    - [forall l1 l2 l3 : lista, sklej (sklej l1 l2) l3 = sklej l1 (sklej l2 l3)]
-    - [forall (b : bit) (l1 l2 : lista), na_końcu b (sklej l1 l2) = sklej l1 (na_końcu b l2)]
-    - [forall l1 l2 : lista, odwróć (sklej l1 l2) = sklej (odwróć l2) (odwróć l1)] *)
+    Innymi słowy: [sklej l1 l2] zwraca listę, której początkiem jest lista [l1],
+    zaś końcem lista [l2].
 
-(** * Dlaczego warto nauczyć się Coqa? *)
+    Zanim zabierzesz się za następne zadanie, spróbuj wymyślić i udowodnić
+    jakieś twierdzenie, które upewni cię, że twoja definicja jest poprawna. *)
 
-(** Języki funkcyjne ekspandują. *)
+(** **** Właściwości funkcji [sklej] - zadania zamknięte *)
 
-(** * Kim jesteśmy, dokąd zmierzamy? *)
+(** Udowodnij podstawowe właściwości funkcji [sklej]:
+    - Łączność: [forall l1 l2 l3 : lista, sklej (sklej l1 l2) l3 = sklej l1 (sklej l2 l3)] *)
+
+(** **** Właściwości funkcji [sklej] - zadania otwarte *)
+
+(** Udowodnij poniższe twierdzenia, zamieniając uprzednio symbol [?] na jakieś
+    konkretne wyrażenie:
+    - [forall l : lista, sklej koniec l = ?]
+    - [forall l : lista, sklej l koniec = ?]
+    - [forall (b : bit) (l1 l2 : lista), na_końcu b (sklej l1 l2) = ?]
+    - [forall l1 l2 : lista, odwróć (sklej l1 l2) = ?] *)
+
+(** * Co dalej? *)
+
+(** ** Środowisko *)
 
 (** Najłatwiej jest zapoznać się z Coqiem używając przeglądarkowego środowiska
     jsCoq (https://jscoq.github.io/scratchpad.html). Polecam - nie trzeba nic
@@ -291,9 +373,11 @@ Qed.
     - Emacs (https://www.gnu.org/software/emacs/) z pluginem Proof General
       (https://proofgeneral.github.io/) - nie polecam.
     - W ostateczności można też używać Coqa z poziomu konsoli, ale tym
-      bardziej nie polecam.
+      bardziej nie polecam. *)
 
-    Przyda się też troche materiałów dydaktycznych:
+(** ** Materiały dydaktyczne *)
+
+(** Przyda ci się też trochę materiałów dydaktycznych:
     - Nagranie z zeszłorocznych dni otwartych (po polsku, ok. 20 min):
       https://www.youtube.com/watch?v=njgUPWlWYUM&t=6936s
     - Nagranie z prezentacji podobnej do naszej (po angielsku, 3 godziny):
@@ -303,15 +387,17 @@ Qed.
 
     Jeżeli słuchanie/czytanie po angielsku sprawia wam problem, możecie też przeczytać
     pierwsze rozdziały mojej własnej twórczości: https://wkolowski.github.io/CoqBookPL/
-    (uwaga, dość niekompletna i trochę nie po kolei).
+    (uwaga, dość niekompletna i trochę nie po kolei). *)
 
-    Przydatne linki:
+(** ** Linki i kontakt *)
+
+(** Przydatne linki:
     - Strona domowa: https://coq.inria.fr/
     - GitHub: https://github.com/coq/coq
     - Forum: https://coq.discourse.group/
     - Czat: https://coq.zulipchat.com/login/
     - Q&A: https://stackoverflow.com/questions/tagged/coq
 
-    Jeżeli macie pytania, piszcie (asekuracyjnie podaje uczelniane maile):
+    Jeżeli masz pytania, pisz śmiało:
     - Ja: 299899@uwr.edu.pl
     - Nie ja: tomasz.drab@cs.uni.wroc.pl *)
