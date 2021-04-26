@@ -457,7 +457,10 @@ Skoro umiemy robić listy, dostawiając bit na początku, to dobrze byłoby
     wspólnego z rekurencją, nie pytaj...). <span class="inlinecode"><span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> jest funkcją typu
     <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">lista</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">lista</span></span>, tzn. bierze jako argumenty bit oraz listę, a zwraca
     listę. Zapis jednak nieco różni się od tego, którego użyliśmy definiując
-    funkcję <span class="inlinecode"><span class="id" title="var">negacja</span></span> - jest nieco bardziej zwięzły.
+    funkcję <span class="inlinecode"><span class="id" title="var">negacja</span></span>. Zapis <span class="inlinecode"><span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode">(<span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>)</span> <span class="inlinecode">(<span class="id" title="var">l</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span>)</span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span></span> <span class="inlinecode">:=</span> <span class="inlinecode">...</span>
+    oznacza to samo, co
+    <span class="inlinecode"><span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">lista</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">lista</span></span> <span class="inlinecode">:=</span> <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode">(<span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span>)</span> <span class="inlinecode">(<span class="id" title="var">l</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span>)</span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode">...</span>,
+    a jest dużo bardziej zwięzły, bo unikamy pisania typów dwa razy.
 
 <div class="paragraph"> </div>
 
@@ -523,6 +526,61 @@ Kolejną funkcją, którą chcemy zdefiniować, jest funkcja <span class="inline
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
+</div>
+
+<div class="doc">
+Czas w końcu udowodnić jakieś twierdzenie. Tym razem zaczynamy od słowa
+    kluczowego <span class="inlinecode"><span class="id" title="keyword">Theorem</span></span> - jest ono konieczne, jeżeli chcemy móc nazwać nasze
+    twierdzenie. A chcemy - żeby móc się do niego później odnosić. Twierdzenie
+    nazywamy <span class="inlinecode"><span class="id" title="var">odwró</span>ć<span class="id" title="var">_na_ko</span>ń<span class="id" title="var">cu</span></span>, bo chcemy się przekonać, co się stanie, gdy
+    najpierw dostawimy bit <span class="inlinecode"><span class="id" title="var">b</span></span> na końcu listy <span class="inlinecode"><span class="id" title="var">l</span></span>, a potem całość odwrócimy.
+    Odpowiedź jest prosta: oczywiście bit <span class="inlinecode"><span class="id" title="var">b</span></span> trafi na początek odwróconej
+    listy <span class="inlinecode"><span class="id" title="var">l</span></span>.
+
+<div class="paragraph"> </div>
+
+    Zaczynamy od <span class="inlinecode"><span class="id" title="tactic">intros</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span>, czyli "weźmy dowolne b". Następnym krokiem jest
+    <span class="inlinecode"><span class="id" title="tactic">induction</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span> <span class="inlinecode">...</span>, co możemy przeczytać jako "indukcja po l". Indukcja to
+    taka analiza przypadków na sterydach - w niektórych przypadkach do naszej
+    dyspozycji dostajemy dodatkowo hipotezę indukcyjną. Indukcja jest sposobem
+    rozumowania niezbędnym, gdy w grę wchodzą funkcje rekurencyjne. Ponieważ
+    funkcja rekurencyjna wywołuje samą siebie na mniejszym argumencie, to żeby
+    udowodnić coś na jej temat dla jakiegoś argumentu, najpierw trzeba udowodnić
+    tę samą własność dla mniejszego argumentu. Widzimy więc, że potrzebne jest
+    nam coś w stylu wywołania rekurencyjnego, tylko że chcemy użyć tego czegoś
+    do dowodzenia, a nie definiowania funkcji... i właśnie tym czymś jest
+    hipoteza indukcyjna!
+
+<div class="paragraph"> </div>
+
+    Uwaga: klauzula <span class="inlinecode"><span class="id" title="keyword">as</span></span> <span class="inlinecode">[|</span> <span class="inlinecode"><span class="id" title="var">g</span>ł<span class="id" title="var">owa_l</span></span> <span class="inlinecode"><span class="id" title="var">ogon_l</span></span> <span class="inlinecode"><span class="id" title="var">hipoteza</span></span> <span class="inlinecode"><span class="id" title="var">indukcyjna</span>]</span> pozwala nam
+    nadać nazwy rzeczom powstałym z rozłożenia <span class="inlinecode"><span class="id" title="var">l</span></span> na kawałki oraz hipotezie
+    indukcyjnej. W programowaniu funkcyjnym tradycyjnie pierwszy element listy
+    nazywa się głową, zaś resztę ogonem, i stąd biorą się nasze nazwy.
+
+<div class="paragraph"> </div>
+
+    Indukcja pozostawia nam do udowodnienia dwa przypadki. W pierwszym <span class="inlinecode"><span class="id" title="var">l</span></span> jest
+    postaci <span class="inlinecode"><span class="id" title="var">koniec</span></span>, a dowód jest prosty - po obu stronach równania jest to
+    samo. W drugim przypadku same obliczenia już nie wystarczą, ale z pomocą
+    przychodzi nam hipoteza indukcyjna, która jest równanie postaci
+    <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>)</span> - jest to
+    niemal dokładnie ta właściwość, którą chcemy udowodnić, ale dotyczy ona
+    ogona <span class="inlinecode"><span class="id" title="var">l</span></span>, a nie samej listy <span class="inlinecode"><span class="id" title="var">l</span></span>.
+
+<div class="paragraph"> </div>
+
+    Zauważmy, że nasz cel również jest równaniem, zaś po jego lewej stronie
+    mamy <span class="inlinecode"><span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode"><span class="id" title="var">g</span>ł<span class="id" title="var">owa_l</span></span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>))</span>. Ponieważ występuje
+    tutaj wyrażenie <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>)</span>, to możemy użyć naszej hipotezy
+    indukcyjnej, żeby zastąpić je przez <span class="inlinecode"><span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>)</span>. Żeby
+    to zrobić, używamy taktyki <span class="inlinecode"><span class="id" title="tactic">rewrite</span></span> <span class="inlinecode"><span class="id" title="var">hipoteza_indukcyjna</span></span>, które realizuje
+    rozumowania polegający na przepisywaniu równań. Na koniec wystarczy trochę
+    policzyć i voilà - widać, że obie strony równania są takie same. 
+</div>
+<div class="code">
+
+<br/>
 <span class="id" title="keyword">Theorem</span> <span class="id" title="var">odwró</span>ć<span class="id" title="var">_odwró</span>ć :<br/>
 &nbsp;&nbsp;<span class="id" title="keyword">forall</span> <span class="id" title="var">l</span> : <span class="id" title="var">lista</span>,<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">odwró</span>ć (<span class="id" title="var">odwró</span>ć <span class="id" title="var">l</span>) = <span class="id" title="var">l</span>.<br/>
@@ -537,6 +595,31 @@ Kolejną funkcją, którą chcemy zdefiniować, jest funkcja <span class="inline
 </div>
 
 <div class="doc">
+Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
+    listę. Dowód, podobnie jak poprzednio, jest przez indukcję po <span class="inlinecode"><span class="id" title="var">l</span></span>. W tym
+    momencie nie powinno nas to już dziwić - ponieważ prawie wszystkie funkcje
+    operujące na listach są rekurencyjne, a dowodzenie właściwości funkcji
+    rekurencyjnych wymaga rozumowania indukcyjnego, to prawie wszystkie dowody
+    dotyczące list będą szły przez indukcję. Zauważmy też, że nie musimy dowodu
+    zaczynąć taktyką <span class="inlinecode"><span class="id" title="tactic">intro</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span> - gdy używamy indukcji, Coq sam wie, że powinien
+    najpierw wprowadzić listę <span class="inlinecode"><span class="id" title="var">l</span></span> do kontekstu.
+
+<div class="paragraph"> </div>
+
+    Mamy dwa przypadki. Gdy <span class="inlinecode"><span class="id" title="var">l</span></span> jest postaci <span class="inlinecode"><span class="id" title="var">koniec</span></span>, wystarczy trochę policzyć
+    by przekonać się, że faktycznie <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode"><span class="id" title="var">koniec</span>)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">koniec</span></span>. W drugim
+    przypadku po wykonaniu obliczeń musimy pokazać
+    <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode"><span class="id" title="var">g</span>ł<span class="id" title="var">owa_l</span></span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>))</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span></span> <span class="inlinecode"><span class="id" title="var">g</span>ł<span class="id" title="var">owa_l</span></span> <span class="inlinecode"><span class="id" title="var">ogon_l</span></span>.
+    Zauważmy, że możemy skorzystać z udowodnionego uprzednio twierdzenia
+    <span class="inlinecode"><span class="id" title="var">odwró</span>ć<span class="id" title="var">_na_ko</span>ń<span class="id" title="var">cu</span></span>, gdyż nasz celu zawiera wyrażenie postaci
+    <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode">...)</span>. Ponieważ twierdzenie <span class="inlinecode"><span class="id" title="var">odwró</span>ć<span class="id" title="var">_na_ko</span>ń<span class="id" title="var">cu</span></span> jest po
+    prostu równaniem, możemy użyć go za pomocą taktyki <span class="inlinecode"><span class="id" title="tactic">rewrite</span></span>. Gdy już to
+    zrobimy, po lewej stronie w naszym celu ukazuje się wyrażenie
+    <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>)</span>, które możemy uprościć korzystając z hipotezy
+    indukcyjnej. I to by było na tyle, bo po obu stronach równania widzimy
+    dokładnie to samo. 
+<div class="paragraph"> </div>
+
 <a id="lab8"></a><h1 class="section">Dlaczego warto nauczyć się Coqa?</h1>
 
 <div class="paragraph"> </div>

@@ -297,7 +297,10 @@ end.
     wspólnego z rekurencją, nie pytaj...). [na_końcu] jest funkcją typu
     [bit -> lista -> lista], tzn. bierze jako argumenty bit oraz listę, a zwraca
     listę. Zapis jednak nieco różni się od tego, którego użyliśmy definiując
-    funkcję [negacja] - jest nieco bardziej zwięzły.
+    funkcję [negacja]. Zapis [na_końcu (b : bit) (l : lista) : lista := ...]
+    oznacza to samo, co
+    [na_końcu : bit -> lista -> lista := fun (b : bit) (l : lista) : lista => ...],
+    a jest dużo bardziej zwięzły, bo unikamy pisania typów dwa razy.
 
     Definicję zaczynamy od sprawdzenia, jakiej postaci jest lista [l]. Opcje
     są dwie, tak jak wynika z definicji typu [lista]. Gdy [l] to [koniec],
@@ -348,6 +351,47 @@ Proof.
      cbn. rewrite hipoteza_indukcyjna. cbn. reflexivity.
 Qed.
 
+(** Czas w końcu udowodnić jakieś twierdzenie. Tym razem zaczynamy od słowa
+    kluczowego [Theorem] - jest ono konieczne, jeżeli chcemy móc nazwać nasze
+    twierdzenie. A chcemy - żeby móc się do niego później odnosić. Twierdzenie
+    nazywamy [odwróć_na_końcu], bo chcemy się przekonać, co się stanie, gdy
+    najpierw dostawimy bit [b] na końcu listy [l], a potem całość odwrócimy.
+    Odpowiedź jest prosta: oczywiście bit [b] trafi na początek odwróconej
+    listy [l].
+
+    Zaczynamy od [intros b], czyli "weźmy dowolne b". Następnym krokiem jest
+    [induction l ...], co możemy przeczytać jako "indukcja po l". Indukcja to
+    taka analiza przypadków na sterydach - w niektórych przypadkach do naszej
+    dyspozycji dostajemy dodatkowo hipotezę indukcyjną. Indukcja jest sposobem
+    rozumowania niezbędnym, gdy w grę wchodzą funkcje rekurencyjne. Ponieważ
+    funkcja rekurencyjna wywołuje samą siebie na mniejszym argumencie, to żeby
+    udowodnić coś na jej temat dla jakiegoś argumentu, najpierw trzeba udowodnić
+    tę samą własność dla mniejszego argumentu. Widzimy więc, że potrzebne jest
+    nam coś w stylu wywołania rekurencyjnego, tylko że chcemy użyć tego czegoś
+    do dowodzenia, a nie definiowania funkcji... i właśnie tym czymś jest
+    hipoteza indukcyjna!
+
+    Uwaga: klauzula [as [| głowa_l ogon_l hipoteza indukcyjna]] pozwala nam
+    nadać nazwy rzeczom powstałym z rozłożenia [l] na kawałki oraz hipotezie
+    indukcyjnej. W programowaniu funkcyjnym tradycyjnie pierwszy element listy
+    nazywa się głową, zaś resztę ogonem, i stąd biorą się nasze nazwy.
+
+    Indukcja pozostawia nam do udowodnienia dwa przypadki. W pierwszym [l] jest
+    postaci [koniec], a dowód jest prosty - po obu stronach równania jest to
+    samo. W drugim przypadku same obliczenia już nie wystarczą, ale z pomocą
+    przychodzi nam hipoteza indukcyjna, która jest równanie postaci
+    [odwróć (na_końcu b ogon_l) = na_początku b (odwróć ogon_l)] - jest to
+    niemal dokładnie ta właściwość, którą chcemy udowodnić, ale dotyczy ona
+    ogona [l], a nie samej listy [l].
+
+    Zauważmy, że nasz cel również jest równaniem, zaś po jego lewej stronie
+    mamy [na_końcu głowa_l (odwróć (na_końcu b ogon_l))]. Ponieważ występuje
+    tutaj wyrażenie [odwróć (na_końcu b ogon_l)], to możemy użyć naszej hipotezy
+    indukcyjnej, żeby zastąpić je przez [na_początku b (odwróć ogon_l)]. Żeby
+    to zrobić, używamy taktyki [rewrite hipoteza_indukcyjna], które realizuje
+    rozumowania polegający na przepisywaniu równań. Na koniec wystarczy trochę
+    policzyć i voilà - widać, że obie strony równania są takie same. *)
+
 Theorem odwróć_odwróć :
   forall l : lista,
     odwróć (odwróć l) = l.
@@ -357,6 +401,28 @@ Proof.
     cbn. rewrite odwróć_na_końcu. rewrite hipoteza_indukcyjna.
       reflexivity.
 Qed.
+
+(** Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
+    listę. Dowód, podobnie jak poprzednio, jest przez indukcję po [l]. W tym
+    momencie nie powinno nas to już dziwić - ponieważ prawie wszystkie funkcje
+    operujące na listach są rekurencyjne, a dowodzenie właściwości funkcji
+    rekurencyjnych wymaga rozumowania indukcyjnego, to prawie wszystkie dowody
+    dotyczące list będą szły przez indukcję. Zauważmy też, że nie musimy dowodu
+    zaczynąć taktyką [intro l] - gdy używamy indukcji, Coq sam wie, że powinien
+    najpierw wprowadzić listę [l] do kontekstu.
+
+    Mamy dwa przypadki. Gdy [l] jest postaci [koniec], wystarczy trochę policzyć
+    by przekonać się, że faktycznie [odwróć (odwróć koniec) = koniec]. W drugim
+    przypadku po wykonaniu obliczeń musimy pokazać
+    [odwróć (na_końcu głowa_l (odwróć ogon_l)) = na_początku głowa_l ogon_l].
+    Zauważmy, że możemy skorzystać z udowodnionego uprzednio twierdzenia
+    [odwróć_na_końcu], gdyż nasz celu zawiera wyrażenie postaci
+    [odwróć (na_końcu ...)]. Ponieważ twierdzenie [odwróć_na_końcu] jest po
+    prostu równaniem, możemy użyć go za pomocą taktyki [rewrite]. Gdy już to
+    zrobimy, po lewej stronie w naszym celu ukazuje się wyrażenie
+    [odwróć (odwróć ogon_l)], które możemy uprościć korzystając z hipotezy
+    indukcyjnej. I to by było na tyle, bo po obu stronach równania widzimy
+    dokładnie to samo. *)
 
 (** * Dlaczego warto nauczyć się Coqa? *)
 
