@@ -209,11 +209,11 @@ Proof.
     reflexivity.             (* Nie musimy ręcznie prosić o policzenie - Coq sam wie, żeby to zrobić. *)
 Qed.
 
-(** Nasze twierdzenie ma stosować się do każdego bitu b, a więc nie
-    możemy o tym bicie niczego założyć. Żeby to wyrazić, piszemy [forall],
-    czyli po polsku "dla każdego".
+(** Nasze twierdzenie ma stosować się do każdego bitu [b], a więc nie możemy o
+    tym bicie niczego założyć. Żeby to wyrazić, piszemy [forall], czyli po
+    polsku "dla każdego".
 
-    Żeby udowodnić coś o każdym bicie b, wystarczy udowodnić to dla
+    Żeby udowodnić coś o każdym bicie [b], wystarczy udowodnić to dla
     dowolnego bitu. Właśnie ten sposób rozumowania realizuje taktyka
     [intros] (argument po [intros] to nazwa, którą chcemy nadać naszemu
     dowolnemu bitowi). Po przeczytaniu linijki [intro dowolne_b.] mamy
@@ -368,7 +368,7 @@ Qed.
     udowodnić coś na jej temat dla jakiegoś argumentu, najpierw trzeba udowodnić
     tę samą własność dla mniejszego argumentu. Widzimy więc, że potrzebne jest
     nam coś w stylu wywołania rekurencyjnego, tylko że chcemy użyć tego czegoś
-    do dowodzenia, a nie definiowania funkcji... i właśnie tym czymś jest
+    do dowodzenia, a nie do definiowania funkcji... i właśnie tym czymś jest
     hipoteza indukcyjna!
 
     Uwaga: klauzula [as [| głowa_l ogon_l hipoteza indukcyjna]] pozwala nam
@@ -376,10 +376,10 @@ Qed.
     indukcyjnej. W programowaniu funkcyjnym tradycyjnie pierwszy element listy
     nazywa się głową, zaś resztę ogonem, i stąd biorą się nasze nazwy.
 
-    Indukcja pozostawia nam do udowodnienia dwa przypadki. W pierwszym [l] jest
-    postaci [koniec], a dowód jest prosty - po obu stronach równania jest to
-    samo. W drugim przypadku same obliczenia już nie wystarczą, ale z pomocą
-    przychodzi nam hipoteza indukcyjna, która jest równanie postaci
+    Indukcja pozostawia nam do udowodnienia dwa przypadki. W pierwszym [l]
+    jest  postaci [koniec], a dowód jest prosty - po obu stronach równania
+    jest to samo. W drugim przypadku same obliczenia już nie wystarczą, ale
+    z pomocą przychodzi nam hipoteza indukcyjna, która jest równaniem postaci
     [odwróć (na_końcu b ogon_l) = na_początku b (odwróć ogon_l)] - jest to
     niemal dokładnie ta właściwość, którą chcemy udowodnić, ale dotyczy ona
     ogona [l], a nie samej listy [l].
@@ -388,8 +388,8 @@ Qed.
     mamy [na_końcu głowa_l (odwróć (na_końcu b ogon_l))]. Ponieważ występuje
     tutaj wyrażenie [odwróć (na_końcu b ogon_l)], to możemy użyć naszej hipotezy
     indukcyjnej, żeby zastąpić je przez [na_początku b (odwróć ogon_l)]. Żeby
-    to zrobić, używamy taktyki [rewrite hipoteza_indukcyjna], które realizuje
-    rozumowania polegający na przepisywaniu równań. Na koniec wystarczy trochę
+    to zrobić, używamy taktyki [rewrite hipoteza_indukcyjna], która realizuje
+    rozumowania polegające na przepisywaniu równań. Na koniec wystarczy trochę
     policzyć i voilà - widać, że obie strony równania są takie same. *)
 
 Theorem odwróć_odwróć :
@@ -411,9 +411,9 @@ Qed.
     zaczynąć taktyką [intro l] - gdy używamy indukcji, Coq sam wie, że powinien
     najpierw wprowadzić listę [l] do kontekstu.
 
-    Mamy dwa przypadki. Gdy [l] jest postaci [koniec], wystarczy trochę policzyć
-    by przekonać się, że faktycznie [odwróć (odwróć koniec) = koniec]. W drugim
-    przypadku po wykonaniu obliczeń musimy pokazać
+    Mamy do rozpatrzenia dwa przypadki. Gdy [l] jest postaci [koniec], wystarczy
+    trochę policzyć by przekonać się, że faktycznie [odwróć (odwróć koniec) = koniec].
+    W drugim przypadku po wykonaniu obliczeń musimy pokazać
     [odwróć (na_końcu głowa_l (odwróć ogon_l)) = na_początku głowa_l ogon_l].
     Zauważmy, że możemy skorzystać z udowodnionego uprzednio twierdzenia
     [odwróć_na_końcu], gdyż nasz celu zawiera wyrażenie postaci
@@ -426,7 +426,20 @@ Qed.
 
 (** * Dlaczego warto nauczyć się Coqa? *)
 
-(** Języki funkcyjne ekspandują. *)
+(** Uważam, że warto nauczyć się Coqa (byłoby głupio, gdybym uważał inaczej,
+    prawda?). Powodów jest kilka.
+
+    Po pierwsze, programowanie funkcyjne ekspanduje i jest go wszędzie coraz
+    więcej. Języki funkcyjne używane są coraz powszechniej (zdaje się, że
+    najszybciej z nich rośnie Scala). Języki nie-funkcyjne natomiast w coraz
+    większym stopniu pożyczają z języków funkcyjnych nowe konstrukty językowe
+    (jeszcze kilka lat temu w C++ czy C# nie było np. funkcji anonimowych),
+    style i sposoby programowania (przetwarzanie strumieni w Javie),   Sprawa ma się tutaj w przybliżeniu dość
+    prosto: jeżeli znasz jeden język funkcyjny, mniej więcej znasz je wszystkie.
+    
+
+
+ *)
 
 (** * Ćwiczenia *)
 
@@ -502,7 +515,7 @@ Qed.
     jsCoq (https://jscoq.github.io/scratchpad.html). Polecam - nie trzeba nic
     instalować i ma rozsądne podpowiadanie składni dla początkujących.
 
-    Jeżeli chcecie zacząć dłuższą przygodę z Coqiem, polecam go zainstalować
+    Jeżeli chcesz zacząć dłuższą przygodę z Coqiem, polecam go zainstalować
     (https://coq.inria.fr/) - śmiga wtedy lepiej niż w przeglądarce. Musicie
     też wybrać sobie jakieś IDE:
     - CoqIDE (https://coq.inria.fr/) - standardowe IDE do Coqa, polecam.
@@ -523,19 +536,28 @@ Qed.
     - Książka Software Foundations, pierwsza połowa pierwszego tomu
       (po angielsku): https://softwarefoundations.cis.upenn.edu/lf-current/toc.html
 
-    Jeżeli słuchanie/czytanie po angielsku sprawia wam problem, możecie też przeczytać
+    Jeżeli słuchanie/czytanie po angielsku sprawia ci problem, możesz też przeczytać
     pierwsze rozdziały mojej własnej twórczości: https://wkolowski.github.io/CoqBookPL/
-    (uwaga, dość niekompletna i trochę nie po kolei). *)
+    (uwaga, dość niekompletna i trochę nie po kolei; nie jest też tak odpicowana, jak
+    niniejsza notatka). *)
 
-(** ** Linki i kontakt *)
+(** ** Przydatne linki *)
 
-(** Przydatne linki:
+(** Poniższe linki stanowią dobre punkty wyjścia do rozpoczęcia eksploracji
+    Coqowego świata:
     - Strona domowa: https://coq.inria.fr/
     - GitHub: https://github.com/coq/coq
     - Forum: https://coq.discourse.group/
     - Czat: https://coq.zulipchat.com/login/
     - Q&A: https://stackoverflow.com/questions/tagged/coq
 
-    Jeżeli masz pytania, pisz śmiało:
+    Na stronie domowej znajdziesz więcej linków i materiałów dydaktycznych. Na
+    GitHubie możesz podejrzeć, co Coqowi siedzi we flakach. Forum i tag "coq"
+    na StackOverflow służą głównie do zadawania pytań. Nie wiem co dzieje się
+    na czacie, ale pewnie też pytania, tylko że szybciej odpowiadają : ) *)
+
+(** ** Kontakt *)
+
+(**  Jeżeli masz pytania, pisz śmiało:
     - Ja: 299899@uwr.edu.pl
     - Nie ja: tomasz.drab@cs.uni.wroc.pl *)

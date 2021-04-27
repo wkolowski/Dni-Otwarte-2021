@@ -327,13 +327,13 @@ Taktyka <span class="inlinecode"><span class="id" title="tactic">cbv</span></spa
 </div>
 
 <div class="doc">
-Nasze twierdzenie ma stosować się do każdego bitu b, a więc nie
-    możemy o tym bicie niczego założyć. Żeby to wyrazić, piszemy <span class="inlinecode"><span class="id" title="keyword">forall</span></span>,
-    czyli po polsku "dla każdego".
+Nasze twierdzenie ma stosować się do każdego bitu <span class="inlinecode"><span class="id" title="var">b</span></span>, a więc nie możemy o
+    tym bicie niczego założyć. Żeby to wyrazić, piszemy <span class="inlinecode"><span class="id" title="keyword">forall</span></span>, czyli po
+    polsku "dla każdego".
 
 <div class="paragraph"> </div>
 
-    Żeby udowodnić coś o każdym bicie b, wystarczy udowodnić to dla
+    Żeby udowodnić coś o każdym bicie <span class="inlinecode"><span class="id" title="var">b</span></span>, wystarczy udowodnić to dla
     dowolnego bitu. Właśnie ten sposób rozumowania realizuje taktyka
     <span class="inlinecode"><span class="id" title="tactic">intros</span></span> (argument po <span class="inlinecode"><span class="id" title="tactic">intros</span></span> to nazwa, którą chcemy nadać naszemu
     dowolnemu bitowi). Po przeczytaniu linijki <span class="inlinecode"><span class="id" title="tactic">intro</span></span> <span class="inlinecode"><span class="id" title="var">dowolne_b</span>.</span> mamy
@@ -548,7 +548,7 @@ Czas w końcu udowodnić jakieś twierdzenie. Tym razem zaczynamy od słowa
     udowodnić coś na jej temat dla jakiegoś argumentu, najpierw trzeba udowodnić
     tę samą własność dla mniejszego argumentu. Widzimy więc, że potrzebne jest
     nam coś w stylu wywołania rekurencyjnego, tylko że chcemy użyć tego czegoś
-    do dowodzenia, a nie definiowania funkcji... i właśnie tym czymś jest
+    do dowodzenia, a nie do definiowania funkcji... i właśnie tym czymś jest
     hipoteza indukcyjna!
 
 <div class="paragraph"> </div>
@@ -560,10 +560,10 @@ Czas w końcu udowodnić jakieś twierdzenie. Tym razem zaczynamy od słowa
 
 <div class="paragraph"> </div>
 
-    Indukcja pozostawia nam do udowodnienia dwa przypadki. W pierwszym <span class="inlinecode"><span class="id" title="var">l</span></span> jest
-    postaci <span class="inlinecode"><span class="id" title="var">koniec</span></span>, a dowód jest prosty - po obu stronach równania jest to
-    samo. W drugim przypadku same obliczenia już nie wystarczą, ale z pomocą
-    przychodzi nam hipoteza indukcyjna, która jest równanie postaci
+    Indukcja pozostawia nam do udowodnienia dwa przypadki. W pierwszym <span class="inlinecode"><span class="id" title="var">l</span></span>
+    jest  postaci <span class="inlinecode"><span class="id" title="var">koniec</span></span>, a dowód jest prosty - po obu stronach równania
+    jest to samo. W drugim przypadku same obliczenia już nie wystarczą, ale
+    z pomocą przychodzi nam hipoteza indukcyjna, która jest równaniem postaci
     <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>)</span> - jest to
     niemal dokładnie ta właściwość, którą chcemy udowodnić, ale dotyczy ona
     ogona <span class="inlinecode"><span class="id" title="var">l</span></span>, a nie samej listy <span class="inlinecode"><span class="id" title="var">l</span></span>.
@@ -574,8 +574,8 @@ Czas w końcu udowodnić jakieś twierdzenie. Tym razem zaczynamy od słowa
     mamy <span class="inlinecode"><span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode"><span class="id" title="var">g</span>ł<span class="id" title="var">owa_l</span></span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>))</span>. Ponieważ występuje
     tutaj wyrażenie <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>)</span>, to możemy użyć naszej hipotezy
     indukcyjnej, żeby zastąpić je przez <span class="inlinecode"><span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>)</span>. Żeby
-    to zrobić, używamy taktyki <span class="inlinecode"><span class="id" title="tactic">rewrite</span></span> <span class="inlinecode"><span class="id" title="var">hipoteza_indukcyjna</span></span>, które realizuje
-    rozumowania polegający na przepisywaniu równań. Na koniec wystarczy trochę
+    to zrobić, używamy taktyki <span class="inlinecode"><span class="id" title="tactic">rewrite</span></span> <span class="inlinecode"><span class="id" title="var">hipoteza_indukcyjna</span></span>, która realizuje
+    rozumowania polegające na przepisywaniu równań. Na koniec wystarczy trochę
     policzyć i voilà - widać, że obie strony równania są takie same. 
 </div>
 <div class="code">
@@ -606,9 +606,9 @@ Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
 
 <div class="paragraph"> </div>
 
-    Mamy dwa przypadki. Gdy <span class="inlinecode"><span class="id" title="var">l</span></span> jest postaci <span class="inlinecode"><span class="id" title="var">koniec</span></span>, wystarczy trochę policzyć
-    by przekonać się, że faktycznie <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode"><span class="id" title="var">koniec</span>)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">koniec</span></span>. W drugim
-    przypadku po wykonaniu obliczeń musimy pokazać
+    Mamy do rozpatrzenia dwa przypadki. Gdy <span class="inlinecode"><span class="id" title="var">l</span></span> jest postaci <span class="inlinecode"><span class="id" title="var">koniec</span></span>, wystarczy
+    trochę policzyć by przekonać się, że faktycznie <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode"><span class="id" title="var">koniec</span>)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">koniec</span></span>.
+    W drugim przypadku po wykonaniu obliczeń musimy pokazać
     <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> <span class="inlinecode"><span class="id" title="var">g</span>ł<span class="id" title="var">owa_l</span></span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>))</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span></span> <span class="inlinecode"><span class="id" title="var">g</span>ł<span class="id" title="var">owa_l</span></span> <span class="inlinecode"><span class="id" title="var">ogon_l</span></span>.
     Zauważmy, że możemy skorzystać z udowodnionego uprzednio twierdzenia
     <span class="inlinecode"><span class="id" title="var">odwró</span>ć<span class="id" title="var">_na_ko</span>ń<span class="id" title="var">cu</span></span>, gdyż nasz celu zawiera wyrażenie postaci
@@ -624,7 +624,22 @@ Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
 
 <div class="paragraph"> </div>
 
- Języki funkcyjne ekspandują. 
+ Uważam, że warto nauczyć się Coqa (byłoby głupio, gdybym uważał inaczej,
+    prawda?). Powodów jest kilka.
+
+<div class="paragraph"> </div>
+
+    Po pierwsze, programowanie funkcyjne ekspanduje i jest go wszędzie coraz
+    więcej. Języki funkcyjne używane są coraz powszechniej (zdaje się, że
+    najszybciej z nich rośnie Scala). Języki nie-funkcyjne natomiast w coraz
+    większym stopniu pożyczają z języków funkcyjnych nowe konstrukty językowe
+    (jeszcze kilka lat temu w C++ czy C nie było np. funkcji anonimowych),
+    style i sposoby programowania (przetwarzanie strumieni w Javie),   Sprawa ma się tutaj w przybliżeniu dość
+    prosto: jeżeli znasz jeden język funkcyjny, mniej więcej znasz je wszystkie.
+    
+
+
+ 
 <div class="paragraph"> </div>
 
 <a id="lab9"></a><h1 class="section">Ćwiczenia</h1>
@@ -774,7 +789,7 @@ Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
 
 <div class="paragraph"> </div>
 
-    Jeżeli chcecie zacząć dłuższą przygodę z Coqiem, polecam go zainstalować
+    Jeżeli chcesz zacząć dłuższą przygodę z Coqiem, polecam go zainstalować
     (https://coq.inria.fr/) - śmiga wtedy lepiej niż w przeglądarce. Musicie
     też wybrać sobie jakieś IDE:
 <ul class="doclist">
@@ -818,16 +833,18 @@ Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
 
 <div class="paragraph"> </div>
 
-    Jeżeli słuchanie/czytanie po angielsku sprawia wam problem, możecie też przeczytać
+    Jeżeli słuchanie/czytanie po angielsku sprawia ci problem, możesz też przeczytać
     pierwsze rozdziały mojej własnej twórczości: https://wkolowski.github.io/CoqBookPL/
-    (uwaga, dość niekompletna i trochę nie po kolei). 
+    (uwaga, dość niekompletna i trochę nie po kolei; nie jest też tak odpicowana, jak
+    niniejsza notatka). 
 <div class="paragraph"> </div>
 
-<a id="lab19"></a><h2 class="section">Linki i kontakt</h2>
+<a id="lab19"></a><h2 class="section">Przydatne linki</h2>
 
 <div class="paragraph"> </div>
 
- Przydatne linki:
+ Poniższe linki stanowią dobre punkty wyjścia do rozpoczęcia eksploracji
+    Coqowego świata:
 <ul class="doclist">
 <li> Strona domowa: https://coq.inria.fr/
 
@@ -848,7 +865,17 @@ Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
 
 <div class="paragraph"> </div>
 
-    Jeżeli masz pytania, pisz śmiało:
+    Na stronie domowej znajdziesz więcej linków i materiałów dydaktycznych. Na
+    GitHubie możesz podejrzeć, co Coqowi siedzi we flakach. Forum i tag "coq"
+    na StackOverflow służą głównie do zadawania pytań. Nie wiem co dzieje się
+    na czacie, ale pewnie też pytania, tylko że szybciej odpowiadają : ) 
+<div class="paragraph"> </div>
+
+<a id="lab20"></a><h2 class="section">Kontakt</h2>
+
+<div class="paragraph"> </div>
+
+  Jeżeli masz pytania, pisz śmiało:
 <ul class="doclist">
 <li> Ja: 299899@uwr.edu.pl
 
