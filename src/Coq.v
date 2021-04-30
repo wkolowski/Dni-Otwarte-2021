@@ -101,7 +101,7 @@ Inductive        (* Definicja typu zaczyna się od słowa kluczowego "Inductive"
     słowo kluczowe [Inductive] - dowiemy się tego później. Zauważ też, że
     definicja kończy się kropką, podobnie jak wszystkie inne komendy w Coqu.
     Samą definicję można odczytać następująco: "bit jest typem, który może
-    przjmować tylko jedną z dwóch wartości: tak albo nie".
+    przyjmować tylko jedną z dwóch wartości: tak albo nie".
 
     Co można zrobić z bitem? Zanegować! Tzn. zamienić "1" na "0", a "0" na "1"
     (co w naszym przypadku oznacza, że chcemy zamienić [tak] na [nie], a [nie]
@@ -118,7 +118,28 @@ Definition                  (* Definicja zaczyna się od słowa kluczowego "Defi
 (** Uwaga: jeżeli oglądałeś moje nagranie z Dni Otwartych, to możesz tam
     zauważyć, że Coq automatycznie zamienia strzałkę [->] na [→], [=>]
     na [→], [fun] na [λ], a [forall] na [∀]. Żeby nie komplikować ci życia,
-    na niniejszej stronie wyłączyłem te konwersje. *)
+    na niniejszej stronie wyłączyłem te konwersje.
+
+    Sama definicja jest dość prosta. Definicje zaczynają się od słowa kluczowego
+    [Definition] (definiować tak możemy nie tylko funkcje, ale też inne obiekty).
+    Następnie podajemy nazwę definiowanej funkcji. Żeby uniknąć niepotrzebnych
+    komplikacji przyjąłem konwencję, że wszystkie nasze nazwy będą w języku
+    polskim. Następnie, po dwukropku, podajemy typ definiowanego obiektu (nie jest
+    to konieczne, ale pisanie typów to dobry zwyczaj). Zapis [A -> B] oznacza typ
+    funkcji, a zatem [bit -> bit] to typ funkcji, które biorą argument typu [bit]
+    i zwracają wynik również typu [bit].
+
+    Ciało definicji zaczyna się po znaku ":=". Funkcje są postaci [fun x : A => e],
+    co można odczytać jako "weź argument typu A o nazwie x i zwróć jako wynik
+    wyrażenie e". Nazwa argumentu nie ma znaczenia - w naszym przypadku zamiast
+    [fun b : bit => match b ...] moglibyśmy równie dobrze napisać
+    [fun c : bit => match c ...]. Dalej, między słowami kluczowymi [match] i
+    [end] wykonujemy _dopasowanie do wzorca_ na bicie [b]. Ponieważ typ [bit]
+    zdefiniowaliśmy tak, że są tylko dwie możliwości ([tak] albo [nie]), to
+    możemy teraz sprawdzić, którą z tych postaci przyjmuje [b], i w każdym z
+    tych dwóch przypadków zwrócić odpowiedni wynik. Uwaga: nie możemy pominąć
+    żadnego przypadku. Nie możemy też podać podać większej ilości przypadków,
+    niż faktycznie jest możliwości. *)
 
 (** * Równość *)
 
@@ -126,7 +147,7 @@ Definition                  (* Definicja zaczyna się od słowa kluczowego "Defi
     udowodnić jakieś twierdzenie, które nas w tym upewni. Zanim jednak to
     nastąpi, zobaczmy jak w ogóle działają w Coqu twierdzenia. Szczególnie
     zainteresowani będziemy dowodzeniem równości dwóch obiektów.
-    
+
     Twierdzenia i dowody są jedną z najmocniejszych stron Coqa. Gdy zaczynamy
     dowód, w oknie po prawej pojawia się nasz cel, czyli to czego chcemy
     dowieść. W miarę jak wykonujemy kolejne kroki dowodu, stan okna po prawej
@@ -136,43 +157,59 @@ Definition                  (* Definicja zaczyna się od słowa kluczowego "Defi
     klawiszowych. Jeżeli nie rozumiesz jakiegoś dowodu, możesz powtarzać go,
     dopóki cię nie oświeci. *)
 
-Goal tak = tak. (* Po słowie kluczowym [Goal] piszemy, co chcemy udowodnić. *)
-Proof.          (* Dowód zaczynamy od słowa kluczowego [Proof]. *)
+Goal tak = tak. (* Po słowie kluczowym "Goal" piszemy, co chcemy udowodnić. *)
+Proof.          (* Dowód zaczynamy od słowa kluczowego "Proof". *)
   reflexivity.  (* Każda rzecz jest równa samej sobie i Coq o tym wie. *)
-Qed.            (* Dowód kończymy słowem [Qed] - od łac. "Quod erat demonstrandum" - "Co należało udowodnić" *)
+Qed.            (* Dowód kończymy słowem "Qed" - od łac. "Quod erat demonstrandum" - "Co należało udowodnić" *)
 
-(** [reflexivity] znaczy po angielsku "zwrotność", a "zwrotność" to w
+(** Nasze twierdzenie jest trywialne: chcemy pokazać, że [tak] jest równe [tak].
+    Dowód jest równie trywialny i sprowadza się do użycia taktyki [reflexivity].
+
+    Po angielsku "reflexivity" znaczy "zwrotność", a "zwrotność" to w
     matematycznej mowie nazwa na fakt, że każda rzecz jest równa samej
     sobie - wiedział o tym już Arystoteles jakieś 2400 lat temu, więc
-    i nie dziwota, że Coq o tym wie. *)
-
-Goal tak = nie.     (* A może [tak] jest równe [nie]? Oby nie! *)
-Proof.
-  Fail reflexivity. (* [tak] to coś innego niż [nie] i Coq to wie - nie da się go zrobić w wała *)
-Abort.              (* Zakończenie dowodu za pomocą [Abort] oznacza, że się poddajemy. *) 
-
-(** [reflexivity] jest taktyką. Taktyka to formalny, Coqowy odpowiednik
+    i nie dziwota, że Coq o tym wie. Taktyka to formalny, Coqowy odpowiednik
     nieformalnego sposobu rozumowania. Powiedzenie, że "każda rzecz jest
     równa samej sobie", to właśnie taki nieformalny sposób rozumowania,
-    a taktyka [reflexivity] jest jego realizacją. Nie każdy sposób
-    rozumowania jest poprawny, a zatem nie każde użycie taktyki kończy
-    się sukcesem. W powyższym przykładzie rozumowanie "tak to to samo
-    co nie, bo każda rzecz jest równa samej sobie" jest niepoprawne, a
-    zatem próba użycia taktyki [reflexivity] zawodzi i musimy się poddać. *)
+    a taktyka [reflexivity] jest jego realizacją. *)
+
+Goal tak = nie.     (* A może "tak" jest równe "nie"? Oby nie! *)
+Proof.
+  Fail reflexivity. (* "tak" to coś innego niż "nie" i Coq to wie - nie da się go zrobić w wała *)
+Abort.              (* Zakończenie dowodu za pomocą "Abort" oznacza, że się poddajemy. *) 
+
+(** Nie każdy sposób rozumowania jest poprawny, a zatem nie każde użycie taktyki
+    kończy się sukcesem. W powyższym przykładzie rozumowanie "tak to to samo co
+    nie, bo każda rzecz jest równa samej sobie" jest niepoprawne, a zatem próba
+    udowodnienia tego twierdzenia za pomocą taktyki [reflexivity] zawodzi i
+    musimy się poddać. *)
 
 (** * Obliczenia *)
 
-(** Obliczenia w Coqu są wykonywane w bardzo prosty sposób - wszystko
-    sprowadza się do upraszczania wyrażeń. Uczyłeś się pewnie w szkole
-    na matematyce, że 0 + x = x i że jeżeli mamy jakieś skomplikowane
-    wyrażenie, w którym występuje 0 + x, to możemy to wyrażenie uprościć
-    do postaci, w której zamiast 0 + x występuje samo x.
+(** Obliczenia w Coqu są wykonywane w bardzo prosty sposób - wszystko sprowadza
+    się do upraszczania wyrażeń. Uczyłeś się pewnie w szkole na matematyce, że
+    0 + x = x i że jeżeli mamy jakieś skomplikowane wyrażenie, w którym występuje
+    0 + x, to możemy to wyrażenie uprościć do postaci, w której zamiast 0 + x
+    występuje samo x.
 
-    Każdy program w Coqu jest po prostu wyrażeniem, a jego obliczanie
-    polega na wykonywaniu po kolei różnych uproszczeń. Są trzy główne
-    rodzaje uproszczeń: odwinięcie definicji, podstawienie wartości za
-    argument funkcji, i wykonanie dopasowania do wzorca. W praktyce
-    wygląda to tak: *)
+    Każdy program w Coqu jest po prostu wyrażeniem, a jego obliczanie polega na
+    wykonywaniu różnych uproszczeń. Kolejność, w jakiej wykonywane są uproszczenia,
+    nie ma wpływu na wynik - zawsze wychodzi ten sam - ale może mieć wpływ na
+    liczbę uproszczeń, którą trzeba wykonać. Liczba ta jednak, niezależnie od
+    kolejności, zawsze jest skończona i wobec tego prędzej czy później każdy
+    program zostaje maksymalnie uproszczony. Ta maksymalnie uproszczona postać
+    programu nazywana jest postacią normalną i jest ona wynikiem obliczeń. *)
+
+Goal negacja nie = tak.
+Proof.
+  cbv.
+  reflexivity.
+Qed.
+
+(** Taktyka [cbv] realizuje sposób rozumowania "policz wynik działania programu".
+    Nazwa pochodzi od angielskiego określenia "call by value" i oznacza pewną
+    konkretną kolejność, w której wykonywane są trzy podstawowe rodzaje uproszczeń,
+    które zobaczymy za chwilę. *)
 
 Goal negacja tak = nie.
 Proof.
@@ -182,23 +219,28 @@ Proof.
   reflexivity.
 Qed.
 
-Goal negacja nie = tak.
-Proof.
-  cbv. (* Oczywiście możemy policzyć wszystko za jednym zamachem. *)
-  reflexivity.
-Qed.
+(** Są trzy główne rodzaje uproszczeń:
+    - odwinięcie definicji
+    - podstawienie wartości za argument funkcji
+    - wykonanie dopasowania do wzorca
 
-(** Taktyka [cbv] realizuje sposób rozumowania "uprość program
-    maksymalnie jak tylko się da". Nazwa pochodzi od angielskiego
-    "call by value" i oznacza pewną konkretną kolejność, w której
-    wykonywane są trzy podstawowe rodzaje uproszczeń, które
-    widzieliśmy powyżej. *)
+    Odwinięcie definicji zamienia nazwę (w naszym przypadku [negacja]) na kod,
+    który ją definiuje (w naszym przypadku [fun b : bit => match b with ... end]).
+    Podstawienie działa tak: jeżeli w funkcji [fun x : A => ... x ...] podstawimy
+    [y] za [x], to otrzymujemy w wyniku [... y ...]
+
+    Wykonanie dopasowania polega na sprawdzeniu, który wzorzec pasuje i zwróceniu
+    odpowiadającej wartości. Wzorce sprawdzane sa od góry do dołu - jeżeli pierwszy
+    nie pasuje, sprawdzany jest kolejny i tak aż do skutku. Gwarantuje to nam, że
+    w każdej sytuacji dopasować się może co najwyżej jeden wzorzec. Ponieważ
+    definicje muszą obsługiwać wszystkie przypadki, mamy także gwarancję, że któryś
+    wzorzec w końcu się dopasuje. *)
 
 (** * Niebanalne twierdzenie *)
 
-(** No, wreszcie czas udowodnić coś o naszej negacji. Ale co? Cóż...
-    gdyby tak zanegować jakiś bit dwa razy, to powinniśmy w wyniku
-    otrzymać to samo, co mieliśmy na początku, czyż nie? *)
+(** No, wreszcie czas udowodnić coś o naszej negacji. Ale co? Cóż... gdyby tak
+    zanegować jakiś bit dwa razy, to powinniśmy w wyniku otrzymać to samo, co
+    mieliśmy na początku, czyż nie? *)
 
 Goal forall b : bit,         (* Dla każdego bitu b... *)
   negacja (negacja b) = b.   (* negacja negacji b jest równa b *)
@@ -431,15 +473,25 @@ Qed.
 
     Po pierwsze, programowanie funkcyjne ekspanduje i jest go wszędzie coraz
     więcej. Języki funkcyjne używane są coraz powszechniej (zdaje się, że
-    najszybciej z nich rośnie Scala). Języki nie-funkcyjne natomiast w coraz
+    najszybciej z nich rośnie Scala). Języki mainstreamowe natomiast w coraz
     większym stopniu pożyczają z języków funkcyjnych nowe konstrukty językowe
-    (jeszcze kilka lat temu w C++ czy C# nie było np. funkcji anonimowych),
-    style i sposoby programowania (przetwarzanie strumieni w Javie),   Sprawa ma się tutaj w przybliżeniu dość
-    prosto: jeżeli znasz jeden język funkcyjny, mniej więcej znasz je wszystkie.
-    
+    (jeszcze kilka lat temu w C++ czy C## nie było np. funkcji anonimowych),
+    style i techniki programowania (przetwarzanie strumieni w Javie), abstrakcje,
+    pomysły na biblioteki i API etc. Sprawa ma się tutaj w przybliżeniu dość
+    prosto: jeżeli znasz Coqa, to bardzo szybko nauczysz się każdego innego
+    języka funkcyjnego oraz w mig zrozumiesz wszelkie zapożyczenia z języków
+    funkcyjnych, występujące w innych językach.
 
-
- *)
+    Po drugie, nauczysz się poprawnie i efektywnie rozumować o programach (nie
+    tylko tych napisanych w Coqu, ale także w innych językach funkcyjnych i, w
+    mniejszym stopniu, także w pozostałych językach). Jest to niesamowicie cenna
+    i bardzo praktyczna umiejętność. Rozumowania równaniowe pozwalają połapać
+    się podczas refaktoryzowania kodu, czy nasze zmiany przypadkiem nie zmieniły
+    znaczenia programu. Umiejętność wymyślania twierdzeń, które w ogóle należy
+    udowodnić na temat danej funkcji, świetnie przekłada się później w pracy na
+    umiejętność wymyślania dobrych testów. Rozumowania na temat równoważności
+    typów przydają się przy projektowaniu interfejsów i API (oraz znowu podczas
+    refaktoringu). *)
 
 (** * Ćwiczenia *)
 

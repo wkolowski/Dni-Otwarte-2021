@@ -168,7 +168,7 @@
     słowo kluczowe <span class="inlinecode"><span class="id" title="keyword">Inductive</span></span> - dowiemy się tego później. Zauważ też, że
     definicja kończy się kropką, podobnie jak wszystkie inne komendy w Coqu.
     Samą definicję można odczytać następująco: "bit jest typem, który może
-    przjmować tylko jedną z dwóch wartości: tak albo nie".
+    przyjmować tylko jedną z dwóch wartości: tak albo nie".
 
 <div class="paragraph"> </div>
 
@@ -194,7 +194,32 @@
 Uwaga: jeżeli oglądałeś moje nagranie z Dni Otwartych, to możesz tam
     zauważyć, że Coq automatycznie zamienia strzałkę <span class="inlinecode">-&gt;</span> na <span class="inlinecode">→</span>, <span class="inlinecode">=&gt;</span>
     na <span class="inlinecode">→</span>, <span class="inlinecode"><span class="id" title="keyword">fun</span></span> na <span class="inlinecode"><span class="id" title="var">λ</span></span>, a <span class="inlinecode"><span class="id" title="keyword">forall</span></span> na <span class="inlinecode">∀</span>. Żeby nie komplikować ci życia,
-    na niniejszej stronie wyłączyłem te konwersje. 
+    na niniejszej stronie wyłączyłem te konwersje.
+
+<div class="paragraph"> </div>
+
+    Sama definicja jest dość prosta. Definicje zaczynają się od słowa kluczowego
+    <span class="inlinecode"><span class="id" title="keyword">Definition</span></span> (definiować tak możemy nie tylko funkcje, ale też inne obiekty).
+    Następnie podajemy nazwę definiowanej funkcji. Żeby uniknąć niepotrzebnych
+    komplikacji przyjąłem konwencję, że wszystkie nasze nazwy będą w języku
+    polskim. Następnie, po dwukropku, podajemy typ definiowanego obiektu (nie jest
+    to konieczne, ale pisanie typów to dobry zwyczaj). Zapis <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">B</span></span> oznacza typ
+    funkcji, a zatem <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> to typ funkcji, które biorą argument typu <span class="inlinecode"><span class="id" title="var">bit</span></span>
+    i zwracają wynik również typu <span class="inlinecode"><span class="id" title="var">bit</span></span>.
+
+<div class="paragraph"> </div>
+
+    Ciało definicji zaczyna się po znaku ":=". Funkcje są postaci <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode"><span class="id" title="var">e</span></span>,
+    co można odczytać jako "weź argument typu A o nazwie x i zwróć jako wynik
+    wyrażenie e". Nazwa argumentu nie ma znaczenia - w naszym przypadku zamiast
+    <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode"><span class="id" title="keyword">match</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">...</span> moglibyśmy równie dobrze napisać
+    <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode"><span class="id" title="var">c</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode"><span class="id" title="keyword">match</span></span> <span class="inlinecode"><span class="id" title="var">c</span></span> <span class="inlinecode">...</span>. Dalej, między słowami kluczowymi <span class="inlinecode"><span class="id" title="keyword">match</span></span> i
+    <span class="inlinecode"><span class="id" title="keyword">end</span></span> wykonujemy <i>dopasowanie do wzorca</i> na bicie <span class="inlinecode"><span class="id" title="var">b</span></span>. Ponieważ typ <span class="inlinecode"><span class="id" title="var">bit</span></span>
+    zdefiniowaliśmy tak, że są tylko dwie możliwości (<span class="inlinecode"><span class="id" title="var">tak</span></span> albo <span class="inlinecode"><span class="id" title="var">nie</span></span>), to
+    możemy teraz sprawdzić, którą z tych postaci przyjmuje <span class="inlinecode"><span class="id" title="var">b</span></span>, i w każdym z
+    tych dwóch przypadków zwrócić odpowiedni wynik. Uwaga: nie możemy pominąć
+    żadnego przypadku. Nie możemy też podać podać większej ilości przypadków,
+    niż faktycznie jest możliwości. 
 <div class="paragraph"> </div>
 
 <a id="lab4"></a><h1 class="section">Równość</h1>
@@ -220,59 +245,84 @@ Uwaga: jeżeli oglądałeś moje nagranie z Dni Otwartych, to możesz tam
 <div class="code">
 
 <br/>
-<span class="id" title="keyword">Goal</span> <span class="id" title="var">tak</span> = <span class="id" title="var">tak</span>. <span class="comment">(*&nbsp;Po&nbsp;słowie&nbsp;kluczowym&nbsp;<span class="inlinecode"><span class="id" title="keyword">Goal</span></span>&nbsp;piszemy,&nbsp;co&nbsp;chcemy&nbsp;udowodnić.&nbsp;*)</span><br/>
-<span class="id" title="keyword">Proof</span>. <span class="comment">(*&nbsp;Dowód&nbsp;zaczynamy&nbsp;od&nbsp;słowa&nbsp;kluczowego&nbsp;<span class="inlinecode"><span class="id" title="keyword">Proof</span></span>.&nbsp;*)</span><br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">tak</span> = <span class="id" title="var">tak</span>. <span class="comment">(*&nbsp;Po&nbsp;słowie&nbsp;kluczowym&nbsp;"Goal"&nbsp;piszemy,&nbsp;co&nbsp;chcemy&nbsp;udowodnić.&nbsp;*)</span><br/>
+<span class="id" title="keyword">Proof</span>. <span class="comment">(*&nbsp;Dowód&nbsp;zaczynamy&nbsp;od&nbsp;słowa&nbsp;kluczowego&nbsp;"Proof".&nbsp;*)</span><br/>
 &nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;Każda&nbsp;rzecz&nbsp;jest&nbsp;równa&nbsp;samej&nbsp;sobie&nbsp;i&nbsp;Coq&nbsp;o&nbsp;tym&nbsp;wie.&nbsp;*)</span><br/>
-<span class="id" title="keyword">Qed</span>. <span class="comment">(*&nbsp;Dowód&nbsp;kończymy&nbsp;słowem&nbsp;<span class="inlinecode"><span class="id" title="keyword">Qed</span></span>&nbsp;-&nbsp;od&nbsp;łac.&nbsp;"Quod&nbsp;erat&nbsp;demonstrandum"&nbsp;-&nbsp;"Co&nbsp;należało&nbsp;udowodnić"&nbsp;*)</span><br/>
+<span class="id" title="keyword">Qed</span>. <span class="comment">(*&nbsp;Dowód&nbsp;kończymy&nbsp;słowem&nbsp;"Qed"&nbsp;-&nbsp;od&nbsp;łac.&nbsp;"Quod&nbsp;erat&nbsp;demonstrandum"&nbsp;-&nbsp;"Co&nbsp;należało&nbsp;udowodnić"&nbsp;*)</span><br/>
 
 <br/>
 </div>
 
 <div class="doc">
-<span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span> znaczy po angielsku "zwrotność", a "zwrotność" to w
+Nasze twierdzenie jest trywialne: chcemy pokazać, że <span class="inlinecode"><span class="id" title="var">tak</span></span> jest równe <span class="inlinecode"><span class="id" title="var">tak</span></span>.
+    Dowód jest równie trywialny i sprowadza się do użycia taktyki <span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span>.
+
+<div class="paragraph"> </div>
+
+    Po angielsku "reflexivity" znaczy "zwrotność", a "zwrotność" to w
     matematycznej mowie nazwa na fakt, że każda rzecz jest równa samej
     sobie - wiedział o tym już Arystoteles jakieś 2400 lat temu, więc
-    i nie dziwota, że Coq o tym wie. 
+    i nie dziwota, że Coq o tym wie. Taktyka to formalny, Coqowy odpowiednik
+    nieformalnego sposobu rozumowania. Powiedzenie, że "każda rzecz jest
+    równa samej sobie", to właśnie taki nieformalny sposób rozumowania,
+    a taktyka <span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span> jest jego realizacją. 
 </div>
 <div class="code">
 
 <br/>
-<span class="id" title="keyword">Goal</span> <span class="id" title="var">tak</span> = <span class="id" title="var">nie</span>. <span class="comment">(*&nbsp;A&nbsp;może&nbsp;<span class="inlinecode"><span class="id" title="var">tak</span></span>&nbsp;jest&nbsp;równe&nbsp;<span class="inlinecode"><span class="id" title="var">nie</span></span>?&nbsp;Oby&nbsp;nie!&nbsp;*)</span><br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">tak</span> = <span class="id" title="var">nie</span>. <span class="comment">(*&nbsp;A&nbsp;może&nbsp;"tak"&nbsp;jest&nbsp;równe&nbsp;"nie"?&nbsp;Oby&nbsp;nie!&nbsp;*)</span><br/>
 <span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="var">Fail</span> <span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">tak</span></span>&nbsp;to&nbsp;coś&nbsp;innego&nbsp;niż <span class="inlinecode"><span class="id" title="var">nie</span></span>&nbsp;i&nbsp;Coq&nbsp;to&nbsp;wie&nbsp;-&nbsp;nie&nbsp;da&nbsp;się&nbsp;go&nbsp;zrobić&nbsp;w&nbsp;wała&nbsp;*)</span><br/>
-<span class="id" title="keyword">Abort</span>. <span class="comment">(*&nbsp;Zakończenie&nbsp;dowodu&nbsp;za&nbsp;pomocą&nbsp;<span class="inlinecode"><span class="id" title="keyword">Abort</span></span>&nbsp;oznacza,&nbsp;że&nbsp;się&nbsp;poddajemy.&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Fail</span> <span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;"tak"&nbsp;to&nbsp;coś&nbsp;innego&nbsp;niż "nie"&nbsp;i&nbsp;Coq&nbsp;to&nbsp;wie&nbsp;-&nbsp;nie&nbsp;da&nbsp;się&nbsp;go&nbsp;zrobić&nbsp;w&nbsp;wała&nbsp;*)</span><br/>
+<span class="id" title="keyword">Abort</span>. <span class="comment">(*&nbsp;Zakończenie&nbsp;dowodu&nbsp;za&nbsp;pomocą&nbsp;"Abort"&nbsp;oznacza,&nbsp;że&nbsp;się&nbsp;poddajemy.&nbsp;*)</span><br/>
 
 <br/>
 </div>
 
 <div class="doc">
-<span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span> jest taktyką. Taktyka to formalny, Coqowy odpowiednik
-    nieformalnego sposobu rozumowania. Powiedzenie, że "każda rzecz jest
-    równa samej sobie", to właśnie taki nieformalny sposób rozumowania,
-    a taktyka <span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span> jest jego realizacją. Nie każdy sposób
-    rozumowania jest poprawny, a zatem nie każde użycie taktyki kończy
-    się sukcesem. W powyższym przykładzie rozumowanie "tak to to samo
-    co nie, bo każda rzecz jest równa samej sobie" jest niepoprawne, a
-    zatem próba użycia taktyki <span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span> zawodzi i musimy się poddać. 
+Nie każdy sposób rozumowania jest poprawny, a zatem nie każde użycie taktyki
+    kończy się sukcesem. W powyższym przykładzie rozumowanie "tak to to samo co
+    nie, bo każda rzecz jest równa samej sobie" jest niepoprawne, a zatem próba
+    udowodnienia tego twierdzenia za pomocą taktyki <span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span> zawodzi i
+    musimy się poddać. 
 <div class="paragraph"> </div>
 
 <a id="lab5"></a><h1 class="section">Obliczenia</h1>
 
 <div class="paragraph"> </div>
 
- Obliczenia w Coqu są wykonywane w bardzo prosty sposób - wszystko
-    sprowadza się do upraszczania wyrażeń. Uczyłeś się pewnie w szkole
-    na matematyce, że 0 + x = x i że jeżeli mamy jakieś skomplikowane
-    wyrażenie, w którym występuje 0 + x, to możemy to wyrażenie uprościć
-    do postaci, w której zamiast 0 + x występuje samo x.
+ Obliczenia w Coqu są wykonywane w bardzo prosty sposób - wszystko sprowadza
+    się do upraszczania wyrażeń. Uczyłeś się pewnie w szkole na matematyce, że
+    0 + x = x i że jeżeli mamy jakieś skomplikowane wyrażenie, w którym występuje
+    0 + x, to możemy to wyrażenie uprościć do postaci, w której zamiast 0 + x
+    występuje samo x.
 
 <div class="paragraph"> </div>
 
-    Każdy program w Coqu jest po prostu wyrażeniem, a jego obliczanie
-    polega na wykonywaniu po kolei różnych uproszczeń. Są trzy główne
-    rodzaje uproszczeń: odwinięcie definicji, podstawienie wartości za
-    argument funkcji, i wykonanie dopasowania do wzorca. W praktyce
-    wygląda to tak: 
+    Każdy program w Coqu jest po prostu wyrażeniem, a jego obliczanie polega na
+    wykonywaniu różnych uproszczeń. Kolejność, w jakiej wykonywane są uproszczenia,
+    nie ma wpływu na wynik - zawsze wychodzi ten sam - ale może mieć wpływ na
+    liczbę uproszczeń, którą trzeba wykonać. Liczba ta jednak, niezależnie od
+    kolejności, zawsze jest skończona i wobec tego prędzej czy później każdy
+    program zostaje maksymalnie uproszczony. Ta maksymalnie uproszczona postać
+    programu nazywana jest postacią normalną i jest ona wynikiem obliczeń. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Goal</span> <span class="id" title="var">negacja</span> <span class="id" title="var">nie</span> = <span class="id" title="var">tak</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">cbv</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Taktyka <span class="inlinecode"><span class="id" title="tactic">cbv</span></span> realizuje sposób rozumowania "policz wynik działania programu".
+    Nazwa pochodzi od angielskiego określenia "call by value" i oznacza pewną
+    konkretną kolejność, w której wykonywane są trzy podstawowe rodzaje uproszczeń,
+    które zobaczymy za chwilę. 
 </div>
 <div class="code">
 
@@ -286,30 +336,46 @@ Uwaga: jeżeli oglądałeś moje nagranie z Dni Otwartych, to możesz tam
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
-<span class="id" title="keyword">Goal</span> <span class="id" title="var">negacja</span> <span class="id" title="var">nie</span> = <span class="id" title="var">tak</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">cbv</span>. <span class="comment">(*&nbsp;Oczywiście&nbsp;możemy&nbsp;policzyć&nbsp;wszystko&nbsp;za&nbsp;jednym&nbsp;zamachem.&nbsp;*)</span><br/>
-&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
-
-<br/>
 </div>
 
 <div class="doc">
-Taktyka <span class="inlinecode"><span class="id" title="tactic">cbv</span></span> realizuje sposób rozumowania "uprość program
-    maksymalnie jak tylko się da". Nazwa pochodzi od angielskiego
-    "call by value" i oznacza pewną konkretną kolejność, w której
-    wykonywane są trzy podstawowe rodzaje uproszczeń, które
-    widzieliśmy powyżej. 
+Są trzy główne rodzaje uproszczeń:
+<ul class="doclist">
+<li> odwinięcie definicji
+
+</li>
+<li> podstawienie wartości za argument funkcji
+
+</li>
+<li> wykonanie dopasowania do wzorca
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+    Odwinięcie definicji zamienia nazwę (w naszym przypadku <span class="inlinecode"><span class="id" title="var">negacja</span></span>) na kod,
+    który ją definiuje (w naszym przypadku <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode"><span class="id" title="keyword">match</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="keyword">with</span></span> <span class="inlinecode">...</span> <span class="inlinecode"><span class="id" title="keyword">end</span></span>).
+    Podstawienie działa tak: jeżeli w funkcji <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode">...</span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">...</span> podstawimy
+    <span class="inlinecode"><span class="id" title="var">y</span></span> za <span class="inlinecode"><span class="id" title="var">x</span></span>, to otrzymujemy w wyniku <span class="inlinecode">...</span> <span class="inlinecode"><span class="id" title="var">y</span></span> <span class="inlinecode">...</span>
+
+<div class="paragraph"> </div>
+
+    Wykonanie dopasowania polega na sprawdzeniu, który wzorzec pasuje i zwróceniu
+    odpowiadającej wartości. Wzorce sprawdzane sa od góry do dołu - jeżeli pierwszy
+    nie pasuje, sprawdzany jest kolejny i tak aż do skutku. Gwarantuje to nam, że
+    w każdej sytuacji dopasować się może co najwyżej jeden wzorzec. Ponieważ
+    definicje muszą obsługiwać wszystkie przypadki, mamy także gwarancję, że któryś
+    wzorzec w końcu się dopasuje. 
 <div class="paragraph"> </div>
 
 <a id="lab6"></a><h1 class="section">Niebanalne twierdzenie</h1>
 
 <div class="paragraph"> </div>
 
- No, wreszcie czas udowodnić coś o naszej negacji. Ale co? Cóż...
-    gdyby tak zanegować jakiś bit dwa razy, to powinniśmy w wyniku
-    otrzymać to samo, co mieliśmy na początku, czyż nie? 
+ No, wreszcie czas udowodnić coś o naszej negacji. Ale co? Cóż... gdyby tak
+    zanegować jakiś bit dwa razy, to powinniśmy w wyniku otrzymać to samo, co
+    mieliśmy na początku, czyż nie? 
 </div>
 <div class="code">
 
@@ -631,15 +697,27 @@ Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
 
     Po pierwsze, programowanie funkcyjne ekspanduje i jest go wszędzie coraz
     więcej. Języki funkcyjne używane są coraz powszechniej (zdaje się, że
-    najszybciej z nich rośnie Scala). Języki nie-funkcyjne natomiast w coraz
+    najszybciej z nich rośnie Scala). Języki mainstreamowe natomiast w coraz
     większym stopniu pożyczają z języków funkcyjnych nowe konstrukty językowe
-    (jeszcze kilka lat temu w C++ czy C nie było np. funkcji anonimowych),
-    style i sposoby programowania (przetwarzanie strumieni w Javie),   Sprawa ma się tutaj w przybliżeniu dość
-    prosto: jeżeli znasz jeden język funkcyjny, mniej więcej znasz je wszystkie.
-    
+    (jeszcze kilka lat temu w C++ czy C# nie było np. funkcji anonimowych),
+    style i techniki programowania (przetwarzanie strumieni w Javie), abstrakcje,
+    pomysły na biblioteki i API etc. Sprawa ma się tutaj w przybliżeniu dość
+    prosto: jeżeli znasz Coqa, to bardzo szybko nauczysz się każdego innego
+    języka funkcyjnego oraz w mig zrozumiesz wszelkie zapożyczenia z języków
+    funkcyjnych, występujące w innych językach.
 
+<div class="paragraph"> </div>
 
- 
+    Po drugie, nauczysz się poprawnie i efektywnie rozumować o programach (nie
+    tylko tych napisanych w Coqu, ale także w innych językach funkcyjnych i, w
+    mniejszym stopniu, także w pozostałych językach). Jest to niesamowicie cenna
+    i bardzo praktyczna umiejętność. Rozumowania równaniowe pozwalają połapać
+    się podczas refaktoryzowania kodu, czy nasze zmiany przypadkiem nie zmieniły
+    znaczenia programu. Umiejętność wymyślania twierdzeń, które w ogóle należy
+    udowodnić na temat danej funkcji, świetnie przekłada się później w pracy na
+    umiejętność wymyślania dobrych testów. Rozumowania na temat równoważności
+    typów przydają się przy projektowaniu interfejsów i API (oraz znowu podczas
+    refaktoringu). 
 <div class="paragraph"> </div>
 
 <a id="lab9"></a><h1 class="section">Ćwiczenia</h1>
