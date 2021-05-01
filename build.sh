@@ -1,24 +1,19 @@
 #!/bin/sh
 
-# Zrób nowego makefile'a na wypadek, gdyby pojawiły się jakieś nowe pliki .v
-coq_makefile -R "." DniOtwarte -o makefile $(find . -name "*v")
+# Skrypt zadaptowany z https://github.com/wkolowski/Typonomikon
 
-# Zbuduj cały kod.
+coq_makefile -R "." DniOtwarte -arg "async-proofs-cache force" -o makefile $(find . -name "*v")
 make
+rm makefile makefile.conf .makefile.d
 
-# Zbuduj wersję HTML.
-coqdoc src/*v --html -d docs                              \
+coqdoc src/*v                                             \
+       -d docs                                            \
+       --html                                             \
        --with-footer assets/footer.html                   \
-       --no-lib-name --lib-subtitles                      \
+       --no-lib-name                                      \
+       --lib-subtitles                                    \
        --parse-comments                                   \
-       --no-index                                         \
-       --toc --toc-depth 3
+       --no-index
 
-# Przenazwij wynikowy plik HTML.
+cp assets/coqdoc.css docs/
 mv docs/Coq.html docs/index.html
-
-# Dodaj właściwe style CSS.
-cp assets/*css docs/
-
-# Wywal co niepotrzebne.
-rm makefile makefile.conf docs/toc.html
