@@ -116,37 +116,40 @@ Definition                  (* Definicja zaczyna się od słowa kluczowego "Defi
       end.
 
 (** Uwaga: jeżeli oglądałeś moje nagranie z Dni Otwartych, to możesz tam
-    zauważyć, że Coq automatycznie zamienia strzałkę [->] na [→], [=>]
-    na [→], [fun] na [λ], a [forall] na [∀]. Żeby nie komplikować ci życia,
-    na niniejszej stronie wyłączyłem te konwersje.
+    zauważyć, że Coq automatycznie zamienia [->] na [→], [=>] na [→], [fun] na
+    [λ], a [forall] na [∀]. Żeby nie komplikować ci życia, na niniejszej stronie
+    wyłączyłem te konwersje.
 
     Sama definicja jest dość prosta. Definicje zaczynają się od słowa kluczowego
     [Definition] (definiować tak możemy nie tylko funkcje, ale też inne obiekty).
     Następnie podajemy nazwę definiowanej funkcji. Żeby uniknąć niepotrzebnych
     komplikacji przyjąłem konwencję, że wszystkie nasze nazwy będą w języku
-    polskim. Następnie, po dwukropku, podajemy typ definiowanego obiektu (nie jest
-    to konieczne, ale pisanie typów to dobry zwyczaj). Zapis [A -> B] oznacza typ
-    funkcji, a zatem [bit -> bit] to typ funkcji, które biorą argument typu [bit]
-    i zwracają wynik również typu [bit].
+    polskim. Następnie, po dwukropku, podajemy typ definiowanego obiektu (nie
+    jest to konieczne, ale pisanie typów to dobry zwyczaj). Zapis [A -> B]
+    oznacza typ funkcyjny, a zatem [bit -> bit] to typ funkcji, które biorą
+    argument typu [bit] i zwracają wynik również typu [bit].
 
-    Ciało definicji zaczyna się po znaku ":=". Funkcje są postaci [fun x : A => e],
-    co można odczytać jako "weź argument typu A o nazwie x i zwróć jako wynik
-    wyrażenie e". Nazwa argumentu nie ma znaczenia - w naszym przypadku zamiast
-    [fun b : bit => match b ...] moglibyśmy równie dobrze napisać
-    [fun c : bit => match c ...]. Dalej, między słowami kluczowymi [match] i
-    [end] wykonujemy _dopasowanie do wzorca_ na bicie [b]. Ponieważ typ [bit]
-    zdefiniowaliśmy tak, że są tylko dwie możliwości ([tak] albo [nie]), to
-    możemy teraz sprawdzić, którą z tych postaci przyjmuje [b], i w każdym z
-    tych dwóch przypadków zwrócić odpowiedni wynik. Uwaga: nie możemy pominąć
-    żadnego przypadku. Nie możemy też podać podać większej ilości przypadków,
-    niż faktycznie jest możliwości. *)
+    Ciało definicji zaczyna się po znaku [:=]. Funkcje o typie [A -> B] mają
+    postać [fun x : A => e], gdzie [e] jest wyrażeniem typu [B] mogącym używać
+    argumentu [x]. Zapis ten można odczytać jako "weź argument typu A o nazwie
+    x i zwróć jako wynik wyrażenie e". Nazwa argumentu nie ma znaczenia - w
+    naszym przypadku zamiast [fun b : bit => match b ...] moglibyśmy równie
+    dobrze napisać [fun c : bit => match c ...]
+
+    Dalej, między słowami kluczowymi [match] i [end] wykonujemy _dopasowanie
+    do wzorca_ na bicie [b]. Ponieważ typ [bit] zdefiniowaliśmy tak, że są
+    tylko dwie możliwości ([tak] albo [nie]), to możemy teraz sprawdzić, którą
+    z tych postaci przyjmuje [b], i w każdym z tych dwóch przypadków zwrócić
+    odpowiedni wynik. Uwaga: nie możemy pominąć żadnego przypadku. Nie możemy
+    też podać podać większej ilości przypadków, niż faktycznie jest możliwości. *)
 
 (** * Równość *)
 
-(** Czy nasza definicja negacji jest poprawna? Na razie nie wiadomo - musimy
-    udowodnić jakieś twierdzenie, które nas w tym upewni. Zanim jednak to
-    nastąpi, zobaczmy jak w ogóle działają w Coqu twierdzenia. Szczególnie
-    zainteresowani będziemy dowodzeniem równości dwóch obiektów.
+(** Czy nasza definicja negacji jest poprawna? Wydaje się że tak, ale pewności
+    nie mamy - dobrze byłoby udowodnić jakieś twierdzenie, które nas w tym
+    upewni. Zanim jednak to nastąpi, zobaczmy jak w ogóle działają w Coqu
+    twierdzenia. Szczególnie zainteresowani będziemy dowodzeniem równości
+    dwóch obiektów.
 
     Twierdzenia i dowody są jedną z najmocniejszych stron Coqa. Gdy zaczynamy
     dowód, w oknie po prawej pojawia się nasz cel, czyli to czego chcemy
@@ -160,29 +163,30 @@ Definition                  (* Definicja zaczyna się od słowa kluczowego "Defi
 Goal tak = tak. (* Po słowie kluczowym "Goal" piszemy, co chcemy udowodnić. *)
 Proof.          (* Dowód zaczynamy od słowa kluczowego "Proof". *)
   reflexivity.  (* Każda rzecz jest równa samej sobie i Coq o tym wie. *)
-Qed.            (* Dowód kończymy słowem "Qed" - od łac. "Quod erat demonstrandum" - "Co należało udowodnić" *)
+Qed.            (* Dowód kończymy słowem kluczowym "Qed" - od łac. "Quod erat demonstrandum" - "Co należało udowodnić" *)
 
 (** Nasze twierdzenie jest trywialne: chcemy pokazać, że [tak] jest równe [tak].
     Dowód jest równie trywialny i sprowadza się do użycia taktyki [reflexivity].
-
     Po angielsku "reflexivity" znaczy "zwrotność", a "zwrotność" to w
-    matematycznej mowie nazwa na fakt, że każda rzecz jest równa samej
-    sobie - wiedział o tym już Arystoteles jakieś 2400 lat temu, więc
-    i nie dziwota, że Coq o tym wie. Taktyka to formalny, Coqowy odpowiednik
-    nieformalnego sposobu rozumowania. Powiedzenie, że "każda rzecz jest
-    równa samej sobie", to właśnie taki nieformalny sposób rozumowania,
-    a taktyka [reflexivity] jest jego realizacją. *)
+    matematycznej mowie nazwa na fakt, że każda rzecz jest równa samej sobie -
+    wiedział o tym już Arystoteles jakieś 2400 lat temu, więc nie dziwota, że
+    Coq też o tym wie. Taktyka zaś to formalny, Coqowy odpowiednik nieformalnego
+    sposobu rozumowania. Powiedzenie, że "każda rzecz jest równa samej sobie",
+    to właśnie taki nieformalny sposób rozumowania, a taktyka [reflexivity]
+    jest jego realizacją. *)
 
 Goal tak = nie.     (* A może "tak" jest równe "nie"? Oby nie! *)
 Proof.
-  Fail reflexivity. (* "tak" to coś innego niż "nie" i Coq to wie - nie da się go zrobić w wała *)
+  Fail reflexivity. (* "tak" to coś innego niż "nie" i Coq to wie - nie da się go zrobić w wała. *)
 Abort.              (* Zakończenie dowodu za pomocą "Abort" oznacza, że się poddajemy. *) 
 
 (** Nie każdy sposób rozumowania jest poprawny, a zatem nie każde użycie taktyki
     kończy się sukcesem. W powyższym przykładzie rozumowanie "tak to to samo co
     nie, bo każda rzecz jest równa samej sobie" jest niepoprawne, a zatem próba
     udowodnienia tego twierdzenia za pomocą taktyki [reflexivity] zawodzi i
-    musimy się poddać. *)
+    musimy się poddać. Uwaga: komenda [Fail] pozwala nam zakomunikować Coqowi,
+    iż spodziewamy się, że przeczytanie tego co po niej następuje zakończy się
+    błędem. *)
 
 (** * Obliczenia *)
 
@@ -202,14 +206,14 @@ Abort.              (* Zakończenie dowodu za pomocą "Abort" oznacza, że się 
 
 Goal negacja nie = tak.
 Proof.
-  cbv.
+  cbn.
   reflexivity.
 Qed.
 
-(** Taktyka [cbv] realizuje sposób rozumowania "policz wynik działania programu".
-    Nazwa pochodzi od angielskiego określenia "call by value" i oznacza pewną
-    konkretną kolejność, w której wykonywane są trzy podstawowe rodzaje uproszczeń,
-    które zobaczymy za chwilę. *)
+(** Taktyka [cbn] realizuje sposób rozumowania "policz wynik działania programu".
+    Nazwa pochodzi od angielskiego "call by name" i oznacza pewną konkretną
+    kolejność, w której wykonywane są trzy podstawowe rodzaje uproszczeń, które
+    zobaczymy za chwilę. *)
 
 Goal negacja tak = nie.
 Proof.
@@ -219,7 +223,13 @@ Proof.
   reflexivity.
 Qed.
 
-(** Są trzy główne rodzaje uproszczeń:
+(** Żeby wykonać pojedyncze uproszczenie, zamiast obliczać wszystko od razu,
+    używamy taktyki [cbv], po której piszemy nazwę uproszczenia (nazwy pochodzą
+    od greckich liter i są mało oświecające). Skrót "cbv" pochodzi z angielskiego
+    "call by value" i, podobnie jak "cbn", oznacza pewną konkretną kolejność
+    wykonywania uproszczeń.
+
+    Są trzy główne rodzaje uproszczeń:
     - odwinięcie definicji
     - podstawienie wartości za argument funkcji
     - wykonanie dopasowania do wzorca
@@ -247,7 +257,7 @@ Goal forall b : bit,         (* Dla każdego bitu b... *)
 Proof.
   intro dowolne_b.           (* Weźmy dowolny bit *)
   destruct dowolne_b.        (* Analiza przypadków: bit może mieć jedną z dwóch postaci (tak/nie) *)
-    cbv. reflexivity.        (* Trochę obliczeń i... udało się! *)
+    cbn. reflexivity.        (* Trochę obliczeń i... udało się! *)
     reflexivity.             (* Nie musimy ręcznie prosić o policzenie - Coq sam wie, żeby to zrobić. *)
 Qed.
 
@@ -257,7 +267,7 @@ Qed.
 
     Żeby udowodnić coś o każdym bicie [b], wystarczy udowodnić to dla
     dowolnego bitu. Właśnie ten sposób rozumowania realizuje taktyka
-    [intros] (argument po [intros] to nazwa, którą chcemy nadać naszemu
+    [intro] (argument po [intro] to nazwa, którą chcemy nadać naszemu
     dowolnemu bitowi). Po przeczytaniu linijki [intro dowolne_b.] mamy
     spore zmiany w oknie po prawej - z naszego celu zniknęło [forall
     b : bit], zaś nad kreską pojawiła się linijka [dowolne_b : bit].
@@ -265,21 +275,24 @@ Qed.
     nasze założenia, hipotezy oraz wszelkie inne obiekty, którymi możemy
     się posługiwać w trakcie dowodu.
 
-    Następnie rozumujemy przez analizę przypadków. Ponieważ zdefiniowaliśmy
-    bit mówiąc (a raczej pisząc), że każdy bit to albo [tak] albo [nie], to
-    rozpatrzenie tych dwóch przypadków z osobna wystarcza, by powiedzieć
-    coś o dowolnym bicie. Właśnie ten sposób rozumowania jest realizowany
-    przez taktykę [destruct]. W wyniku użycia tej taktyki mamy tearz dwa
-    cele: w pierwszy z nich [dowolne_b] zostało zastąpione przez [tak], a w
-    drugim przez [nie]. W pierwszym przypadku wystarczy wykonać nieco obliczeń
+    Następnie rozumujemy przez analizę przypadków. Ponieważ zdefiniowaliśmy bit
+    mówiąc (a raczej pisząc), że każdy bit to albo [tak] albo [nie], to
+    rozpatrzenie tych dwóch przypadków z osobna wystarcza by powiedzieć coś o
+    dowolnym bicie. Właśnie ten sposób rozumowania jest realizowany przez
+    taktykę [destruct]. W wyniku użycia tej taktyki mamy teraz dwa podcele: w
+    pierwszym z nich [dowolne_b] zostało zastąpione przez [tak], a w drugim
+    przez [nie]. W pierwszym przypadku wystarczy wykonać nieco obliczeń
     i widać wtedy, że obie strony równości są takie same. Drugi przypadek jest
     analogiczny - co więcej, jeżeli użyjemy tylko taktyki [reflexivity], to
-    Coq sam połapie się, że powinien wykonać odpowiednie obliczenia.
+    Coq sam połapie się, że powinien wykonać odpowiednie obliczenia. Uwaga: dla
+    czytelności, dowodzenie każdego z podcelów zaczynamy od dwóch spacji wcięcia
+    w kodzie.
 
     Tym sposobem udało nam się udowodnić nasze twierdzenie, choć być może nie
     wzbudza ono w tobie jakiegoś wybitnego entuzjazmu. Wszakże w Pythonie czy
-    innym C++, aby upewnić się, czy tamtejsza negacja jest poprawna, wystarczy
-    napisać dwa testy. Jeżeli oba przechodzą, można ogłosić sukces. *)
+    innym C++, aby upewnić się, że tamtejsza negacja jest poprawna, wystarczy
+    napisać dwa testy. Jeżeli oba przechodzą, można ogłosić sukces i nie trzeba
+    niczego dowodzić. *)
 
 (** * Bardziej skomplikowane typy, funkcje rekurencyjne i dowody przez indukcję *)
 
@@ -322,7 +335,7 @@ Check na_początku tak (na_początku nie (na_początku tak koniec)).
     sprawdził, jakiego typu jest dany obiekt. Służy do tego komenda [Check].
     W prawym dolnym rogu Coq wyświetla swoją odpowiedź: najpierw powtarza to co
     wpisaliśmy, a potem, po dwukropku, podaje nam typ obiektu. Jak widać, Coq
-    sądzi, że to, co napisaliśmy powyżej, jest obiektem typu [lista] (odpowiedź
+    sądzi, że to, co napisaliśmy powyżej, jest elementem typu [lista] (odpowiedź
     Coqa pozwoliłem sobie skopiować i wkleić powyżej w komentarzu po znaczniku
     "===>"). Lista ta w tradycyjnym zapisie to [[tak; nie; tak]]. *)
 
@@ -379,9 +392,10 @@ end.
     sprawdzamy, jakiej postaci jest argument [l]. Gdy [l] to [koniec], wynikiem
     również jest [koniec] - gdy nie ma na liście żadnych bitów, nie ma czego
     odwracać. Jeżeli [l] jest postaci [na_początku b l'] dla [b : bit] oraz 
-    [l : lista], to początkowy bit [b] musi powędrować na koniec wynikowej listy -
-    możemy wysłać go tam za pomocą funkcji [na_końcu] - zaś reszta listy (czyli
-    [l']) musi zostać rekurencyjnie odwrócona, za pomocą funkcji [odwróć]. *)
+    [l' : lista], to początkowy bit [b] musi powędrować na koniec wynikowej
+    listy - możemy wysłać go tam za pomocą funkcji [na_końcu] - zaś reszta
+    listy (czyli [l']) musi zostać rekurencyjnie odwrócona za pomocą funkcji
+    [odwróć]. *)
 
 Theorem odwróć_na_końcu :
   forall (b : bit) (l : lista),
@@ -389,8 +403,8 @@ Theorem odwróć_na_końcu :
 Proof.
   intro b.
   induction l as [| głowa_l ogon_l hipoteza_indukcyjna].
-     cbv. reflexivity.
-     cbn. rewrite hipoteza_indukcyjna. cbn. reflexivity.
+    cbn. reflexivity.
+    cbn. rewrite hipoteza_indukcyjna. cbn. reflexivity.
 Qed.
 
 (** Czas w końcu udowodnić jakieś twierdzenie. Tym razem zaczynamy od słowa
@@ -401,11 +415,11 @@ Qed.
     Odpowiedź jest prosta: oczywiście bit [b] trafi na początek odwróconej
     listy [l].
 
-    Zaczynamy od [intros b], czyli "weźmy dowolne b". Następnym krokiem jest
+    Zaczynamy od [intro b], czyli "weźmy dowolne b". Następnym krokiem jest
     [induction l ...], co możemy przeczytać jako "indukcja po l". Indukcja to
     taka analiza przypadków na sterydach - w niektórych przypadkach do naszej
     dyspozycji dostajemy dodatkowo hipotezę indukcyjną. Indukcja jest sposobem
-    rozumowania niezbędnym, gdy w grę wchodzą funkcje rekurencyjne. Ponieważ
+    rozumowania niezbędnym, gdy w grę wchodzą funkcje rekurencyjne: ponieważ
     funkcja rekurencyjna wywołuje samą siebie na mniejszym argumencie, to żeby
     udowodnić coś na jej temat dla jakiegoś argumentu, najpierw trzeba udowodnić
     tę samą własność dla mniejszego argumentu. Widzimy więc, że potrzebne jest
@@ -440,18 +454,19 @@ Theorem odwróć_odwróć :
 Proof.
   induction l as [| głowa_l ogon_l hipoteza_indukcyjna].
     cbn. reflexivity.
-    cbn. rewrite odwróć_na_końcu. rewrite hipoteza_indukcyjna.
-      reflexivity.
+    cbn. rewrite odwróć_na_końcu. rewrite hipoteza_indukcyjna. reflexivity.
 Qed.
 
 (** Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
-    listę. Dowód, podobnie jak poprzednio, jest przez indukcję po [l]. W tym
-    momencie nie powinno nas to już dziwić - ponieważ prawie wszystkie funkcje
-    operujące na listach są rekurencyjne, a dowodzenie właściwości funkcji
-    rekurencyjnych wymaga rozumowania indukcyjnego, to prawie wszystkie dowody
-    dotyczące list będą szły przez indukcję. Zauważmy też, że nie musimy dowodu
-    zaczynąć taktyką [intro l] - gdy używamy indukcji, Coq sam wie, że powinien
-    najpierw wprowadzić listę [l] do kontekstu.
+    listę, co na początku. Dowód, podobnie jak poprzednio, jest przez indukcję
+    po [l]. W tym momencie nie powinno nas to już dziwić - ponieważ prawie
+    wszystkie funkcje operujące na listach są rekurencyjne, a dowodzenie
+    właściwości funkcji rekurencyjnych wymaga rozumowania indukcyjnego, to
+    prawie wszystkie dowody dotyczące list będą szły przez indukcję (wyjaśnia
+    to też, dlaczego definicje typów zaczynają się od słowa kluczowego
+    [Inductive]). Zauważmy, że nie musimy dowodu zaczynać taktyką [intro l] -
+    gdy używamy indukcji, Coq sam wie, że powinien najpierw wprowadzić listę
+    [l] do kontekstu.
 
     Mamy do rozpatrzenia dwa przypadki. Gdy [l] jest postaci [koniec], wystarczy
     trochę policzyć by przekonać się, że faktycznie [odwróć (odwróć koniec) = koniec].
@@ -464,7 +479,14 @@ Qed.
     zrobimy, po lewej stronie w naszym celu ukazuje się wyrażenie
     [odwróć (odwróć ogon_l)], które możemy uprościć korzystając z hipotezy
     indukcyjnej. I to by było na tyle, bo po obu stronach równania widzimy
-    dokładnie to samo. *)
+    dokładnie to samo.
+
+    W ten oto sposób udało nam się w Coqu udowodnić właściwość funkcji [odwróć],
+    której nie można zagwarantować żadną liczbą testów. Czy to znaczy, że nasza
+    funkcja jest poprawna? Cóż, nie do końca... wszakże [odwróć] nie jest jedyną
+    funkcją [f : lista -> lista], która spełnia twierdzenie [f (f l) = l]. Żeby
+    upewnić się, że [odwróć] to faktycznie ta funkcja, o którą nam chodziło,
+    trzeba by udowodnić jeszcze kilka twierdzeń! *)
 
 (** * Dlaczego warto nauczyć się Coqa? *)
 
@@ -568,7 +590,7 @@ Qed.
     instalować i ma rozsądne podpowiadanie składni dla początkujących.
 
     Jeżeli chcesz zacząć dłuższą przygodę z Coqiem, polecam go zainstalować
-    (https://coq.inria.fr/) - śmiga wtedy lepiej niż w przeglądarce. Musicie
+    (https://coq.inria.fr/) - śmiga wtedy lepiej niż w przeglądarce. Musisz
     też wybrać sobie jakieś IDE:
     - CoqIDE (https://coq.inria.fr/) - standardowe IDE do Coqa, polecam.
     - Visual Studio Code (https://code.visualstudio.com/) z pluginem dla
@@ -587,20 +609,22 @@ Qed.
       https://www.youtube.com/watch?v=5e7UdWzITyQ
     - Książka Software Foundations, pierwsza połowa pierwszego tomu
       (po angielsku): https://softwarefoundations.cis.upenn.edu/lf-current/toc.html
+      (jest też wersja śmigająca w jsCoqu:
+      https://jscoq.github.io/ext/sf/lf/full/toc.html)
 
-    Jeżeli słuchanie/czytanie po angielsku sprawia ci problem, możesz też przeczytać
-    pierwsze rozdziały mojej własnej twórczości: https://wkolowski.github.io/CoqBookPL/
-    (uwaga, dość niekompletna i trochę nie po kolei; nie jest też tak odpicowana, jak
-    niniejsza notatka). *)
+    Jeżeli słuchanie/czytanie po angielsku sprawia ci problem, możesz też
+    przeczytać pierwsze rozdziały mojej własnej twórczości:
+    https://wkolowski.github.io/CoqBookPL/ (uwaga: materiał dość niekompletny i
+    trochę nie po kolei; nie jest też tak odpicowany, jak niniejsza notatka). *)
 
 (** ** Przydatne linki *)
 
 (** Poniższe linki stanowią dobre punkty wyjścia do rozpoczęcia eksploracji
     Coqowego świata:
-    - Strona domowa: https://coq.inria.fr/
+    - Strona domowa: https://coq.inria.fr
     - GitHub: https://github.com/coq/coq
-    - Forum: https://coq.discourse.group/
-    - Czat: https://coq.zulipchat.com/login/
+    - Forum: https://coq.discourse.group
+    - Czat: https://coq.zulipchat.com
     - Q&A: https://stackoverflow.com/questions/tagged/coq
 
     Na stronie domowej znajdziesz więcej linków i materiałów dydaktycznych. Na

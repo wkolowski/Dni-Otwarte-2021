@@ -192,9 +192,9 @@
 
 <div class="doc">
 Uwaga: jeżeli oglądałeś moje nagranie z Dni Otwartych, to możesz tam
-    zauważyć, że Coq automatycznie zamienia strzałkę <span class="inlinecode">-&gt;</span> na <span class="inlinecode">→</span>, <span class="inlinecode">=&gt;</span>
-    na <span class="inlinecode">→</span>, <span class="inlinecode"><span class="id" title="keyword">fun</span></span> na <span class="inlinecode"><span class="id" title="var">λ</span></span>, a <span class="inlinecode"><span class="id" title="keyword">forall</span></span> na <span class="inlinecode">∀</span>. Żeby nie komplikować ci życia,
-    na niniejszej stronie wyłączyłem te konwersje.
+    zauważyć, że Coq automatycznie zamienia <span class="inlinecode">-&gt;</span> na <span class="inlinecode">→</span>, <span class="inlinecode">=&gt;</span> na <span class="inlinecode">→</span>, <span class="inlinecode"><span class="id" title="keyword">fun</span></span> na
+    <span class="inlinecode"><span class="id" title="var">λ</span></span>, a <span class="inlinecode"><span class="id" title="keyword">forall</span></span> na <span class="inlinecode">∀</span>. Żeby nie komplikować ci życia, na niniejszej stronie
+    wyłączyłem te konwersje.
 
 <div class="paragraph"> </div>
 
@@ -202,34 +202,39 @@ Uwaga: jeżeli oglądałeś moje nagranie z Dni Otwartych, to możesz tam
     <span class="inlinecode"><span class="id" title="keyword">Definition</span></span> (definiować tak możemy nie tylko funkcje, ale też inne obiekty).
     Następnie podajemy nazwę definiowanej funkcji. Żeby uniknąć niepotrzebnych
     komplikacji przyjąłem konwencję, że wszystkie nasze nazwy będą w języku
-    polskim. Następnie, po dwukropku, podajemy typ definiowanego obiektu (nie jest
-    to konieczne, ale pisanie typów to dobry zwyczaj). Zapis <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">B</span></span> oznacza typ
-    funkcji, a zatem <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> to typ funkcji, które biorą argument typu <span class="inlinecode"><span class="id" title="var">bit</span></span>
-    i zwracają wynik również typu <span class="inlinecode"><span class="id" title="var">bit</span></span>.
+    polskim. Następnie, po dwukropku, podajemy typ definiowanego obiektu (nie
+    jest to konieczne, ale pisanie typów to dobry zwyczaj). Zapis <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">B</span></span>
+    oznacza typ funkcyjny, a zatem <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> to typ funkcji, które biorą
+    argument typu <span class="inlinecode"><span class="id" title="var">bit</span></span> i zwracają wynik również typu <span class="inlinecode"><span class="id" title="var">bit</span></span>.
 
 <div class="paragraph"> </div>
 
-    Ciało definicji zaczyna się po znaku ":=". Funkcje są postaci <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode"><span class="id" title="var">e</span></span>,
-    co można odczytać jako "weź argument typu A o nazwie x i zwróć jako wynik
-    wyrażenie e". Nazwa argumentu nie ma znaczenia - w naszym przypadku zamiast
-    <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode"><span class="id" title="keyword">match</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">...</span> moglibyśmy równie dobrze napisać
-    <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode"><span class="id" title="var">c</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode"><span class="id" title="keyword">match</span></span> <span class="inlinecode"><span class="id" title="var">c</span></span> <span class="inlinecode">...</span>. Dalej, między słowami kluczowymi <span class="inlinecode"><span class="id" title="keyword">match</span></span> i
-    <span class="inlinecode"><span class="id" title="keyword">end</span></span> wykonujemy <i>dopasowanie do wzorca</i> na bicie <span class="inlinecode"><span class="id" title="var">b</span></span>. Ponieważ typ <span class="inlinecode"><span class="id" title="var">bit</span></span>
-    zdefiniowaliśmy tak, że są tylko dwie możliwości (<span class="inlinecode"><span class="id" title="var">tak</span></span> albo <span class="inlinecode"><span class="id" title="var">nie</span></span>), to
-    możemy teraz sprawdzić, którą z tych postaci przyjmuje <span class="inlinecode"><span class="id" title="var">b</span></span>, i w każdym z
-    tych dwóch przypadków zwrócić odpowiedni wynik. Uwaga: nie możemy pominąć
-    żadnego przypadku. Nie możemy też podać podać większej ilości przypadków,
-    niż faktycznie jest możliwości. 
+    Ciało definicji zaczyna się po znaku <span class="inlinecode">:=</span>. Funkcje o typie <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">B</span></span> mają
+    postać <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode"><span class="id" title="var">x</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode"><span class="id" title="var">e</span></span>, gdzie <span class="inlinecode"><span class="id" title="var">e</span></span> jest wyrażeniem typu <span class="inlinecode"><span class="id" title="var">B</span></span> mogącym używać
+    argumentu <span class="inlinecode"><span class="id" title="var">x</span></span>. Zapis ten można odczytać jako "weź argument typu A o nazwie
+    x i zwróć jako wynik wyrażenie e". Nazwa argumentu nie ma znaczenia - w
+    naszym przypadku zamiast <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode"><span class="id" title="keyword">match</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">...</span> moglibyśmy równie
+    dobrze napisać <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode"><span class="id" title="var">c</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode"><span class="id" title="keyword">match</span></span> <span class="inlinecode"><span class="id" title="var">c</span></span> <span class="inlinecode">...</span>
+
+<div class="paragraph"> </div>
+
+    Dalej, między słowami kluczowymi <span class="inlinecode"><span class="id" title="keyword">match</span></span> i <span class="inlinecode"><span class="id" title="keyword">end</span></span> wykonujemy <i>dopasowanie
+    do wzorca</i> na bicie <span class="inlinecode"><span class="id" title="var">b</span></span>. Ponieważ typ <span class="inlinecode"><span class="id" title="var">bit</span></span> zdefiniowaliśmy tak, że są
+    tylko dwie możliwości (<span class="inlinecode"><span class="id" title="var">tak</span></span> albo <span class="inlinecode"><span class="id" title="var">nie</span></span>), to możemy teraz sprawdzić, którą
+    z tych postaci przyjmuje <span class="inlinecode"><span class="id" title="var">b</span></span>, i w każdym z tych dwóch przypadków zwrócić
+    odpowiedni wynik. Uwaga: nie możemy pominąć żadnego przypadku. Nie możemy
+    też podać podać większej ilości przypadków, niż faktycznie jest możliwości. 
 <div class="paragraph"> </div>
 
 <a id="lab4"></a><h1 class="section">Równość</h1>
 
 <div class="paragraph"> </div>
 
- Czy nasza definicja negacji jest poprawna? Na razie nie wiadomo - musimy
-    udowodnić jakieś twierdzenie, które nas w tym upewni. Zanim jednak to
-    nastąpi, zobaczmy jak w ogóle działają w Coqu twierdzenia. Szczególnie
-    zainteresowani będziemy dowodzeniem równości dwóch obiektów.
+ Czy nasza definicja negacji jest poprawna? Wydaje się że tak, ale pewności
+    nie mamy - dobrze byłoby udowodnić jakieś twierdzenie, które nas w tym
+    upewni. Zanim jednak to nastąpi, zobaczmy jak w ogóle działają w Coqu
+    twierdzenia. Szczególnie zainteresowani będziemy dowodzeniem równości
+    dwóch obiektów.
 
 <div class="paragraph"> </div>
 
@@ -248,7 +253,7 @@ Uwaga: jeżeli oglądałeś moje nagranie z Dni Otwartych, to możesz tam
 <span class="id" title="keyword">Goal</span> <span class="id" title="var">tak</span> = <span class="id" title="var">tak</span>. <span class="comment">(*&nbsp;Po&nbsp;słowie&nbsp;kluczowym&nbsp;"Goal"&nbsp;piszemy,&nbsp;co&nbsp;chcemy&nbsp;udowodnić.&nbsp;*)</span><br/>
 <span class="id" title="keyword">Proof</span>. <span class="comment">(*&nbsp;Dowód&nbsp;zaczynamy&nbsp;od&nbsp;słowa&nbsp;kluczowego&nbsp;"Proof".&nbsp;*)</span><br/>
 &nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;Każda&nbsp;rzecz&nbsp;jest&nbsp;równa&nbsp;samej&nbsp;sobie&nbsp;i&nbsp;Coq&nbsp;o&nbsp;tym&nbsp;wie.&nbsp;*)</span><br/>
-<span class="id" title="keyword">Qed</span>. <span class="comment">(*&nbsp;Dowód&nbsp;kończymy&nbsp;słowem&nbsp;"Qed"&nbsp;-&nbsp;od&nbsp;łac.&nbsp;"Quod&nbsp;erat&nbsp;demonstrandum"&nbsp;-&nbsp;"Co&nbsp;należało&nbsp;udowodnić"&nbsp;*)</span><br/>
+<span class="id" title="keyword">Qed</span>. <span class="comment">(*&nbsp;Dowód&nbsp;kończymy&nbsp;słowem&nbsp;kluczowym&nbsp;"Qed"&nbsp;-&nbsp;od&nbsp;łac.&nbsp;"Quod&nbsp;erat&nbsp;demonstrandum"&nbsp;-&nbsp;"Co&nbsp;należało&nbsp;udowodnić"&nbsp;*)</span><br/>
 
 <br/>
 </div>
@@ -256,23 +261,20 @@ Uwaga: jeżeli oglądałeś moje nagranie z Dni Otwartych, to możesz tam
 <div class="doc">
 Nasze twierdzenie jest trywialne: chcemy pokazać, że <span class="inlinecode"><span class="id" title="var">tak</span></span> jest równe <span class="inlinecode"><span class="id" title="var">tak</span></span>.
     Dowód jest równie trywialny i sprowadza się do użycia taktyki <span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span>.
-
-<div class="paragraph"> </div>
-
     Po angielsku "reflexivity" znaczy "zwrotność", a "zwrotność" to w
-    matematycznej mowie nazwa na fakt, że każda rzecz jest równa samej
-    sobie - wiedział o tym już Arystoteles jakieś 2400 lat temu, więc
-    i nie dziwota, że Coq o tym wie. Taktyka to formalny, Coqowy odpowiednik
-    nieformalnego sposobu rozumowania. Powiedzenie, że "każda rzecz jest
-    równa samej sobie", to właśnie taki nieformalny sposób rozumowania,
-    a taktyka <span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span> jest jego realizacją. 
+    matematycznej mowie nazwa na fakt, że każda rzecz jest równa samej sobie -
+    wiedział o tym już Arystoteles jakieś 2400 lat temu, więc nie dziwota, że
+    Coq też o tym wie. Taktyka zaś to formalny, Coqowy odpowiednik nieformalnego
+    sposobu rozumowania. Powiedzenie, że "każda rzecz jest równa samej sobie",
+    to właśnie taki nieformalny sposób rozumowania, a taktyka <span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span>
+    jest jego realizacją. 
 </div>
 <div class="code">
 
 <br/>
 <span class="id" title="keyword">Goal</span> <span class="id" title="var">tak</span> = <span class="id" title="var">nie</span>. <span class="comment">(*&nbsp;A&nbsp;może&nbsp;"tak"&nbsp;jest&nbsp;równe&nbsp;"nie"?&nbsp;Oby&nbsp;nie!&nbsp;*)</span><br/>
 <span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="var">Fail</span> <span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;"tak"&nbsp;to&nbsp;coś&nbsp;innego&nbsp;niż "nie"&nbsp;i&nbsp;Coq&nbsp;to&nbsp;wie&nbsp;-&nbsp;nie&nbsp;da&nbsp;się&nbsp;go&nbsp;zrobić&nbsp;w&nbsp;wała&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Fail</span> <span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;"tak"&nbsp;to&nbsp;coś&nbsp;innego&nbsp;niż "nie"&nbsp;i&nbsp;Coq&nbsp;to&nbsp;wie&nbsp;-&nbsp;nie&nbsp;da&nbsp;się&nbsp;go&nbsp;zrobić&nbsp;w&nbsp;wała.&nbsp;*)</span><br/>
 <span class="id" title="keyword">Abort</span>. <span class="comment">(*&nbsp;Zakończenie&nbsp;dowodu&nbsp;za&nbsp;pomocą&nbsp;"Abort"&nbsp;oznacza,&nbsp;że&nbsp;się&nbsp;poddajemy.&nbsp;*)</span><br/>
 
 <br/>
@@ -283,7 +285,9 @@ Nie każdy sposób rozumowania jest poprawny, a zatem nie każde użycie taktyki
     kończy się sukcesem. W powyższym przykładzie rozumowanie "tak to to samo co
     nie, bo każda rzecz jest równa samej sobie" jest niepoprawne, a zatem próba
     udowodnienia tego twierdzenia za pomocą taktyki <span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span> zawodzi i
-    musimy się poddać. 
+    musimy się poddać. Uwaga: komenda <span class="inlinecode"><span class="id" title="var">Fail</span></span> pozwala nam zakomunikować Coqowi,
+    iż spodziewamy się, że przeczytanie tego co po niej następuje zakończy się
+    błędem. 
 <div class="paragraph"> </div>
 
 <a id="lab5"></a><h1 class="section">Obliczenia</h1>
@@ -311,7 +315,7 @@ Nie każdy sposób rozumowania jest poprawny, a zatem nie każde użycie taktyki
 <br/>
 <span class="id" title="keyword">Goal</span> <span class="id" title="var">negacja</span> <span class="id" title="var">nie</span> = <span class="id" title="var">tak</span>.<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">cbv</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">cbn</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 
@@ -319,10 +323,10 @@ Nie każdy sposób rozumowania jest poprawny, a zatem nie każde użycie taktyki
 </div>
 
 <div class="doc">
-Taktyka <span class="inlinecode"><span class="id" title="tactic">cbv</span></span> realizuje sposób rozumowania "policz wynik działania programu".
-    Nazwa pochodzi od angielskiego określenia "call by value" i oznacza pewną
-    konkretną kolejność, w której wykonywane są trzy podstawowe rodzaje uproszczeń,
-    które zobaczymy za chwilę. 
+Taktyka <span class="inlinecode"><span class="id" title="var">cbn</span></span> realizuje sposób rozumowania "policz wynik działania programu".
+    Nazwa pochodzi od angielskiego "call by name" i oznacza pewną konkretną
+    kolejność, w której wykonywane są trzy podstawowe rodzaje uproszczeń, które
+    zobaczymy za chwilę. 
 </div>
 <div class="code">
 
@@ -339,7 +343,15 @@ Taktyka <span class="inlinecode"><span class="id" title="tactic">cbv</span></spa
 </div>
 
 <div class="doc">
-Są trzy główne rodzaje uproszczeń:
+Żeby wykonać pojedyncze uproszczenie, zamiast obliczać wszystko od razu,
+    używamy taktyki <span class="inlinecode"><span class="id" title="tactic">cbv</span></span>, po której piszemy nazwę uproszczenia (nazwy pochodzą
+    od greckich liter i są mało oświecające). Skrót "cbv" pochodzi z angielskiego
+    "call by value" i, podobnie jak "cbn", oznacza pewną konkretną kolejność
+    wykonywania uproszczeń.
+
+<div class="paragraph"> </div>
+
+    Są trzy główne rodzaje uproszczeń:
 <ul class="doclist">
 <li> odwinięcie definicji
 
@@ -385,7 +397,7 @@ Są trzy główne rodzaje uproszczeń:
 <span class="id" title="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">dowolne_b</span>. <span class="comment">(*&nbsp;Weźmy&nbsp;dowolny&nbsp;bit&nbsp;*)</span><br/>
 &nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">dowolne_b</span>. <span class="comment">(*&nbsp;Analiza&nbsp;przypadków:&nbsp;bit&nbsp;może&nbsp;mieć&nbsp;jedną&nbsp;z&nbsp;dwóch&nbsp;postaci&nbsp;(tak/nie)&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">cbv</span>. <span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;Trochę&nbsp;obliczeń&nbsp;i...&nbsp;udało&nbsp;się!&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;Trochę&nbsp;obliczeń&nbsp;i...&nbsp;udało&nbsp;się!&nbsp;*)</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;Nie&nbsp;musimy&nbsp;ręcznie&nbsp;prosić&nbsp;o&nbsp;policzenie&nbsp;-&nbsp;Coq&nbsp;sam&nbsp;wie,&nbsp;żeby&nbsp;to&nbsp;zrobić.&nbsp;*)</span><br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 
@@ -401,7 +413,7 @@ Nasze twierdzenie ma stosować się do każdego bitu <span class="inlinecode"><
 
     Żeby udowodnić coś o każdym bicie <span class="inlinecode"><span class="id" title="var">b</span></span>, wystarczy udowodnić to dla
     dowolnego bitu. Właśnie ten sposób rozumowania realizuje taktyka
-    <span class="inlinecode"><span class="id" title="tactic">intros</span></span> (argument po <span class="inlinecode"><span class="id" title="tactic">intros</span></span> to nazwa, którą chcemy nadać naszemu
+    <span class="inlinecode"><span class="id" title="tactic">intro</span></span> (argument po <span class="inlinecode"><span class="id" title="tactic">intro</span></span> to nazwa, którą chcemy nadać naszemu
     dowolnemu bitowi). Po przeczytaniu linijki <span class="inlinecode"><span class="id" title="tactic">intro</span></span> <span class="inlinecode"><span class="id" title="var">dowolne_b</span>.</span> mamy
     spore zmiany w oknie po prawej - z naszego celu zniknęło <span class="inlinecode"><span class="id" title="keyword">forall</span></span>
     <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span>, zaś nad kreską pojawiła się linijka <span class="inlinecode"><span class="id" title="var">dowolne_b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span>.
@@ -411,23 +423,26 @@ Nasze twierdzenie ma stosować się do każdego bitu <span class="inlinecode"><
 
 <div class="paragraph"> </div>
 
-    Następnie rozumujemy przez analizę przypadków. Ponieważ zdefiniowaliśmy
-    bit mówiąc (a raczej pisząc), że każdy bit to albo <span class="inlinecode"><span class="id" title="var">tak</span></span> albo <span class="inlinecode"><span class="id" title="var">nie</span></span>, to
-    rozpatrzenie tych dwóch przypadków z osobna wystarcza, by powiedzieć
-    coś o dowolnym bicie. Właśnie ten sposób rozumowania jest realizowany
-    przez taktykę <span class="inlinecode"><span class="id" title="tactic">destruct</span></span>. W wyniku użycia tej taktyki mamy tearz dwa
-    cele: w pierwszy z nich <span class="inlinecode"><span class="id" title="var">dowolne_b</span></span> zostało zastąpione przez <span class="inlinecode"><span class="id" title="var">tak</span></span>, a w
-    drugim przez <span class="inlinecode"><span class="id" title="var">nie</span></span>. W pierwszym przypadku wystarczy wykonać nieco obliczeń
+    Następnie rozumujemy przez analizę przypadków. Ponieważ zdefiniowaliśmy bit
+    mówiąc (a raczej pisząc), że każdy bit to albo <span class="inlinecode"><span class="id" title="var">tak</span></span> albo <span class="inlinecode"><span class="id" title="var">nie</span></span>, to
+    rozpatrzenie tych dwóch przypadków z osobna wystarcza by powiedzieć coś o
+    dowolnym bicie. Właśnie ten sposób rozumowania jest realizowany przez
+    taktykę <span class="inlinecode"><span class="id" title="tactic">destruct</span></span>. W wyniku użycia tej taktyki mamy teraz dwa podcele: w
+    pierwszym z nich <span class="inlinecode"><span class="id" title="var">dowolne_b</span></span> zostało zastąpione przez <span class="inlinecode"><span class="id" title="var">tak</span></span>, a w drugim
+    przez <span class="inlinecode"><span class="id" title="var">nie</span></span>. W pierwszym przypadku wystarczy wykonać nieco obliczeń
     i widać wtedy, że obie strony równości są takie same. Drugi przypadek jest
     analogiczny - co więcej, jeżeli użyjemy tylko taktyki <span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span>, to
-    Coq sam połapie się, że powinien wykonać odpowiednie obliczenia.
+    Coq sam połapie się, że powinien wykonać odpowiednie obliczenia. Uwaga: dla
+    czytelności, dowodzenie każdego z podcelów zaczynamy od dwóch spacji wcięcia
+    w kodzie.
 
 <div class="paragraph"> </div>
 
     Tym sposobem udało nam się udowodnić nasze twierdzenie, choć być może nie
     wzbudza ono w tobie jakiegoś wybitnego entuzjazmu. Wszakże w Pythonie czy
-    innym C++, aby upewnić się, czy tamtejsza negacja jest poprawna, wystarczy
-    napisać dwa testy. Jeżeli oba przechodzą, można ogłosić sukces. 
+    innym C++, aby upewnić się, że tamtejsza negacja jest poprawna, wystarczy
+    napisać dwa testy. Jeżeli oba przechodzą, można ogłosić sukces i nie trzeba
+    niczego dowodzić. 
 <div class="paragraph"> </div>
 
 <a id="lab7"></a><h1 class="section">Bardziej skomplikowane typy, funkcje rekurencyjne i dowody przez indukcję</h1>
@@ -499,7 +514,7 @@ Najpierw trochę terminologii: to, co w definicji typu piszemy po pionowej
     sprawdził, jakiego typu jest dany obiekt. Służy do tego komenda <span class="inlinecode"><span class="id" title="keyword">Check</span></span>.
     W prawym dolnym rogu Coq wyświetla swoją odpowiedź: najpierw powtarza to co
     wpisaliśmy, a potem, po dwukropku, podaje nam typ obiektu. Jak widać, Coq
-    sądzi, że to, co napisaliśmy powyżej, jest obiektem typu <span class="inlinecode"><span class="id" title="var">lista</span></span> (odpowiedź
+    sądzi, że to, co napisaliśmy powyżej, jest elementem typu <span class="inlinecode"><span class="id" title="var">lista</span></span> (odpowiedź
     Coqa pozwoliłem sobie skopiować i wkleić powyżej w komentarzu po znaczniku
     "===&gt;"). Lista ta w tradycyjnym zapisie to <span class="inlinecode">[<span class="id" title="var">tak</span>;</span> <span class="inlinecode"><span class="id" title="var">nie</span>;</span> <span class="inlinecode"><span class="id" title="var">tak</span>]</span>. 
 </div>
@@ -574,9 +589,10 @@ Kolejną funkcją, którą chcemy zdefiniować, jest funkcja <span class="inline
     sprawdzamy, jakiej postaci jest argument <span class="inlinecode"><span class="id" title="var">l</span></span>. Gdy <span class="inlinecode"><span class="id" title="var">l</span></span> to <span class="inlinecode"><span class="id" title="var">koniec</span></span>, wynikiem
     również jest <span class="inlinecode"><span class="id" title="var">koniec</span></span> - gdy nie ma na liście żadnych bitów, nie ma czego
     odwracać. Jeżeli <span class="inlinecode"><span class="id" title="var">l</span></span> jest postaci <span class="inlinecode"><span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">l'</span></span> dla <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span> oraz 
-    <span class="inlinecode"><span class="id" title="var">l</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span></span>, to początkowy bit <span class="inlinecode"><span class="id" title="var">b</span></span> musi powędrować na koniec wynikowej listy -
-    możemy wysłać go tam za pomocą funkcji <span class="inlinecode"><span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> - zaś reszta listy (czyli
-    <span class="inlinecode"><span class="id" title="var">l'</span></span>) musi zostać rekurencyjnie odwrócona, za pomocą funkcji <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span>. 
+    <span class="inlinecode"><span class="id" title="var">l'</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span></span>, to początkowy bit <span class="inlinecode"><span class="id" title="var">b</span></span> musi powędrować na koniec wynikowej
+    listy - możemy wysłać go tam za pomocą funkcji <span class="inlinecode"><span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span></span> - zaś reszta
+    listy (czyli <span class="inlinecode"><span class="id" title="var">l'</span></span>) musi zostać rekurencyjnie odwrócona za pomocą funkcji
+    <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span>. 
 </div>
 <div class="code">
 
@@ -587,8 +603,8 @@ Kolejną funkcją, którą chcemy zdefiniować, jest funkcja <span class="inline
 <span class="id" title="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">b</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l</span> <span class="id" title="keyword">as</span> [| <span class="id" title="var">g</span>ł<span class="id" title="var">owa_l</span> <span class="id" title="var">ogon_l</span> <span class="id" title="var">hipoteza_indukcyjna</span>].<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">cbv</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">hipoteza_indukcyjna</span>. <span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">hipoteza_indukcyjna</span>. <span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
@@ -605,11 +621,11 @@ Czas w końcu udowodnić jakieś twierdzenie. Tym razem zaczynamy od słowa
 
 <div class="paragraph"> </div>
 
-    Zaczynamy od <span class="inlinecode"><span class="id" title="tactic">intros</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span>, czyli "weźmy dowolne b". Następnym krokiem jest
+    Zaczynamy od <span class="inlinecode"><span class="id" title="tactic">intro</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span>, czyli "weźmy dowolne b". Następnym krokiem jest
     <span class="inlinecode"><span class="id" title="tactic">induction</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span> <span class="inlinecode">...</span>, co możemy przeczytać jako "indukcja po l". Indukcja to
     taka analiza przypadków na sterydach - w niektórych przypadkach do naszej
     dyspozycji dostajemy dodatkowo hipotezę indukcyjną. Indukcja jest sposobem
-    rozumowania niezbędnym, gdy w grę wchodzą funkcje rekurencyjne. Ponieważ
+    rozumowania niezbędnym, gdy w grę wchodzą funkcje rekurencyjne: ponieważ
     funkcja rekurencyjna wywołuje samą siebie na mniejszym argumencie, to żeby
     udowodnić coś na jej temat dla jakiegoś argumentu, najpierw trzeba udowodnić
     tę samą własność dla mniejszego argumentu. Widzimy więc, że potrzebne jest
@@ -653,8 +669,7 @@ Czas w końcu udowodnić jakieś twierdzenie. Tym razem zaczynamy od słowa
 <span class="id" title="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l</span> <span class="id" title="keyword">as</span> [| <span class="id" title="var">g</span>ł<span class="id" title="var">owa_l</span> <span class="id" title="var">ogon_l</span> <span class="id" title="var">hipoteza_indukcyjna</span>].<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">odwró</span>ć<span class="id" title="var">_na_ko</span>ń<span class="id" title="var">cu</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">hipoteza_indukcyjna</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">odwró</span>ć<span class="id" title="var">_na_ko</span>ń<span class="id" title="var">cu</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">hipoteza_indukcyjna</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
@@ -662,13 +677,15 @@ Czas w końcu udowodnić jakieś twierdzenie. Tym razem zaczynamy od słowa
 
 <div class="doc">
 Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
-    listę. Dowód, podobnie jak poprzednio, jest przez indukcję po <span class="inlinecode"><span class="id" title="var">l</span></span>. W tym
-    momencie nie powinno nas to już dziwić - ponieważ prawie wszystkie funkcje
-    operujące na listach są rekurencyjne, a dowodzenie właściwości funkcji
-    rekurencyjnych wymaga rozumowania indukcyjnego, to prawie wszystkie dowody
-    dotyczące list będą szły przez indukcję. Zauważmy też, że nie musimy dowodu
-    zaczynąć taktyką <span class="inlinecode"><span class="id" title="tactic">intro</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span> - gdy używamy indukcji, Coq sam wie, że powinien
-    najpierw wprowadzić listę <span class="inlinecode"><span class="id" title="var">l</span></span> do kontekstu.
+    listę, co na początku. Dowód, podobnie jak poprzednio, jest przez indukcję
+    po <span class="inlinecode"><span class="id" title="var">l</span></span>. W tym momencie nie powinno nas to już dziwić - ponieważ prawie
+    wszystkie funkcje operujące na listach są rekurencyjne, a dowodzenie
+    właściwości funkcji rekurencyjnych wymaga rozumowania indukcyjnego, to
+    prawie wszystkie dowody dotyczące list będą szły przez indukcję (wyjaśnia
+    to też, dlaczego definicje typów zaczynają się od słowa kluczowego
+    <span class="inlinecode"><span class="id" title="keyword">Inductive</span></span>). Zauważmy, że nie musimy dowodu zaczynać taktyką <span class="inlinecode"><span class="id" title="tactic">intro</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span> -
+    gdy używamy indukcji, Coq sam wie, że powinien najpierw wprowadzić listę
+    <span class="inlinecode"><span class="id" title="var">l</span></span> do kontekstu.
 
 <div class="paragraph"> </div>
 
@@ -683,7 +700,16 @@ Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
     zrobimy, po lewej stronie w naszym celu ukazuje się wyrażenie
     <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> <span class="inlinecode">(<span class="id" title="var">odwró</span>ć</span> <span class="inlinecode"><span class="id" title="var">ogon_l</span>)</span>, które możemy uprościć korzystając z hipotezy
     indukcyjnej. I to by było na tyle, bo po obu stronach równania widzimy
-    dokładnie to samo. 
+    dokładnie to samo.
+
+<div class="paragraph"> </div>
+
+    W ten oto sposób udało nam się w Coqu udowodnić właściwość funkcji <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span>,
+    której nie można zagwarantować żadną liczbą testów. Czy to znaczy, że nasza
+    funkcja jest poprawna? Cóż, nie do końca... wszakże <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> nie jest jedyną
+    funkcją <span class="inlinecode"><span class="id" title="var">f</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">lista</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">lista</span></span>, która spełnia twierdzenie <span class="inlinecode"><span class="id" title="var">f</span></span> <span class="inlinecode">(<span class="id" title="var">f</span></span> <span class="inlinecode"><span class="id" title="var">l</span>)</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" title="var">l</span></span>. Żeby
+    upewnić się, że <span class="inlinecode"><span class="id" title="var">odwró</span>ć</span> to faktycznie ta funkcja, o którą nam chodziło,
+    trzeba by udowodnić jeszcze kilka twierdzeń! 
 <div class="paragraph"> </div>
 
 <a id="lab8"></a><h1 class="section">Dlaczego warto nauczyć się Coqa?</h1>
@@ -868,7 +894,7 @@ Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
 <div class="paragraph"> </div>
 
     Jeżeli chcesz zacząć dłuższą przygodę z Coqiem, polecam go zainstalować
-    (https://coq.inria.fr/) - śmiga wtedy lepiej niż w przeglądarce. Musicie
+    (https://coq.inria.fr/) - śmiga wtedy lepiej niż w przeglądarce. Musisz
     też wybrać sobie jakieś IDE:
 <ul class="doclist">
 <li> CoqIDE (https://coq.inria.fr/) - standardowe IDE do Coqa, polecam.
@@ -905,16 +931,18 @@ Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
 </li>
 <li> Książka Software Foundations, pierwsza połowa pierwszego tomu
       (po angielsku): https://softwarefoundations.cis.upenn.edu/lf-current/toc.html
+      (jest też wersja śmigająca w jsCoqu:
+      https://jscoq.github.io/ext/sf/lf/full/toc.html)
 
 </li>
 </ul>
 
 <div class="paragraph"> </div>
 
-    Jeżeli słuchanie/czytanie po angielsku sprawia ci problem, możesz też przeczytać
-    pierwsze rozdziały mojej własnej twórczości: https://wkolowski.github.io/CoqBookPL/
-    (uwaga, dość niekompletna i trochę nie po kolei; nie jest też tak odpicowana, jak
-    niniejsza notatka). 
+    Jeżeli słuchanie/czytanie po angielsku sprawia ci problem, możesz też
+    przeczytać pierwsze rozdziały mojej własnej twórczości:
+    https://wkolowski.github.io/CoqBookPL/ (uwaga: materiał dość niekompletny i
+    trochę nie po kolei; nie jest też tak odpicowany, jak niniejsza notatka). 
 <div class="paragraph"> </div>
 
 <a id="lab19"></a><h2 class="section">Przydatne linki</h2>
@@ -924,16 +952,16 @@ Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
  Poniższe linki stanowią dobre punkty wyjścia do rozpoczęcia eksploracji
     Coqowego świata:
 <ul class="doclist">
-<li> Strona domowa: https://coq.inria.fr/
+<li> Strona domowa: https://coq.inria.fr
 
 </li>
 <li> GitHub: https://github.com/coq/coq
 
 </li>
-<li> Forum: https://coq.discourse.group/
+<li> Forum: https://coq.discourse.group
 
 </li>
-<li> Czat: https://coq.zulipchat.com/login/
+<li> Czat: https://coq.zulipchat.com
 
 </li>
 <li> Q&amp;A: https://stackoverflow.com/questions/tagged/coq
