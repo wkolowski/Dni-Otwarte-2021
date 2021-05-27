@@ -2,7 +2,7 @@
 
 # Skrypt zadaptowany z https://github.com/wkolowski/Typonomikon
 
-coq_makefile -R "." DniOtwarte -arg "async-proofs-cache force" -o makefile $(find . -name "*v")
+coq_makefile -R "." DniOtwarte -arg "-async-proofs-cache force" -o makefile $(find . -name "*v")
 make
 rm makefile makefile.conf .makefile.d
 

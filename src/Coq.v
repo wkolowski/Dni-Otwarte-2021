@@ -240,7 +240,7 @@ Qed.
     [y] za [x], to otrzymujemy w wyniku [... y ...]
 
     Wykonanie dopasowania polega na sprawdzeniu, który wzorzec pasuje i zwróceniu
-    odpowiadającej wartości. Wzorce sprawdzane sa od góry do dołu - jeżeli pierwszy
+    odpowiadającej wartości. Wzorce sprawdzane są od góry do dołu - jeżeli pierwszy
     nie pasuje, sprawdzany jest kolejny i tak aż do skutku. Gwarantuje to nam, że
     w każdej sytuacji dopasować się może co najwyżej jeden wzorzec. Ponieważ
     definicje muszą obsługiwać wszystkie przypadki, mamy także gwarancję, że któryś
@@ -427,7 +427,7 @@ Qed.
     do dowodzenia, a nie do definiowania funkcji... i właśnie tym czymś jest
     hipoteza indukcyjna!
 
-    Uwaga: klauzula [as [| głowa_l ogon_l hipoteza indukcyjna]] pozwala nam
+    Uwaga: klauzula [as [| głowa_l ogon_l hipoteza_indukcyjna]] pozwala nam
     nadać nazwy rzeczom powstałym z rozłożenia [l] na kawałki oraz hipotezie
     indukcyjnej. W programowaniu funkcyjnym tradycyjnie pierwszy element listy
     nazywa się głową, zaś resztę ogonem, i stąd biorą się nasze nazwy.
