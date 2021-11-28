@@ -525,6 +525,9 @@ Qed.
     Oczywiście jak nie chcesz, to nie musisz robić ćwiczeń - nikt cię nie
     zmusza. To tylko taka dobra rada... *)
 
+(* W tym okienku możesz wpisać swoje rozwiązania zadań. Może się ono wydawać
+   małe, ale jak coś wpiszesz, to się powiększy :) *)
+
 (** **** Funkcja [lub] *)
 
 (** Zdefiniuj funkcję [lub : bit -> bit -> bit], która zwraca [tak], gdy co
