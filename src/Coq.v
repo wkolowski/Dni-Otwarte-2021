@@ -141,7 +141,7 @@ Definition                  (* Definicja zaczyna się od słowa kluczowego "Defi
     tylko dwie możliwości ([tak] albo [nie]), to możemy teraz sprawdzić, którą
     z tych postaci przyjmuje [b], i w każdym z tych dwóch przypadków zwrócić
     odpowiedni wynik. Uwaga: nie możemy pominąć żadnego przypadku. Nie możemy
-    też podać podać większej ilości przypadków, niż faktycznie jest możliwości. *)
+    też podać większej ilości przypadków, niż faktycznie jest możliwości. *)
 
 (** * Równość *)
 
