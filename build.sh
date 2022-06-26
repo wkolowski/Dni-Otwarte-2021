@@ -3,7 +3,7 @@
 # Skrypt zaadaptowany z https://github.com/wkolowski/Typonomikon
 
 coq_makefile -R "." DniOtwarte -arg "-async-proofs-cache force" -o makefile $(find . -name "*v")
-make
+make -j `nproc`
 rm makefile makefile.conf .makefile.d
 
 coqdoc src/*v                                             \
