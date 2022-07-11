@@ -107,7 +107,6 @@ h4.section {
              font-size: 100%;
 	     line-height: 125%;
              /*max-width: 35em; */ /* 40em; */
-             max-width: 60em;
              color: black;
              text-align: justify;
              border-style: plain}
@@ -406,6 +405,9 @@ A:visited {text-decoration: none; color:black}
 A:active {text-decoration: none; color:black}
 A:hover {text-decoration: none; color: #555555 }
 
+/* Linki w komentarzach muszą mieć klasę .link, żeby były niebieskie. */
+a.link {text-decoration: none; color:blue}
+
 #index #entrance {
     text-align: center;
 }
@@ -423,12 +425,4 @@ A:hover {text-decoration: none; color: #555555 }
 ul.doclist {
     margin-top: 0em;
     margin-bottom: 0em;
-}
-
-.CodeMirror.cm-s-default {
-    margin-top: 2em;
-    margin-bottom: 2em;
-    max-width: 60em;
-    margin-left: auto;
-    margin-right: auto;
 }

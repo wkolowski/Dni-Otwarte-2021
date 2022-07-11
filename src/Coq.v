@@ -2,12 +2,13 @@
 
 (** Cześć, nazywam się Wojciech Kołowski i witam cię na Dniach Otwartych
     Instytutu Informatyki UWr 2021. Wszystkie materiały z tego wydarzenia
-    możesz znaleźć tutaj: https://ii.uni.wroc.pl/dla-studenta/drzwi-otwarte,
+    możesz znaleźć
+    #<a class='link' href='https://ii.uni.wroc.pl/dla-studenta/drzwi-otwarte'>tutaj</a>#,
     ja natomiast opowiem ci dziś o języku programowania Coq. *)
 
 (** * Coq a inne języki programowania *)
 
-(** Coq (wymawiane "kok"; nazwa pochodzi od francuskiego słowa "coq",
+(** Coq (wymawiane "kok"; nazwa pochodzi od francuskiego słowa _coq_,
     oznaczającego koguta) jest mocno wyjątkowym językiem programowania,
     różniącym się znacznie od większości popularnych języków, jak C++ czy
     Python.
@@ -91,7 +92,7 @@ Inductive        (* Definicja typu zaczyna się od słowa kluczowego "Inductive"
     | nie : bit. (* "nie" jest elementem typu "bit" *)
 
 (** Żeby Coq przeczytał powyższą definicję, kliknij na samej górze po prawej
-    strzałkę w dół (lub wciśnij alt + strzałka w dół). Kiedy Coq jest w trakcie
+    strzałkę w dół (lub wciśnij alt + strzałkę w dół). Kiedy Coq jest w trakcie
     czytania definicji, jest ona podświetlona na pomarańczowo. Jeżeli Coq ją
     zaakceptuje, zostaje ona podświetlona na szaro. Jeżeli z definicją jest coś
     nie tak, to zostanie podświetlona na czerwono, a komunikat o błędzie pojawi
@@ -125,7 +126,7 @@ Definition                  (* Definicja zaczyna się od słowa kluczowego "Defi
     Następnie podajemy nazwę definiowanej funkcji. Żeby uniknąć niepotrzebnych
     komplikacji przyjąłem konwencję, że wszystkie nasze nazwy będą w języku
     polskim. Następnie, po dwukropku, podajemy typ definiowanego obiektu (nie
-    jest to konieczne, ale pisanie typów to dobry zwyczaj). Zapis [A -> B]
+    zawsze jest to konieczne, ale pisanie typów to dobry zwyczaj). Zapis [A -> B]
     oznacza typ funkcyjny, a zatem [bit -> bit] to typ funkcji, które biorą
     argument typu [bit] i zwracają wynik również typu [bit].
 
@@ -589,51 +590,59 @@ Qed.
 (** ** Środowisko *)
 
 (** Najłatwiej jest zapoznać się z Coqiem używając przeglądarkowego środowiska
-    jsCoq (https://jscoq.github.io/scratchpad.html). Polecam - nie trzeba nic
-    instalować i ma rozsądne podpowiadanie składni dla początkujących.
+    #<a class='link' href='https://jscoq.github.io/scratchpad.html'>jsCoq</a>#.
+    Polecam - nie trzeba nic instalować i ma rozsądne podpowiadanie składni dla
+    początkujących.
 
-    Jeżeli chcesz zacząć dłuższą przygodę z Coqiem, polecam go zainstalować
-    (https://coq.inria.fr/) - śmiga wtedy lepiej niż w przeglądarce. Musisz
-    też wybrać sobie jakieś IDE:
-    - CoqIDE (https://coq.inria.fr/) - standardowe IDE do Coqa, polecam.
-    - Visual Studio Code (https://code.visualstudio.com/) z pluginem dla
-      Coqa - również całkiem spoko.
-    - Emacs (https://www.gnu.org/software/emacs/) z pluginem Proof General
-      (https://proofgeneral.github.io/) - nie polecam.
-    - W ostateczności można też używać Coqa z poziomu konsoli, ale tym
-      bardziej nie polecam. *)
+    Jeżeli chcesz zacząć dłuższą przygodę z Coqiem, polecam go
+    #<a class='link' href='https://coq.inria.fr/download'>zainstalować</a># - śmiga
+    wtedy lepiej niż w przeglądarce. Musisz też wybrać sobie jakieś IDE:
+    - #<a class='link' href='https://coq.inria.fr/download'>CoqIDE</a># -
+      standardowe IDE do Coqa, polecam.
+    - #<a class='link' href='https://code.visualstudio.com/'>Visual Studio Code</a>#
+      z pluginem dla Coqa - również całkiem spoko.
+    - #<a class='link' href='https://www.gnu.org/software/emacs/'>Emacs</a>#
+      z pluginem #<a class='link' href='https://proofgeneral.github.io/'>Proof General</a># -
+      zdecydowanie nie polecam.
+    - W ostateczności można też używać Coqa z poziomu konsoli, ale tym bardziej
+      nie polecam. *)
 
 (** ** Materiały dydaktyczne *)
 
 (** Przyda ci się też trochę materiałów dydaktycznych:
-    - Nagranie z zeszłorocznych dni otwartych (po polsku, ok. 20 min):
-      https://www.youtube.com/watch?v=njgUPWlWYUM&t=6936s
-    - Nagranie z prezentacji podobnej do naszej (po angielsku, 3 godziny):
-      https://www.youtube.com/watch?v=5e7UdWzITyQ
-    - Książka Software Foundations, pierwsza połowa pierwszego tomu
-      (po angielsku): https://softwarefoundations.cis.upenn.edu/lf-current/toc.html
-      (jest też wersja śmigająca w jsCoqu:
-      https://jscoq.github.io/ext/sf/lf/full/toc.html)
+    - #<a class='link' href='https://www.youtube.com/watch?v=njgUPWlWYUM&t=6936s'>
+      Nagranie z zeszłorocznych dni otwartych</a># (po polsku, ok. 20 min)
+    - #<a class='link' href='https://www.youtube.com/watch?v=5e7UdWzITyQ'>
+      Nagranie z prezentacji podobnej do naszej</a># (po angielsku, 3 godziny)
+    - #<a class='link' href='https://softwarefoundations.cis.upenn.edu/lf-current/toc.html'>
+      Książka Software Foundations</a>#, pierwsza połowa pierwszego tomu (po angielsku).
+      Jest też #<a class='link' href='https://jscoq.github.io/ext/sf/lf/full/toc.html'>
+      wersja śmigająca w jsCoqu</a>#.
 
     Jeżeli słuchanie/czytanie po angielsku sprawia ci problem, możesz też
-    przeczytać pierwsze rozdziały mojej własnej twórczości:
-    https://wkolowski.github.io/CoqBookPL/ (uwaga: materiał dość niekompletny i
-    trochę nie po kolei; nie jest też tak odpicowany, jak niniejsza notatka). *)
+    przeczytać pierwsze rozdziały
+    #<a class='link' href='https://wkolowski.github.io/CoqBookPL/'>
+    mojej własnej twórczości</a> (uwaga: materiał dość niekompletny i trochę
+    nie po kolei; nie jest też tak odpicowany, jak niniejsza notatka). *)
 
 (** ** Przydatne linki *)
 
 (** Poniższe linki stanowią dobre punkty wyjścia do rozpoczęcia eksploracji
     Coqowego świata:
-    - Strona domowa: https://coq.inria.fr
-    - GitHub: https://github.com/coq/coq
-    - Forum: https://coq.discourse.group
-    - Czat: https://coq.zulipchat.com
-    - Q&A: https://stackoverflow.com/questions/tagged/coq
+    - #<a class='link' href='https://coq.inria.fr'>Strona domowa</a>#
+    - #<a class='link' href='https://github.com/coq/coq'>GitHub</a>#
+    - #<a class='link' href='https://coq.discourse.group'>Forum</a>#
+    - #<a class='link' href='https://coq.zulipchat.com'>Czat</a>#
+    - #<a class='link' href='https://stackoverflow.com/questions/tagged/coq'>Q&A</a>#
+    - #<a class='link' href='https://proofassistants.stackexchange.com/'>Lepsze Q&A</a>#
+    - #<a class='link' href='https://coq.pl-a.net/'>Więcej linków</a>#
+    - #<a class='link' href='https://github.com/coq-community/awesome-coq'>Jeszcze więcej linków</a>#
 
     Na stronie domowej znajdziesz więcej linków i materiałów dydaktycznych. Na
     GitHubie możesz podejrzeć, co Coqowi siedzi we flakach. Forum i tag "coq"
-    na StackOverflow służą głównie do zadawania pytań. Nie wiem co dzieje się
-    na czacie, ale pewnie też pytania, tylko że szybciej odpowiadają : ) *)
+    na StackOverflow służą głównie do zadawania pytań. Ostatnio powstał też
+    strona na StackExchange poświęcona Coqowi i językom my podobnym. Nie wiem
+    co dzieje się na czacie, ale pewnie też pytania, tylko że szybciej odpowiadają :) *)
 
 (** ** Kontakt *)
 
