@@ -88,8 +88,8 @@
 
 Inductive        (* Definicja typu zaczyna się od słowa kluczowego "Inductive". *)
   bit : Type :=  (* "bit" jest typem zdefiniowanym w ten sposób, że: *)
-    | tak : bit  (* "tak" jest elementem typu "bit" *)
-    | nie : bit. (* "nie" jest elementem typu "bit" *)
+| tak : bit      (* "tak" jest elementem typu "bit" *)
+| nie : bit.     (* "nie" jest elementem typu "bit" *)
 
 (** Żeby Coq przeczytał powyższą definicję, kliknij na samej górze po prawej
     strzałkę w dół (lub wciśnij alt + strzałkę w dół). Kiedy Coq jest w trakcie
@@ -112,8 +112,8 @@ Definition                  (* Definicja zaczyna się od słowa kluczowego "Defi
   negacja : bit -> bit :=   (* negacja to funkcja, która bierze bit i zwraca bit, zdefiniowana następująco: *)
     fun b : bit =>          (* Weź jako argument bit nazwany [b]. *)
       match b with          (* Sprawdź, jakiej [b] jest postaci: *)
-          | tak => nie      (* Gdy [b] to [tak], wynikiem funkcji jest [nie]. *)
-          | nie => tak      (* Gdy [b] to [nie], wynikiem funkcji jest [tak]. *)
+      | tak => nie          (* Gdy [b] to [tak], wynikiem funkcji jest [nie]. *)
+      | nie => tak          (* Gdy [b] to [nie], wynikiem funkcji jest [tak]. *)
       end.
 
 (** Uwaga: jeżeli oglądałeś moje nagranie z Dni Otwartych, to możesz tam
@@ -258,8 +258,8 @@ Goal forall b : bit,         (* Dla każdego bitu b... *)
 Proof.
   intro dowolne_b.           (* Weźmy dowolny bit *)
   destruct dowolne_b.        (* Analiza przypadków: bit może mieć jedną z dwóch postaci (tak/nie) *)
-    cbn. reflexivity.        (* Trochę obliczeń i... udało się! *)
-    reflexivity.             (* Nie musimy ręcznie prosić o policzenie - Coq sam wie, żeby to zrobić. *)
+  - cbn. reflexivity.        (* Trochę obliczeń i... udało się! *)
+  - reflexivity.             (* Nie musimy ręcznie prosić o policzenie - Coq sam wie, żeby to zrobić. *)
 Qed.
 
 (** Nasze twierdzenie ma stosować się do każdego bitu [b], a więc nie możemy o
@@ -268,8 +268,8 @@ Qed.
 
     Żeby udowodnić coś o każdym bicie [b], wystarczy udowodnić to dla
     dowolnego bitu. Właśnie ten sposób rozumowania realizuje taktyka
-    [intro] (argument po [intro] to nazwa, którą chcemy nadać naszemu
-    dowolnemu bitowi). Po przeczytaniu linijki [intro dowolne_b.] mamy
+    [intro]. Argument po [intro] to nazwa, którą chcemy nadać naszemu
+    dowolnemu bitowi. Po przeczytaniu linijki [intro dowolne_b.] mamy
     spore zmiany w oknie po prawej - z naszego celu zniknęło [forall
     b : bit], zaś nad kreską pojawiła się linijka [dowolne_b : bit].
     To, co znajduje się nad kreską, to kontekst - widać tam wszystkie
@@ -285,9 +285,10 @@ Qed.
     przez [nie]. W pierwszym przypadku wystarczy wykonać nieco obliczeń
     i widać wtedy, że obie strony równości są takie same. Drugi przypadek jest
     analogiczny - co więcej, jeżeli użyjemy tylko taktyki [reflexivity], to
-    Coq sam połapie się, że powinien wykonać odpowiednie obliczenia. Uwaga: dla
-    czytelności, dowodzenie każdego z podcelów zaczynamy od dwóch spacji wcięcia
-    w kodzie.
+    Coq sam połapie się, że powinien wykonać odpowiednie obliczenia. Uwaga:
+    dla czytelności, dowodzenie każdego z podcelów zaczynamy w nowej linii od
+    symbolu [-]. Jest to tzw. bullet - pomaga on nam skupić uwagę na celu,
+    który aktualnie dowodzimy.
 
     Tym sposobem udało nam się udowodnić nasze twierdzenie, choć być może nie
     wzbudza ono w tobie jakiegoś wybitnego entuzjazmu. Wszakże w Pythonie czy
@@ -307,8 +308,8 @@ Qed.
     na listach, i udowodnimy, że są one poprawne. *)
 
 Inductive lista : Type :=
-    | koniec      : lista                  (* [koniec] jest listą *)
-    | na_początku : bit -> lista -> lista. (* [na_początku b l] jest listą, pod warunkiem że [b] jest bitem a [l] listą *)
+| koniec      : lista                  (* [koniec] jest listą *)
+| na_początku : bit -> lista -> lista. (* [na_początku b l] jest listą, pod warunkiem że [b] jest bitem a [l] listą *)
 
 (** Najpierw trochę terminologii: to, co w definicji typu piszemy po pionowej
     kresce "|", to konstruktor. A zatem konstruktorami typu [bit] są [tak] i
@@ -342,8 +343,8 @@ Check na_początku tak (na_początku nie (na_początku tak koniec)).
 
 Fixpoint na_końcu (b : bit) (l : lista) : lista :=
 match l with
-    | koniec           => na_początku b koniec
-    | na_początku c l' => na_początku c (na_końcu b l')
+| koniec           => na_początku b koniec
+| na_początku c l' => na_początku c (na_końcu b l')
 end.
 
 (** Skoro umiemy robić listy, dostawiając bit na początku, to dobrze byłoby
@@ -381,8 +382,8 @@ end.
 
 Fixpoint odwróć (l : lista) : lista :=
 match l with
-    | koniec           => koniec
-    | na_początku b l' => na_końcu b (odwróć l')
+| koniec           => koniec
+| na_początku b l' => na_końcu b (odwróć l')
 end.
 
 (** Kolejną funkcją, którą chcemy zdefiniować, jest funkcja [odwróć], której
@@ -404,8 +405,8 @@ Theorem odwróć_na_końcu :
 Proof.
   intro b.
   induction l as [| głowa_l ogon_l hipoteza_indukcyjna].
-    cbn. reflexivity.
-    cbn. rewrite hipoteza_indukcyjna. cbn. reflexivity.
+  - cbn. reflexivity.
+  - cbn. rewrite hipoteza_indukcyjna. cbn. reflexivity.
 Qed.
 
 (** Czas w końcu udowodnić jakieś twierdzenie. Tym razem zaczynamy od słowa
@@ -454,8 +455,8 @@ Theorem odwróć_odwróć :
     odwróć (odwróć l) = l.
 Proof.
   induction l as [| głowa_l ogon_l hipoteza_indukcyjna].
-    cbn. reflexivity.
-    cbn. rewrite odwróć_na_końcu. rewrite hipoteza_indukcyjna. reflexivity.
+  - cbn. reflexivity.
+  - cbn. rewrite odwróć_na_końcu. rewrite hipoteza_indukcyjna. reflexivity.
 Qed.
 
 (** Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
@@ -643,9 +644,3 @@ Qed.
     na StackOverflow służą głównie do zadawania pytań. Ostatnio powstał też
     strona na StackExchange poświęcona Coqowi i językom my podobnym. Nie wiem
     co dzieje się na czacie, ale pewnie też pytania, tylko że szybciej odpowiadają :) *)
-
-(** ** Kontakt *)
-
-(**  Jeżeli masz pytania, pisz śmiało:
-    - Ja: 299899@uwr.edu.pl
-    - Nie ja: tomasz.drab@cs.uni.wroc.pl *)

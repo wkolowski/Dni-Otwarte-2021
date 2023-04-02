@@ -149,8 +149,8 @@
 <br/>
 <span class="id" title="keyword">Inductive</span>        <span class="comment">(*&nbsp;Definicja&nbsp;typu&nbsp;zaczyna&nbsp;się&nbsp;od&nbsp;słowa&nbsp;kluczowego&nbsp;"Inductive".&nbsp;*)</span><br/>
 &nbsp;&nbsp;<span class="id" title="var">bit</span> : <span class="id" title="keyword">Type</span> :=  <span class="comment">(*&nbsp;"bit"&nbsp;jest&nbsp;typem&nbsp;zdefiniowanym&nbsp;w&nbsp;ten&nbsp;sposób,&nbsp;że:&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">tak</span> : <span class="id" title="var">bit</span>  <span class="comment">(*&nbsp;"tak"&nbsp;jest&nbsp;elementem&nbsp;typu&nbsp;"bit"&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">nie</span> : <span class="id" title="var">bit</span>. <span class="comment">(*&nbsp;"nie"&nbsp;jest&nbsp;elementem&nbsp;typu&nbsp;"bit"&nbsp;*)</span><br/>
+| <span class="id" title="var">tak</span> : <span class="id" title="var">bit</span>      <span class="comment">(*&nbsp;"tak"&nbsp;jest&nbsp;elementem&nbsp;typu&nbsp;"bit"&nbsp;*)</span><br/>
+| <span class="id" title="var">nie</span> : <span class="id" title="var">bit</span>. <span class="comment">(*&nbsp;"nie"&nbsp;jest&nbsp;elementem&nbsp;typu&nbsp;"bit"&nbsp;*)</span><br/>
 
 <br/>
 </div>
@@ -184,8 +184,8 @@
 &nbsp;&nbsp;<span class="id" title="var">negacja</span> : <span class="id" title="var">bit</span> -&gt; <span class="id" title="var">bit</span> :=   <span class="comment">(*&nbsp;negacja&nbsp;to&nbsp;funkcja,&nbsp;która&nbsp;bierze&nbsp;bit&nbsp;i&nbsp;zwraca&nbsp;bit,&nbsp;zdefiniowana&nbsp;następująco:&nbsp;*)</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">b</span> : <span class="id" title="var">bit</span> =&gt;          <span class="comment">(*&nbsp;Weź&nbsp;jako&nbsp;argument&nbsp;bit&nbsp;nazwany&nbsp;<span class="inlinecode"><span class="id" title="var">b</span></span>.&nbsp;*)</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">b</span> <span class="id" title="keyword">with</span>          <span class="comment">(*&nbsp;Sprawdź,&nbsp;jakiej&nbsp;<span class="inlinecode"><span class="id" title="var">b</span></span>&nbsp;jest&nbsp;postaci:&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">tak</span> =&gt; <span class="id" title="var">nie</span>      <span class="comment">(*&nbsp;Gdy&nbsp;<span class="inlinecode"><span class="id" title="var">b</span></span>&nbsp;to&nbsp;<span class="inlinecode"><span class="id" title="var">tak</span></span>,&nbsp;wynikiem&nbsp;funkcji&nbsp;jest&nbsp;<span class="inlinecode"><span class="id" title="var">nie</span></span>.&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">nie</span> =&gt; <span class="id" title="var">tak</span>      <span class="comment">(*&nbsp;Gdy&nbsp;<span class="inlinecode"><span class="id" title="var">b</span></span>&nbsp;to&nbsp;<span class="inlinecode"><span class="id" title="var">nie</span></span>,&nbsp;wynikiem&nbsp;funkcji&nbsp;jest&nbsp;<span class="inlinecode"><span class="id" title="var">tak</span></span>.&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">tak</span> =&gt; <span class="id" title="var">nie</span>          <span class="comment">(*&nbsp;Gdy&nbsp;<span class="inlinecode"><span class="id" title="var">b</span></span>&nbsp;to&nbsp;<span class="inlinecode"><span class="id" title="var">tak</span></span>,&nbsp;wynikiem&nbsp;funkcji&nbsp;jest&nbsp;<span class="inlinecode"><span class="id" title="var">nie</span></span>.&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">nie</span> =&gt; <span class="id" title="var">tak</span>          <span class="comment">(*&nbsp;Gdy&nbsp;<span class="inlinecode"><span class="id" title="var">b</span></span>&nbsp;to&nbsp;<span class="inlinecode"><span class="id" title="var">nie</span></span>,&nbsp;wynikiem&nbsp;funkcji&nbsp;jest&nbsp;<span class="inlinecode"><span class="id" title="var">tak</span></span>.&nbsp;*)</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
 
 <br/>
@@ -398,8 +398,8 @@ Taktyka <span class="inlinecode"><span class="id" title="var">cbn</span></span> 
 <span class="id" title="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">dowolne_b</span>. <span class="comment">(*&nbsp;Weźmy&nbsp;dowolny&nbsp;bit&nbsp;*)</span><br/>
 &nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">dowolne_b</span>. <span class="comment">(*&nbsp;Analiza&nbsp;przypadków:&nbsp;bit&nbsp;może&nbsp;mieć&nbsp;jedną&nbsp;z&nbsp;dwóch&nbsp;postaci&nbsp;(tak/nie)&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;Trochę&nbsp;obliczeń&nbsp;i...&nbsp;udało&nbsp;się!&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;Nie&nbsp;musimy&nbsp;ręcznie&nbsp;prosić&nbsp;o&nbsp;policzenie&nbsp;-&nbsp;Coq&nbsp;sam&nbsp;wie,&nbsp;żeby&nbsp;to&nbsp;zrobić.&nbsp;*)</span><br/>
+&nbsp;&nbsp;- <span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;Trochę&nbsp;obliczeń&nbsp;i...&nbsp;udało&nbsp;się!&nbsp;*)</span><br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">reflexivity</span>. <span class="comment">(*&nbsp;Nie&nbsp;musimy&nbsp;ręcznie&nbsp;prosić&nbsp;o&nbsp;policzenie&nbsp;-&nbsp;Coq&nbsp;sam&nbsp;wie,&nbsp;żeby&nbsp;to&nbsp;zrobić.&nbsp;*)</span><br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
@@ -414,8 +414,8 @@ Nasze twierdzenie ma stosować się do każdego bitu <span class="inlinecode"><
 
     Żeby udowodnić coś o każdym bicie <span class="inlinecode"><span class="id" title="var">b</span></span>, wystarczy udowodnić to dla
     dowolnego bitu. Właśnie ten sposób rozumowania realizuje taktyka
-    <span class="inlinecode"><span class="id" title="tactic">intro</span></span> (argument po <span class="inlinecode"><span class="id" title="tactic">intro</span></span> to nazwa, którą chcemy nadać naszemu
-    dowolnemu bitowi). Po przeczytaniu linijki <span class="inlinecode"><span class="id" title="tactic">intro</span></span> <span class="inlinecode"><span class="id" title="var">dowolne_b</span>.</span> mamy
+    <span class="inlinecode"><span class="id" title="tactic">intro</span></span>. Argument po <span class="inlinecode"><span class="id" title="tactic">intro</span></span> to nazwa, którą chcemy nadać naszemu
+    dowolnemu bitowi. Po przeczytaniu linijki <span class="inlinecode"><span class="id" title="tactic">intro</span></span> <span class="inlinecode"><span class="id" title="var">dowolne_b</span>.</span> mamy
     spore zmiany w oknie po prawej - z naszego celu zniknęło <span class="inlinecode"><span class="id" title="keyword">forall</span></span>
     <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span>, zaś nad kreską pojawiła się linijka <span class="inlinecode"><span class="id" title="var">dowolne_b</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">bit</span></span>.
     To, co znajduje się nad kreską, to kontekst - widać tam wszystkie
@@ -433,9 +433,10 @@ Nasze twierdzenie ma stosować się do każdego bitu <span class="inlinecode"><
     przez <span class="inlinecode"><span class="id" title="var">nie</span></span>. W pierwszym przypadku wystarczy wykonać nieco obliczeń
     i widać wtedy, że obie strony równości są takie same. Drugi przypadek jest
     analogiczny - co więcej, jeżeli użyjemy tylko taktyki <span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span>, to
-    Coq sam połapie się, że powinien wykonać odpowiednie obliczenia. Uwaga: dla
-    czytelności, dowodzenie każdego z podcelów zaczynamy od dwóch spacji wcięcia
-    w kodzie.
+    Coq sam połapie się, że powinien wykonać odpowiednie obliczenia. Uwaga:
+    dla czytelności, dowodzenie każdego z podcelów zaczynamy w nowej linii od
+    symbolu <span class="inlinecode">-</span>. Jest to tzw. bullet - pomaga on nam skupić uwagę na celu,
+    który aktualnie dowodzimy.
 
 <div class="paragraph"> </div>
 
@@ -463,8 +464,8 @@ Nasze twierdzenie ma stosować się do każdego bitu <span class="inlinecode"><
 
 <br/>
 <span class="id" title="keyword">Inductive</span> <span class="id" title="var">lista</span> : <span class="id" title="keyword">Type</span> :=<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">koniec</span>      : <span class="id" title="var">lista</span>                  <span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">koniec</span></span>&nbsp;jest&nbsp;listą&nbsp;*)</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> : <span class="id" title="var">bit</span> -&gt; <span class="id" title="var">lista</span> -&gt; <span class="id" title="var">lista</span>. <span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span>&nbsp;jest&nbsp;listą,&nbsp;pod&nbsp;warunkiem&nbsp;że&nbsp;<span class="inlinecode"><span class="id" title="var">b</span></span>&nbsp;jest&nbsp;bitem&nbsp;a&nbsp;<span class="inlinecode"><span class="id" title="var">l</span></span>&nbsp;listą&nbsp;*)</span><br/>
+| <span class="id" title="var">koniec</span>      : <span class="id" title="var">lista</span>                  <span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">koniec</span></span>&nbsp;jest&nbsp;listą&nbsp;*)</span><br/>
+| <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> : <span class="id" title="var">bit</span> -&gt; <span class="id" title="var">lista</span> -&gt; <span class="id" title="var">lista</span>. <span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span></span> <span class="inlinecode"><span class="id" title="var">b</span></span> <span class="inlinecode"><span class="id" title="var">l</span></span>&nbsp;jest&nbsp;listą,&nbsp;pod&nbsp;warunkiem&nbsp;że&nbsp;<span class="inlinecode"><span class="id" title="var">b</span></span>&nbsp;jest&nbsp;bitem&nbsp;a&nbsp;<span class="inlinecode"><span class="id" title="var">l</span></span>&nbsp;listą&nbsp;*)</span><br/>
 
 <br/>
 </div>
@@ -524,8 +525,8 @@ Najpierw trochę terminologii: to, co w definicji typu piszemy po pionowej
 <br/>
 <span class="id" title="keyword">Fixpoint</span> <span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span> (<span class="id" title="var">b</span> : <span class="id" title="var">bit</span>) (<span class="id" title="var">l</span> : <span class="id" title="var">lista</span>) : <span class="id" title="var">lista</span> :=<br/>
 <span class="id" title="keyword">match</span> <span class="id" title="var">l</span> <span class="id" title="keyword">with</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">koniec</span>           =&gt; <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">b</span> <span class="id" title="var">koniec</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">c</span> <span class="id" title="var">l'</span> =&gt; <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">c</span> (<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span> <span class="id" title="var">b</span> <span class="id" title="var">l'</span>)<br/>
+| <span class="id" title="var">koniec</span>           =&gt; <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">b</span> <span class="id" title="var">koniec</span><br/>
+| <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">c</span> <span class="id" title="var">l'</span> =&gt; <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">c</span> (<span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span> <span class="id" title="var">b</span> <span class="id" title="var">l'</span>)<br/>
 <span class="id" title="keyword">end</span>.<br/>
 
 <br/>
@@ -574,8 +575,8 @@ Skoro umiemy robić listy, dostawiając bit na początku, to dobrze byłoby
 <br/>
 <span class="id" title="keyword">Fixpoint</span> <span class="id" title="var">odwró</span>ć (<span class="id" title="var">l</span> : <span class="id" title="var">lista</span>) : <span class="id" title="var">lista</span> :=<br/>
 <span class="id" title="keyword">match</span> <span class="id" title="var">l</span> <span class="id" title="keyword">with</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">koniec</span>           =&gt; <span class="id" title="var">koniec</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">b</span> <span class="id" title="var">l'</span> =&gt; <span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span> <span class="id" title="var">b</span> (<span class="id" title="var">odwró</span>ć <span class="id" title="var">l'</span>)<br/>
+| <span class="id" title="var">koniec</span>           =&gt; <span class="id" title="var">koniec</span><br/>
+| <span class="id" title="var">na_pocz</span>ą<span class="id" title="var">tku</span> <span class="id" title="var">b</span> <span class="id" title="var">l'</span> =&gt; <span class="id" title="var">na_ko</span>ń<span class="id" title="var">cu</span> <span class="id" title="var">b</span> (<span class="id" title="var">odwró</span>ć <span class="id" title="var">l'</span>)<br/>
 <span class="id" title="keyword">end</span>.<br/>
 
 <br/>
@@ -604,8 +605,8 @@ Kolejną funkcją, którą chcemy zdefiniować, jest funkcja <span class="inline
 <span class="id" title="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">b</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l</span> <span class="id" title="keyword">as</span> [| <span class="id" title="var">g</span>ł<span class="id" title="var">owa_l</span> <span class="id" title="var">ogon_l</span> <span class="id" title="var">hipoteza_indukcyjna</span>].<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">hipoteza_indukcyjna</span>. <span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="var">cbn</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">hipoteza_indukcyjna</span>. <span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
@@ -669,8 +670,8 @@ Czas w końcu udowodnić jakieś twierdzenie. Tym razem zaczynamy od słowa
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">odwró</span>ć (<span class="id" title="var">odwró</span>ć <span class="id" title="var">l</span>) = <span class="id" title="var">l</span>.<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l</span> <span class="id" title="keyword">as</span> [| <span class="id" title="var">g</span>ł<span class="id" title="var">owa_l</span> <span class="id" title="var">ogon_l</span> <span class="id" title="var">hipoteza_indukcyjna</span>].<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cbn</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">odwró</span>ć<span class="id" title="var">_na_ko</span>ń<span class="id" title="var">cu</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">hipoteza_indukcyjna</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="var">cbn</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="var">cbn</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">odwró</span>ć<span class="id" title="var">_na_ko</span>ń<span class="id" title="var">cu</span>. <span class="id" title="tactic">rewrite</span> <span class="id" title="var">hipoteza_indukcyjna</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
@@ -998,22 +999,7 @@ Udowodnijmy jeszcze, że dwukrotne odwrócenie listy daje w wyniku tę samą
     GitHubie możesz podejrzeć, co Coqowi siedzi we flakach. Forum i tag "coq"
     na StackOverflow służą głównie do zadawania pytań. Ostatnio powstał też
     strona na StackExchange poświęcona Coqowi i językom my podobnym. Nie wiem
-    co dzieje się na czacie, ale pewnie też pytania, tylko że szybciej odpowiadają :) 
-<div class="paragraph"> </div>
-
-<a id="lab20"></a><h2 class="section">Kontakt</h2>
-
-<div class="paragraph"> </div>
-
-  Jeżeli masz pytania, pisz śmiało:
-<ul class="doclist">
-<li> Ja: 299899@uwr.edu.pl
-
-</li>
-<li> Nie ja: tomasz.drab@cs.uni.wroc.pl 
-</li>
-</ul>
-</div>
+    co dzieje się na czacie, ale pewnie też pytania, tylko że szybciej odpowiadają :) </div>
 <div class="code">
 </div>
 <footer>
